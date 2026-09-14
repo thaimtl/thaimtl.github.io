@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Thai Tran</title>
+<meta name="description" content="Thai Tran. Computer engineering at McGill. Betting on agentic AI and world models.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..700&family=Libre+Franklin:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f4f2ea;
+    --ink:#17150f;
+    --mute:#5f5a52;
+    --hair:rgba(23,21,15,.26);
+    --name:'Playfair Display',Georgia,serif;
+    --body:'Source Serif 4',Georgia,'Times New Roman',serif;
+    --sans:'Libre Franklin','Helvetica Neue',Arial,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:var(--body);font-size:16px;line-height:1.46;
+    padding:clamp(14px,2.5vw,34px);
+  }
+  a{color:inherit}
+  .paper{max-width:1280px;margin:0 auto}
+
+  /* ---------- rules ---------- */
+  .rule-thick{border-top:3px solid var(--ink)}
+  .rule-thin{border-top:1px solid var(--ink)}
+  .rule-hair{border-top:1px solid var(--hair)}
+
+  /* ---------- masthead ---------- */
+  .masthead{text-align:center;padding:clamp(12px,1.8vw,22px) 0 6px}
+  .masthead h1{
+    font-family:var(--name);font-weight:900;
+    font-size:clamp(46px,11.5vw,146px);line-height:.94;
+    letter-spacing:clamp(.005em,.4vw,.045em);text-transform:uppercase;
+    padding:clamp(8px,1.4vw,16px) 0 clamp(10px,1.6vw,18px);
+  }
+  .dateline{
+    display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+    font-family:var(--sans);font-size:10.5px;font-weight:600;
+    letter-spacing:.13em;text-transform:uppercase;color:var(--mute);
+    padding:0;
+  }
+  .dateline span{min-width:0;padding:8px 16px}
+  .dateline span:first-child{text-align:left}
+  .dateline span:last-child{text-align:right}
+  .dateline span+span{border-left:1px solid var(--hair)}
+  .dateline b{font-weight:800;color:var(--ink);letter-spacing:.11em}
+
+  /* ---------- section nav ---------- */
+  .secnav{
+    display:flex;justify-content:center;flex-wrap:wrap;gap:clamp(14px,3vw,44px);
+    padding:9px 0;list-style:none;
+  }
+  .secnav a{
+    font-family:var(--sans);font-size:11.5px;font-weight:700;
+    letter-spacing:.15em;text-transform:uppercase;text-decoration:none;
+  }
+  .secnav a:hover,.secnav a:focus{background:var(--ink);color:var(--paper);outline:0}
+
+  /* ---------- page grid ---------- */
+  .fold,.below{display:grid;grid-template-columns:repeat(12,1fr);gap:0}
+  .col{min-width:0;padding:clamp(14px,1.6vw,22px) clamp(13px,1.5vw,20px)}
+  .col+.col{border-left:1px solid var(--hair)}
+
+  /* ---------- newspaper type ---------- */
+  .kicker{
+    font-family:var(--sans);font-size:10.5px;font-weight:800;
+    letter-spacing:.17em;text-transform:uppercase;
+    padding-bottom:7px;margin-bottom:9px;border-bottom:1px solid var(--ink);
+  }
+  h2{
+    font-family:var(--name);font-weight:700;line-height:1.04;
+    letter-spacing:-.012em;font-size:clamp(28px,3.5vw,46px);
+  }
+  h3{
+    font-family:var(--name);font-weight:700;line-height:1.06;
+    letter-spacing:-.008em;font-size:clamp(21px,2.3vw,30px);
+  }
+  .deck{
+    font-family:var(--body);font-style:italic;font-size:clamp(15px,1.25vw,18px);
+    color:var(--mute);line-height:1.38;margin-top:.6em;
+  }
+  .byline{
+    font-family:var(--sans);font-size:10.5px;font-weight:700;
+    letter-spacing:.16em;text-transform:uppercase;
+    margin:.95em 0;padding:6px 0;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);
+  }
+  .byline span{display:block;font-weight:400;letter-spacing:.11em;color:var(--mute);margin-top:4px}
+  .text{text-align:justify;hyphens:auto;-webkit-hyphens:auto}
+  .text p+p{margin-top:.55em;text-indent:1.15em}
+  .text p:first-child::first-letter{
+    font-family:var(--name);font-weight:900;float:left;
+    font-size:3.35em;line-height:.82;margin:.02em .09em 0 0;
+  }
+  .cols2{column-count:2;column-gap:clamp(16px,1.8vw,26px);column-rule:1px solid var(--hair)}
+  .cols3{column-count:3;column-gap:clamp(16px,1.8vw,26px);column-rule:1px solid var(--hair)}
+
+  /* ---------- standing rail ---------- */
+  .rail{grid-column:1/4}
+  .rail .item{padding:12px 0;border-top:1px solid var(--hair)}
+  .rail .item:first-of-type{border-top:0;padding-top:4px}
+  .rail .lbl{
+    display:block;font-family:var(--sans);font-size:10px;font-weight:800;
+    letter-spacing:.17em;text-transform:uppercase;margin-bottom:5px;
+  }
+  .rail p{font-size:15px;line-height:1.42}
+  .rail a,.text a,.opinion a{text-decoration:none;border-bottom:1px solid var(--hair)}
+  .rail a:hover,.rail a:focus,
+  .text a:hover,.text a:focus,
+  .opinion a:hover,.opinion a:focus{border-bottom-color:var(--ink);outline:0}
+
+  /* ---------- lead + opinion ---------- */
+  .lead{grid-column:4/10;text-align:center}
+  .lead .text{text-align:justify}
+  .lead h2{font-size:clamp(32px,4.6vw,62px)}
+  .opinion{grid-column:10/13}
+  .opinion .op{padding:13px 0;border-top:1px solid var(--hair)}
+  .opinion .op:first-of-type{border-top:0;padding-top:4px}
+  .opinion .says{font-weight:700;font-size:16.5px;line-height:1.32}
+  .opinion .why{font-size:14.5px;color:var(--mute);margin-top:.5em;line-height:1.44}
+
+  /* ---------- below the fold ---------- */
+  .story-a{grid-column:1/8}
+  .story-b{grid-column:8/13}
+  .story-full{grid-column:1/13}
+
+  /* ---------- display ad ---------- */
+  .advert{
+    max-width:640px;margin:clamp(18px,2.4vw,28px) auto 0;
+    border:4px double var(--ink);padding:clamp(18px,2.4vw,30px) clamp(16px,2.4vw,34px);
+    text-align:center;
+  }
+  .ad-label{
+    font-family:var(--sans);font-size:9.5px;font-weight:800;letter-spacing:.3em;
+    text-transform:uppercase;color:var(--mute);
+    padding-bottom:9px;margin-bottom:14px;border-bottom:1px solid var(--hair);
+  }
+  .ad-hed{
+    font-family:var(--name);font-weight:700;text-transform:uppercase;
+    font-size:clamp(15px,1.7vw,21px);line-height:1.22;letter-spacing:.005em;
+  }
+  .ad-name{
+    font-family:var(--name);font-weight:900;font-size:clamp(40px,6vw,76px);
+    line-height:1;letter-spacing:.03em;margin:.14em 0 .1em;
+  }
+  .ad-copy{font-size:15.5px;line-height:1.42;max-width:44ch;margin:0 auto}
+  .ad-foot{
+    font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:.2em;
+    text-transform:uppercase;margin-top:16px;padding-top:11px;border-top:1px solid var(--hair);
+  }
+
+  /* ---------- colophon ---------- */
+  .colophon{
+    margin-top:clamp(16px,2vw,24px);padding:12px 2px 4px;
+    display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+    font-family:var(--sans);font-size:10.5px;font-weight:600;
+    letter-spacing:.13em;text-transform:uppercase;color:var(--mute);
+  }
+  .colophon a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hair)}
+  .colophon a:hover{border-bottom-color:var(--ink)}
+
+  @media(max-width:880px){
+    .rail,.lead,.opinion,.story-a,.story-b,.story-full{grid-column:1/13}
+    .col+.col{border-left:0;border-top:1px solid var(--ink)}
+    .cols2,.cols3{column-count:1}
+    .dateline{grid-template-columns:1fr}
+    .dateline span,.dateline span:first-child,.dateline span:last-child{text-align:center;padding:6px 10px}
+    .dateline span+span{border-left:0;border-top:1px solid var(--hair)}
+    .lead{text-align:left}
+    .text{text-align:left;hyphens:none}
+  }
+  @media(min-width:881px) and (max-width:1080px){
+    .cols3{column-count:2}
+  }
+</style>
+</head>
+<body>
+<div class="paper">
+
+  <header class="masthead rule-thick">
+    <h1>Thai Tran</h1>
+    <div class="rule-thin"></div>
+    <div class="dateline">
+      <span>Montreal, Quebec</span>
+      <span><b>Monday, September 14, 2026</b></span>
+      <span>Latest Edition, No Paywall</span>
+    </div>
+  </header>
+
+  <div class="rule-thick"></div>
+  <ul class="secnav">
+    <li><a href="https://github.com/thaimtl">GitHub</a></li>
+    <li><a href="https://www.linkedin.com/in/thai-tran-minh">LinkedIn</a></li>
+    <li><a href="https://devpost.com/thaimtl">Devpost</a></li>
+    <li><a href="mailto:minh.thai.tran@mail.mcgill.ca">Email</a></li>
+  </ul>
+  <div class="rule-thick"></div>
+
+  <div class="fold">
+    <aside class="col rail">
+      <p class="kicker">Right Now</p>
+      <div class="item">
+        <span class="lbl">Researching</span>
+        <p>Agentic AI and world models, on my own time. Nothing to link yet.</p>
+      </div>
+      <div class="item">
+        <span class="lbl">Building</span>
+        <p>SIY, my agentic ecommerce platform. Full story below.</p>
+      </div>
+      <div class="item">
+        <span class="lbl">Reading</span>
+        <p>Whatever I am reading, tracked in the open at <a href="https://github.com/thaimtl/books">github.com/thaimtl/books</a>.</p>
+      </div>
+    </aside>
+
+    <article class="col lead">
+      <h2>My Bet Is on Agentic AI and World Models</h2>
+      <p class="deck">Agents can already act. What they cannot reliably do is predict what an action will cost, and that gap is where I spend my attention.</p>
+      <p class="byline">By Thai Tran<span>Computer Engineering, McGill 2028</span></p>
+      <div class="text cols2">
+        <p>My bet is on agentic AI and world models, and I have come to think of it as one bet rather than two. An agent is a system that acts. A world model is a system that predicts what happens next. Betting on the first without the second is betting on motion without foresight.</p>
+        <p><a href="https://sequoiacap.com/article/2026-this-is-agi">Sequoia</a> spent this year arguing that long-horizon agents are functionally AGI and that 2026 is their year. The consequence they describe is the part I keep thinking about. You stop working as an individual contributor and start managing several agents running at once. Their litmus test is simple, and I think it is the right one: can you hire one.</p>
+        <p>That matches what I already believed. Once ten agents can work at the same time, the scarce resource is no longer how fast anyone types. It is knowing which direction is right before any of them start.</p>
+        <p>The other half of my bet is moving just as quickly. a16z named world models among its <a href="https://a16z.com/newsletter/big-ideas-2026-part-1/">big ideas for 2026</a>, pointing at systems like World Labs' Marble and DeepMind's Genie 3 that generate persistent, explorable environments from a text prompt or a single image. The demos get shown as games. What I see is a machine you can ask what happens next.</p>
+        <p>That is the capability I think agents are missing. An agent that can simulate a consequence before committing to it can plan instead of guess, and can throw a bad branch away without paying for it. The hard part, and the one I keep running into, is that the world moves. A model of an environment starts mispredicting the moment that environment changes, which is the gap robotics has fought for years and software is about to inherit.</p>
+        <p>That is what I research privately, and it is why I build tools meant to be read by agents rather than clicked by people. An interface an agent can plan against is a small, concrete version of the same problem. Strip the vocabulary away and the bet is simple. Whoever teaches a machine to check its work before it acts wins.</p>
+        <p>Most of what I know about this I did not learn in a lecture hall. About 20% of my coursework is current and useful, and the rest I picked up from YouTube, books, and shipping things that broke in front of real users. I still learn a tool the same way, by leaning on it before I should and finding out where it gives.</p>
+      </div>
+    </article>
+
+    <aside class="col opinion">
+      <p class="kicker">What I Actually Think</p>
+      <div class="op">
+        <p class="says">Ten agents on a bad design only reach the wrong place faster.</p>
+        <p class="why">Writing code was never <a href="https://typedb.com/blog/the-new-economics-of-code-verification-is-the-new-bottleneck">the binding constraint</a> on any mature codebase I have worked in. Reviewing it and landing it safely was. Agents made the cheap step cheaper and poured the output into the step that was already the bottleneck, so the scarce resource is acceptance, not authorship. Design is where acceptance gets settled before the code exists. Typing was never the slow part. Checking was, and ten agents only means ten times more to check.</p>
+      </div>
+      <div class="op">
+        <p class="says">My peers spent 2026 looking for an AI-proof career. I spent it learning agentic workflows.</p>
+        <p class="why">Automation has never removed whole jobs, and I do not think this round is different. <a href="https://economics.mit.edu/sites/default/files/2025-06/Autor-Thompson-Expertise-22050620.pdf">Autor's task-based work</a> shows it substitutes for particular tasks and leaves the others alone, which makes an AI-proof job a category error. No job disappears all at once, but parts of every job change. AI tools are one more layer on a stack that already has plenty, and I would rather be early to that change than hidden from it.</p>
+      </div>
+      <div class="op">
+        <p class="says">The people who changed how I think were not studying engineering.</p>
+        <p class="why">Granovetter showed that novel information travels along weak ties rather than close ones, and <a href="https://www.science.org/doi/10.1126/science.abl4476">a causal test across twenty million people</a> confirmed it in 2022. I found that out by accident. Your close friends already know what you know, so anything new has to arrive through someone you barely do. I joined McGill Ventures because my program does not teach the startup and venture side of AI. That room is what pushed me to start a club of my own, built to make building more accessible to students. Anthropic backed it.</p>
+      </div>
+    </aside>
+  </div>
+
+  <div class="rule-thick"></div>
+
+  <div class="below">
+    <article class="col story-a">
+      <p class="kicker">The Project</p>
+      <h3>SIY</h3>
+      <p class="deck">An agentic ecommerce platform, and the thing I spend my nights on.</p>
+      <div class="text cols2">
+        <p>I started SIY as a closet that tells you what to wear out of clothes you already own. It is turning into something larger. The part I care about most is the recommendation side, which reasons about which pieces actually go together, working from a real wardrobe instead of pushing inventory at you.</p>
+        <p>Agentic ecommerce, the way I mean it, is an agent that understands what you already own, what you genuinely need, and what would work with the rest, and that can act on that understanding rather than hand you another grid of products.</p>
+        <p>That is a harder problem than a recommender, and it is the one I want to solve, because being right requires knowing what is already in the closet.</p>
+      </div>
+    </article>
+
+    <article class="col story-b">
+      <p class="kicker">The Internship</p>
+      <h3>When Your User Is an Agent</h3>
+      <p class="deck">Summer 2026. AI Builder Intern at Planned.</p>
+      <div class="text">
+        <p>I spent the summer building internal tooling whose primary user was an AI agent rather than a person. That shift quietly raises the bar on what counts as a good interface.</p>
+        <p>An agent arrives cold. There is no product tour, no colleague to ask, and no intuition about what I meant by a field name. Everything has to be legible from the schema alone, which turns out to be a demanding standard.</p>
+        <p>Working out that difference was the most useful thing I learned all year. The specifics stay inside the company.</p>
+      </div>
+    </article>
+  </div>
+
+  <div class="rule-thin"></div>
+
+  <div class="below">
+    <article class="col story-full">
+      <p class="kicker">Community</p>
+      <h3>Claude Builder Club McGill</h3>
+      <p class="deck">Anthropic's inaugural campus chapter, started from nothing and grown to 300+ members in three months.</p>
+      <div class="text cols3">
+        <p>Anthropic made me their inaugural Campus Ambassador, and I started the club from nothing: exec team, event operations, sponsor pipeline. It reached 300+ members across every faculty at McGill within three months.</p>
+        <p>I ran six technical workshops on AI fluency, Claude Code, and developer tooling. Nineteen or more members have since landed internships at large technology companies, venture funds, startups, and AI research labs.</p>
+        <p>We also ran Montreal's first Claude AI hackathon: 280+ applications, 150+ builders in the room, sponsored by Anthropic, Brim Financial, Rootly AI, and PCare+.</p>
+      </div>
+    </article>
+  </div>
+
+  <div class="rule-thick"></div>
+
+  <aside class="advert">
+    <p class="ad-label">Advertisement</p>
+    <p class="ad-hed">Do you own a closet full of clothes<br>and wear the same five things?</p>
+    <p class="ad-name">SIY</p>
+    <p class="ad-copy">An agent that knows what is already in your wardrobe, what actually goes together, and what you do not need to buy again.</p>
+    <p class="ad-foot">Now in development. Inquire within.</p>
+  </aside>
+
+  <div class="colophon">
+    <p>Say hi &rarr; <a href="mailto:minh.thai.tran@mail.mcgill.ca">minh.thai.tran@mail.mcgill.ca</a></p>
+  </div>
+
+</div>
+</body>
+</html>
