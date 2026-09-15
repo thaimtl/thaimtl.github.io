@@ -189,7 +189,7 @@
     <div class="rule-thin"></div>
     <div class="dateline">
       <span>Montreal, Quebec</span>
-      <span><b>Tuesday, September 15, 2026</b></span>
+      <span><b id="today">Tuesday, September 15, 2026</b></span>
       <span>Latest Edition, No Paywall</span>
     </div>
   </header>
@@ -308,5 +308,10 @@
   </div>
 
 </div>
+
+<script>
+  document.getElementById('today').textContent =
+    new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+</script>
 </body>
 </html>
