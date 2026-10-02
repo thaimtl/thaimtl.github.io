@@ -87,7 +87,7 @@
     font-family:var(--head);font-weight:700;line-height:1.08;
     letter-spacing:-.012em;font-size:clamp(21px,2.3vw,30px);
   }
-  h2,h3,.deck,.pull,.g-title{text-wrap:balance}
+  h2,h3,.deck,.g-title{text-wrap:balance}
   .deck{
     font-family:var(--body);font-size:clamp(15px,1.25vw,18px);
     color:var(--mute);line-height:1.38;margin-top:.6em;
@@ -103,12 +103,6 @@
   .text p:first-child::first-letter{
     font-family:var(--head);font-weight:800;float:left;
     font-size:3.35em;line-height:.82;margin:.02em .09em 0 0;
-  }
-  .pull{
-    column-span:all;margin:16px 0 14px;padding:12px 6%;
-    border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
-    font-family:var(--head);font-weight:500;font-size:clamp(20px,2vw,26px);line-height:1.25;
-    text-align:center;letter-spacing:-.01em;hyphens:none;
   }
   .cols2{column-count:2;column-gap:clamp(16px,1.8vw,26px);column-rule:1px solid var(--hair)}
   .cols3{column-count:3;column-gap:clamp(16px,1.8vw,26px);column-rule:1px solid var(--hair)}
@@ -146,8 +140,8 @@
   /* ---------- below the fold ---------- */
   .story-full{grid-column:1/13}
   .story-half{grid-column:span 6}
-  .story-half:first-child{grid-column:span 5}
-  .story-half:last-child{grid-column:span 7}
+  .story-half:first-child{grid-column:span 7}
+  .story-half:last-child{grid-column:span 5}
 
   /* ---------- feature graphic ---------- */
   .graphic{
@@ -275,9 +269,9 @@
         <p>My bet is on agentic AI and world models, which I've come to think of as one bet. An agent is a system that acts. A world model is a system that predicts what happens next. An agent without one is acting blind.</p>
         <p>The venture firm <a href="https://sequoiacap.com/article/2026-this-is-agi">Sequoia Capital</a> spent this year arguing that long-horizon agents are functionally artificial general intelligence and that 2026 is their year. The consequence stuck with me: you stop working as an individual contributor and start managing several agents at once. I think their litmus test is the right one, which is "Can you hire one?" A human can't hope to outwork ten agents, and trying isn't the wise move. We should be the ones driving them.</p>
         <p>That matches what I already believed. Once ten agents can work at the same time, the scarce resource is knowing which direction is right before any of them start.</p>
-        <blockquote class="pull">Whoever teaches a machine to check its work before it acts wins.</blockquote>
         <p>The other half of my bet is moving just as quickly. Andreessen Horowitz, another venture firm, named world models among its <a href="https://a16z.com/newsletter/big-ideas-2026-part-1/">big ideas for 2026</a> and pointed at systems like World Labs' Marble and DeepMind's Genie 3, which generate persistent, explorable environments from a text prompt or a single image. The demos are usually games. What I see is a machine you can ask what happens next.</p>
         <p>That's the capability I think agents are missing. An agent that can simulate a consequence before committing to it can plan instead of guess, and can throw a bad branch away without paying for it. The hard part, and the one I keep running into, is that the world moves. A model of an environment starts mispredicting the moment that environment changes, which is the gap robotics has fought for years and software is about to inherit.</p>
+        <p>The labs are stuck on the same problem one level up. Releasing a stronger model is the easy part now, and making sure it does what we meant is the hard one. In September 2026, <a href="https://darioamodei.com/post/we-must-pace-the-frontier">Dario Amodei</a>, who runs Anthropic, argued the industry should pace the frontier so evaluation can catch up, and <a href="https://yoshuabengio.org/en/blog/professor-yoshua-bengios-speech-un-security-council">Yoshua Bengio</a>, the Montreal computer scientist, told the UN Security Council that agents from leading labs have already acted against their instructions.</p>
         <p>That's what I research privately, and it's why I build tools meant to be read by agents rather than clicked by people. An interface an agent can plan against is a small, concrete version of the same problem. Whoever teaches a machine to check its work before it acts wins.</p>
         <p>Most of what I know about this I didn't learn in a lecture hall. About 20% of my coursework is current and useful, and the rest I picked up from YouTube, books, and shipping things that broke in front of real users. I still learn a tool the same way, by leaning on it before I should and finding out where it gives.</p>
       </div>
@@ -356,12 +350,13 @@
   <div class="below">
     <article class="col story-half">
       <p class="kicker">The Internship</p>
-      <h3>When Your User Is an Agent</h3>
-      <p class="deck">An AI builder internship at Planned taught me to design for a user that only reads the schema.</p>
+      <h3>Intern Ships to Production Daily, Database Survives</h3>
+      <p class="deck">Planned handed its AI builder intern the whole codebase, a bunch of AI tools, and a lot of trust on day one.</p>
       <div class="text cols2">
-        <p>I spent the summer building internal tooling whose primary user was an AI agent rather than a person. That shift raises the bar on what counts as a good interface.</p>
-        <p>An agent arrives cold. There's no product tour, no colleague to ask, and no intuition about what I meant by a field name. Everything has to be legible from the schema alone, which turns out to be a demanding standard.</p>
-        <p>Working out that difference was the most useful thing I learned all year. The specifics stay inside the company.</p>
+        <p>I wasn't hired as an engineer at Planned this summer, and I still shipped to production every day.</p>
+        <p>I walked in expecting to be the office's only AI maxxer, the person who runs everything through an agent, and then met everyone else. Every person had tools or workflows running for them, not just the engineers. In my first week our product manager took tickets himself and passed them to engineers for review, and half the team prompted by voice, which people told me is about three times faster than typing, so I switched too.</p>
+        <p>The team tested new tools fast and kept only the good ones. When GitHub released stacked pull requests in July, a few senior engineers had them running within the hour and decided they weren't worth leaving Graphite, the stacking tool the team already used. Stacking also taught me to break work into small, reviewable chunks instead of dropping a 3,582-line diff on a principal engineer.</p>
+        <p>The lesson I'm keeping is not to be a meat proxy, a person who just forwards whatever the agent wrote. When agents write most of the code, the job becomes judging it, and you can't judge what you don't understand, so I'm learning fundamentals harder, not skipping them. I want to be the engineer who works alongside the agents and can tell when something's gone wrong and take over.</p>
       </div>
     </article>
 
@@ -369,10 +364,11 @@
       <p class="kicker">Community</p>
       <h3>Claude Builder Club McGill</h3>
       <p class="deck">Anthropic's first campus chapter grew from nothing to 300+ members in three months.</p>
-      <div class="text cols2">
+      <div class="text">
         <p>Anthropic made me their inaugural Campus Ambassador, and I started the club from nothing: exec team, event operations, sponsor pipeline. It reached 300+ members across every faculty at McGill within three months.</p>
         <p>I ran six technical workshops on AI fluency, Claude Code, and developer tooling. Nineteen or more members have since landed internships at large technology companies, venture funds, startups, and AI research labs.</p>
         <p>We also ran Montreal's first Claude AI hackathon: 280+ applications, 150+ builders in the room, sponsored by Anthropic, Brim Financial, Rootly AI, and PCare+.</p>
+        <p>I'm running more workshops this semester because agentic engineering is already here, and the gap between students who've seen it and students who haven't grows every month, while startups like Planned struggle to find people who already work this way.</p>
       </div>
     </article>
   </div>
