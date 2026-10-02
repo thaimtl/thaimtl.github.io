@@ -67,7 +67,8 @@
   .secnav a:hover,.secnav a:focus{background:var(--ink);color:var(--paper);outline:0}
 
   /* ---------- page grid ---------- */
-  .fold,.below{display:grid;grid-template-columns:repeat(12,1fr);gap:0}
+  .fold{display:grid;grid-template-columns:2.8fr 6fr 3.2fr}
+  .below{display:grid;grid-template-columns:repeat(12,1fr)}
   .col{min-width:0;padding:clamp(14px,1.6vw,22px) clamp(13px,1.5vw,20px)}
   .col+.col{border-left:1px solid var(--hair)}
 
@@ -108,7 +109,6 @@
   .cols3{column-count:3;column-gap:clamp(16px,1.8vw,26px);column-rule:1px solid var(--hair)}
 
   /* ---------- standing rail ---------- */
-  .rail{grid-column:1/4}
   .rail .item{padding:12px 0;border-top:1px solid var(--hair)}
   .rail .item:first-of-type{border-top:0;padding-top:4px}
   .rail .lbl{
@@ -128,10 +128,9 @@
   .brief p{font-size:14.5px;line-height:1.44}
 
   /* ---------- lead + opinion ---------- */
-  .lead{grid-column:4/10;text-align:center}
+  .lead{text-align:center}
   .lead .text{text-align:justify}
   .lead h2{font-size:clamp(32px,4.6vw,62px)}
-  .opinion{grid-column:10/13}
   .opinion .op{padding:13px 0;border-top:1px solid var(--hair)}
   .opinion .op:first-of-type{border-top:0;padding-top:4px}
   .opinion .says{font-weight:700;font-size:16.5px;line-height:1.32}
@@ -184,7 +183,8 @@
   .colophon a:hover{border-bottom-color:var(--ink)}
 
   @media(max-width:880px){
-    .rail,.lead,.opinion,.story-full,.story-half{grid-column:1/13}
+    .fold{grid-template-columns:1fr}
+    .story-full,.story-half{grid-column:1/13}
     .graphic{grid-template-columns:1fr;gap:18px}
     .g-wheel{max-width:300px;margin:0 auto}
     .col+.col{border-left:0;border-top:1px solid var(--ink)}
@@ -285,7 +285,7 @@
       </div>
       <div class="op">
         <p class="says">My peers spent 2026 looking for an AI-proof career. I spent it learning agentic workflows.</p>
-        <p class="why">Automation has never removed whole jobs, and I don't think this round is different. <a href="https://www.nber.org/system/files/working_papers/w8337/w8337.pdf">Research by the MIT economist David Autor</a> shows it substitutes for particular tasks and leaves the others alone, which makes an AI-proof job a category error. AI tools are one more layer on a stack that already has plenty, and I'd rather be early to that change than hidden from it.</p>
+        <p class="why">Automation has never removed whole jobs, and I don't think this round is different. <a href="https://www.nber.org/system/files/working_papers/w8337/w8337.pdf">Research by the MIT economist David Autor</a> shows it substitutes for particular tasks and leaves the others alone, which makes an AI-proof job a category error. AI tools are one more layer on a stack that already has plenty, and nobody's job title changed when they picked up Git, so I'd rather be early to this change than hidden from it.</p>
       </div>
       <div class="op">
         <p class="says">The people who changed how I think were not in my major or my friend group.</p>
@@ -356,7 +356,8 @@
         <p>I wasn't hired as an engineer at Planned this summer, and I still shipped to production every day.</p>
         <p>I walked in expecting to be the office's only AI maxxer, the person who runs everything through an agent, and then met everyone else. Every person had tools or workflows running for them, not just the engineers. In my first week our product manager took tickets himself and passed them to engineers for review, and half the team prompted by voice, which people told me is about three times faster than typing, so I switched too.</p>
         <p>The team tested new tools fast and kept only the good ones. When GitHub released stacked pull requests in July, a few senior engineers had them running within the hour and decided they weren't worth leaving Graphite, the stacking tool the team already used. Stacking also taught me to break work into small, reviewable chunks instead of dropping a 3,582-line diff on a principal engineer.</p>
-        <p>The lesson I'm keeping is not to be a meat proxy, a person who just forwards whatever the agent wrote. When agents write most of the code, the job becomes judging it, and you can't judge what you don't understand, so I'm learning fundamentals harder, not skipping them. I want to be the engineer who works alongside the agents and can tell when something's gone wrong and take over.</p>
+        <p>The lesson I'm keeping is not to be a meat proxy, a person who just forwards whatever the agent wrote. It's tempting to read a summer like this as proof that fundamentals matter less now, and it's the opposite. When agents write most of the code, <a href="https://brain.co/blog/authorship-over-output">authorship</a> moves from typing to judging, and you can't judge what you don't understand.</p>
+        <p>I want to be the engineer who can tell when something's gone wrong and take over.</p>
       </div>
     </article>
 
