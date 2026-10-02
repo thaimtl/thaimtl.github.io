@@ -7,14 +7,15 @@
 <meta name="description" content="Thai Tran. Computer engineering at McGill. Betting on agentic AI and world models.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..900;1,8..60,300..700&family=Libre+Franklin:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Source+Serif+4:opsz,wght@8..60,300..900&family=Libre+Franklin:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root{
-    --paper:#f4f2ea;
-    --ink:#17150f;
-    --mute:#5f5a52;
-    --hair:rgba(23,21,15,.26);
-    --name:'Playfair Display',Georgia,serif;
+    --paper:#ffffff;
+    --ink:#121212;
+    --mute:#5a5a5a;
+    --hair:#dcdcdc;
+    --name:'UnifrakturMaguntia','Old English Text MT',serif;
+    --head:'Source Serif 4',Georgia,serif;
     --body:'Source Serif 4',Georgia,'Times New Roman',serif;
     --sans:'Libre Franklin','Helvetica Neue',Arial,sans-serif;
   }
@@ -26,6 +27,7 @@
     padding:clamp(14px,2.5vw,34px);
   }
   a{color:inherit}
+  a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
   .paper{max-width:1280px;margin:0 auto}
 
   /* ---------- rules ---------- */
@@ -36,10 +38,9 @@
   /* ---------- masthead ---------- */
   .masthead{text-align:center;padding:clamp(12px,1.8vw,22px) 0 6px}
   .masthead h1{
-    font-family:var(--name);font-weight:900;
-    font-size:clamp(46px,11.5vw,146px);line-height:.94;
-    letter-spacing:clamp(.005em,.4vw,.045em);text-transform:uppercase;
-    padding:clamp(8px,1.4vw,16px) 0 clamp(10px,1.6vw,18px);
+    font-family:var(--name);font-weight:400;
+    font-size:clamp(54px,11.5vw,138px);line-height:1;
+    padding:clamp(6px,1vw,12px) 0 clamp(8px,1.2vw,14px);
   }
   .dateline{
     display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
@@ -59,6 +60,7 @@
     padding:9px 0;list-style:none;
   }
   .secnav a{
+    display:inline-block;padding:6px 4px;
     font-family:var(--sans);font-size:11.5px;font-weight:700;
     letter-spacing:.15em;text-transform:uppercase;text-decoration:none;
   }
@@ -72,19 +74,22 @@
   /* ---------- newspaper type ---------- */
   .kicker{
     font-family:var(--sans);font-size:10.5px;font-weight:800;
-    letter-spacing:.17em;text-transform:uppercase;
+    letter-spacing:.17em;text-transform:uppercase;line-height:1.4;
     padding-bottom:7px;margin-bottom:9px;border-bottom:1px solid var(--ink);
   }
   h2{
-    font-family:var(--name);font-weight:700;line-height:1.04;
-    letter-spacing:-.012em;font-size:clamp(28px,3.5vw,46px);
+    font-family:var(--head);font-weight:700;line-height:1.04;
+    letter-spacing:-.018em;font-size:clamp(28px,3.5vw,46px);
   }
+  h3 a{text-decoration:none}
+  h3 a:hover{text-decoration:underline;text-decoration-thickness:2px}
   h3{
-    font-family:var(--name);font-weight:700;line-height:1.06;
-    letter-spacing:-.008em;font-size:clamp(21px,2.3vw,30px);
+    font-family:var(--head);font-weight:700;line-height:1.08;
+    letter-spacing:-.012em;font-size:clamp(21px,2.3vw,30px);
   }
+  h2,h3,.deck,.pull,.g-title{text-wrap:balance}
   .deck{
-    font-family:var(--body);font-style:italic;font-size:clamp(15px,1.25vw,18px);
+    font-family:var(--body);font-size:clamp(15px,1.25vw,18px);
     color:var(--mute);line-height:1.38;margin-top:.6em;
   }
   .byline{
@@ -96,8 +101,14 @@
   .text{text-align:justify;hyphens:auto;-webkit-hyphens:auto}
   .text p+p{margin-top:.55em;text-indent:1.15em}
   .text p:first-child::first-letter{
-    font-family:var(--name);font-weight:900;float:left;
+    font-family:var(--head);font-weight:800;float:left;
     font-size:3.35em;line-height:.82;margin:.02em .09em 0 0;
+  }
+  .pull{
+    column-span:all;margin:16px 0 14px;padding:12px 6%;
+    border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);
+    font-family:var(--head);font-weight:500;font-size:clamp(20px,2vw,26px);line-height:1.25;
+    text-align:center;letter-spacing:-.01em;hyphens:none;
   }
   .cols2{column-count:2;column-gap:clamp(16px,1.8vw,26px);column-rule:1px solid var(--hair)}
   .cols3{column-count:3;column-gap:clamp(16px,1.8vw,26px);column-rule:1px solid var(--hair)}
@@ -110,11 +121,17 @@
     display:block;font-family:var(--sans);font-size:10px;font-weight:800;
     letter-spacing:.17em;text-transform:uppercase;margin-bottom:5px;
   }
-  .rail p{font-size:15px;line-height:1.42}
+  .rail .item p{font-size:15px;line-height:1.42}
   .rail a,.text a,.opinion a{text-decoration:none;border-bottom:1px solid var(--hair)}
   .rail a:hover,.rail a:focus,
   .text a:hover,.text a:focus,
   .opinion a:hover,.opinion a:focus{border-bottom-color:var(--ink);outline:0}
+
+  .rail .kicker:not(:first-child){margin-top:24px}
+  .brief{padding:11px 0;border-top:1px solid var(--hair)}
+  .kicker+.brief{border-top:0;padding-top:2px}
+  .brief-hed{font-size:17px;line-height:1.2;letter-spacing:-.005em;margin-bottom:5px}
+  .brief p{font-size:14.5px;line-height:1.44}
 
   /* ---------- lead + opinion ---------- */
   .lead{grid-column:4/10;text-align:center}
@@ -127,9 +144,40 @@
   .opinion .why{font-size:14.5px;color:var(--mute);margin-top:.5em;line-height:1.44}
 
   /* ---------- below the fold ---------- */
-  .story-a{grid-column:1/8}
-  .story-b{grid-column:8/13}
   .story-full{grid-column:1/13}
+  .story-half{grid-column:span 6}
+  .story-half:first-child{grid-column:span 5}
+  .story-half:last-child{grid-column:span 7}
+
+  /* ---------- feature graphic ---------- */
+  .graphic{
+    display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.92fr) minmax(0,1.08fr);
+    gap:0 clamp(20px,2.6vw,38px);align-items:center;
+    margin:20px 0 0;padding-top:16px;border-top:1px solid var(--ink);font-family:var(--sans);
+  }
+  .g-title{font-family:var(--sans);font-weight:800;font-size:17px;line-height:1.25;letter-spacing:0}
+  .g-dek{font-size:13px;line-height:1.45;color:var(--mute);margin:.4em 0 .7em}
+  .g-wheel{width:100%;height:auto;display:block;color:var(--ink)}
+  .g-wheel text{font-family:var(--sans);font-size:9.5px;font-weight:800;letter-spacing:.12em;fill:var(--ink)}
+  .g-wheel .g-lbl{fill:var(--mute);font-size:8.5px;paint-order:stroke;stroke:var(--paper);stroke-width:3px}
+  .g-br{fill:none;stroke:var(--ink);stroke-width:1.5}
+  .g-spoke{stroke:#b9b9b9;stroke-width:.75}
+  .g-spoke.g-base{stroke:var(--ink);stroke-width:1.25}
+  .g-dot{stroke:var(--paper);stroke-width:2}
+  .g-basedot{stroke:var(--ink);stroke-width:2}
+  .g-rules div{padding:7px 0;border-top:1px solid var(--hair)}
+  .g-rules div:first-child{border-top:0;padding-top:0}
+  .g-rules dt{font-weight:800;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase}
+  .g-rules dd{font-size:13px;line-height:1.4;margin-top:2px}
+  .g-sub{font-weight:700;font-size:13px;margin-bottom:10px}
+  .g-swatches{list-style:none;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 10px}
+  .g-swatches li{font-size:12px;line-height:1.3;min-width:0}
+  .g-swatches i{display:block;height:28px;margin-bottom:6px}
+  .g-swatches b{display:block;font-weight:700}
+  .g-swatches span{color:var(--mute);font-size:11px;white-space:nowrap}
+  .g-cap{font-size:12px;line-height:1.45;color:var(--mute);margin-top:14px}
+  .g-cap a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--hair)}
+  .g-cap a:hover{border-bottom-color:var(--ink)}
 
   /* ---------- display ad ---------- */
   .advert{
@@ -143,14 +191,15 @@
     padding-bottom:9px;margin-bottom:14px;border-bottom:1px solid var(--hair);
   }
   .ad-hed{
-    font-family:var(--name);font-weight:700;text-transform:uppercase;
+    font-family:var(--head);font-weight:700;text-transform:uppercase;
     font-size:clamp(15px,1.7vw,21px);line-height:1.22;letter-spacing:.005em;
   }
   .ad-name{
-    font-family:var(--name);font-weight:900;font-size:clamp(40px,6vw,76px);
+    font-family:var(--head);font-weight:900;font-size:clamp(40px,6vw,76px);
     line-height:1;letter-spacing:.03em;margin:.14em 0 .1em;
   }
   .ad-copy{font-size:15.5px;line-height:1.42;max-width:44ch;margin:0 auto}
+  .ad-foot a{text-decoration:none;border-bottom:1px solid var(--ink)}
   .ad-foot{
     font-family:var(--sans);font-size:10px;font-weight:700;letter-spacing:.2em;
     text-transform:uppercase;margin-top:16px;padding-top:11px;border-top:1px solid var(--hair);
@@ -167,7 +216,9 @@
   .colophon a:hover{border-bottom-color:var(--ink)}
 
   @media(max-width:880px){
-    .rail,.lead,.opinion,.story-a,.story-b,.story-full{grid-column:1/13}
+    .rail,.lead,.opinion,.story-full,.story-half{grid-column:1/13}
+    .graphic{grid-template-columns:1fr;gap:18px}
+    .g-wheel{max-width:300px;margin:0 auto}
     .col+.col{border-left:0;border-top:1px solid var(--ink)}
     .cols2,.cols3{column-count:1}
     .dateline{grid-template-columns:1fr}
@@ -176,8 +227,10 @@
     .lead{text-align:left}
     .text{text-align:left;hyphens:none}
   }
-  @media(min-width:881px) and (max-width:1080px){
+  @media(min-width:881px) and (max-width:1180px){
     .cols3{column-count:2}
+    .graphic{grid-template-columns:1fr 1fr;row-gap:18px}
+    .g-c{grid-column:1/3}
   }
 </style>
 </head>
@@ -205,7 +258,7 @@
 
   <div class="fold">
     <aside class="col rail">
-      <p class="kicker">Right Now</p>
+      <h2 class="kicker">Right Now</h2>
       <div class="item">
         <span class="lbl">Researching</span>
         <p>Agentic AI and world models, on my own time. Nothing to link yet.</p>
@@ -216,38 +269,59 @@
       </div>
       <div class="item">
         <span class="lbl">Reading</span>
-        <p>Whatever I am reading, tracked in the open at <a href="https://github.com/thaimtl/books">github.com/thaimtl/books</a>.</p>
+        <p>Whatever I'm reading, tracked in the open at <a href="https://github.com/thaimtl/books">github.com/thaimtl/books</a>.</p>
+      </div>
+
+      <h2 class="kicker">In Brief</h2>
+      <div class="brief">
+        <h3 class="brief-hed">Northside Ventures Adds a Student Scout</h3>
+        <p>I scout startups for Northside Ventures now, a job I took after pitching investors myself, so I've sat on both sides of the table.</p>
+      </div>
+      <div class="brief">
+        <h3 class="brief-hed">McGill Ventures Rebuilds Its Website</h3>
+        <p>I'm the lead developer on the redesign, and it's the same club that first showed me how investors decide who to back.</p>
+      </div>
+      <div class="brief">
+        <h3 class="brief-hed">Hackathon Streak Heads to San Francisco</h3>
+        <p>I'm competing at Cal Hacks 13 in San Francisco, October 23 to 25, my first hackathon outside Montreal. I've placed at all three I've entered so far (McHacks, ConUHacks, and a machine learning hackathon at McGill), so this is the streak's first road game.</p>
+      </div>
+
+      <h2 class="kicker">Sports</h2>
+      <div class="brief">
+        <h3 class="brief-hed">Ninth Grader Takes Chess Title, Can't Read the Pieces</h3>
+        <p>In ninth grade I won my school's inter-campus Chinese chess tournament as the only ninth grader in it, beating twelfth graders without a coach. I also couldn't read the characters on the pieces, and I still can't. I learned by playing my grandfather every afternoon, then my dad after my grandparents moved to my uncle's. My dad is exceptional, which keeps the title in perspective.</p>
       </div>
     </aside>
 
     <article class="col lead">
       <h2>My Bet Is on Agentic AI and World Models</h2>
-      <p class="deck">Agents can already act. They cannot reliably predict what an action will cost, and that gap is where I spend my attention.</p>
+      <p class="deck">Agents can already act. They can't reliably predict what an action will cost, and that gap is where I spend my attention.</p>
       <p class="byline">By Thai Tran<span>Computer Engineering, McGill 2028</span></p>
       <div class="text cols2">
-        <p>My bet is on agentic AI and world models, which I have come to think of as one bet. An agent is a system that acts. A world model is a system that predicts what happens next. An agent without one is acting blind.</p>
-        <p><a href="https://sequoiacap.com/article/2026-this-is-agi">Sequoia</a> spent this year arguing that long-horizon agents are functionally AGI and that 2026 is their year. The consequence stuck with me: you stop working as an individual contributor and start managing several agents at once. I think their litmus test is the right one, which is "Can you hire one". A human cannot hope to outwork ten agents, and trying is not the wise move. We should be the ones driving them.</p>
+        <p>My bet is on agentic AI and world models, which I've come to think of as one bet. An agent is a system that acts. A world model is a system that predicts what happens next. An agent without one is acting blind.</p>
+        <p>The venture firm <a href="https://sequoiacap.com/article/2026-this-is-agi">Sequoia Capital</a> spent this year arguing that long-horizon agents are functionally artificial general intelligence and that 2026 is their year. The consequence stuck with me: you stop working as an individual contributor and start managing several agents at once. I think their litmus test is the right one, which is "Can you hire one?" A human can't hope to outwork ten agents, and trying isn't the wise move. We should be the ones driving them.</p>
         <p>That matches what I already believed. Once ten agents can work at the same time, the scarce resource is knowing which direction is right before any of them start.</p>
-        <p>The other half of my bet is moving just as quickly. a16z named world models among its <a href="https://a16z.com/newsletter/big-ideas-2026-part-1/">big ideas for 2026</a> and pointed at systems like World Labs' Marble and DeepMind's Genie 3, which generate persistent, explorable environments from a text prompt or a single image. The demos are usually games. What I see is a machine you can ask what happens next.</p>
-        <p>That is the capability I think agents are missing. An agent that can simulate a consequence before committing to it can plan instead of guess, and can throw a bad branch away without paying for it. The hard part, and the one I keep running into, is that the world moves. A model of an environment starts mispredicting the moment that environment changes, which is the gap robotics has fought for years and software is about to inherit.</p>
-        <p>That is what I research privately, and it is why I build tools meant to be read by agents rather than clicked by people. An interface an agent can plan against is a small, concrete version of the same problem. Whoever teaches a machine to check its work before it acts wins.</p>
-        <p>Most of what I know about this I did not learn in a lecture hall. About 20% of my coursework is current and useful, and the rest I picked up from YouTube, books, and shipping things that broke in front of real users. I still learn a tool the same way, by leaning on it before I should and finding out where it gives.</p>
+        <blockquote class="pull">Whoever teaches a machine to check its work before it acts wins.</blockquote>
+        <p>The other half of my bet is moving just as quickly. Andreessen Horowitz, another venture firm, named world models among its <a href="https://a16z.com/newsletter/big-ideas-2026-part-1/">big ideas for 2026</a> and pointed at systems like World Labs' Marble and DeepMind's Genie 3, which generate persistent, explorable environments from a text prompt or a single image. The demos are usually games. What I see is a machine you can ask what happens next.</p>
+        <p>That's the capability I think agents are missing. An agent that can simulate a consequence before committing to it can plan instead of guess, and can throw a bad branch away without paying for it. The hard part, and the one I keep running into, is that the world moves. A model of an environment starts mispredicting the moment that environment changes, which is the gap robotics has fought for years and software is about to inherit.</p>
+        <p>That's what I research privately, and it's why I build tools meant to be read by agents rather than clicked by people. An interface an agent can plan against is a small, concrete version of the same problem. Whoever teaches a machine to check its work before it acts wins.</p>
+        <p>Most of what I know about this I didn't learn in a lecture hall. About 20% of my coursework is current and useful, and the rest I picked up from YouTube, books, and shipping things that broke in front of real users. I still learn a tool the same way, by leaning on it before I should and finding out where it gives.</p>
       </div>
     </article>
 
     <aside class="col opinion">
-      <p class="kicker">What I Actually Think</p>
+      <h2 class="kicker">What I Actually Think</h2>
       <div class="op">
         <p class="says">Ten agents on a bad design only reach the wrong place faster.</p>
-        <p class="why">Writing code was never <a href="https://typedb.com/blog/the-new-economics-of-code-verification-is-the-new-bottleneck">the binding constraint</a> on any mature codebase I have worked in. Reviewing it and landing it safely was. Agents made the cheap step cheaper and poured the output into the step that was already the bottleneck, so what is scarce now is acceptance. Design is where acceptance gets settled, before the code exists. Ten agents only means ten times more to check.</p>
+        <p class="why">Writing code was never <a href="https://typedb.com/blog/the-new-economics-of-code-verification-is-the-new-bottleneck">the binding constraint</a> on any mature codebase I've worked in. Reviewing it and landing it safely was. Agents made the cheap step cheaper and poured the output into the step that was already the bottleneck, so what's scarce now is acceptance. Design is where acceptance gets settled, before the code exists. Ten agents only means ten times more to check.</p>
       </div>
       <div class="op">
         <p class="says">My peers spent 2026 looking for an AI-proof career. I spent it learning agentic workflows.</p>
-        <p class="why">Automation has never removed whole jobs, and I do not think this round is different. <a href="https://www.nber.org/system/files/working_papers/w8337/w8337.pdf">Autor's task-based work</a> shows it substitutes for particular tasks and leaves the others alone, which makes an AI-proof job a category error. AI tools are one more layer on a stack that already has plenty, and I would rather be early to that change than hidden from it.</p>
+        <p class="why">Automation has never removed whole jobs, and I don't think this round is different. <a href="https://www.nber.org/system/files/working_papers/w8337/w8337.pdf">Research by the MIT economist David Autor</a> shows it substitutes for particular tasks and leaves the others alone, which makes an AI-proof job a category error. AI tools are one more layer on a stack that already has plenty, and I'd rather be early to that change than hidden from it.</p>
       </div>
       <div class="op">
         <p class="says">The people who changed how I think were not in my major or my friend group.</p>
-        <p class="why"><a href="https://snap.stanford.edu/class/cs224w-readings/granovetter73weakties.pdf">Granovetter</a> showed that novel information travels along weak ties rather than close ones, and <a href="https://news.mit.edu/2022/weak-ties-linkedin-employment-0915">a causal test across twenty million people</a> confirmed it in 2022. I found that out while scrolling Instagram reels, which is about as weak as a tie gets. It held for me too. I was the only one in my friend group who thought I could build products and grow without constraints, so I had to go out and make new friends. <a href="https://www.mcgillvc.ca/">McGill Ventures</a> gave me the view from the other side, how investors decide who to invest in. The right friends are harder to find than the decision to go looking. I found a few with the same drive, and they are why I started a club of my own, the first AI builder club at McGill. Anthropic happened to back it. No shade on the friends I started with, who are all still around and, by Granovetter's logic, still the last people likely to tell me anything new.</p>
+        <p class="why">The Stanford sociologist <a href="https://snap.stanford.edu/class/cs224w-readings/granovetter73weakties.pdf">Mark Granovetter</a> showed that novel information travels along weak ties rather than close ones, and <a href="https://news.mit.edu/2022/weak-ties-linkedin-employment-0915">a causal test across twenty million people</a> confirmed it in 2022. I found that out while scrolling Instagram reels, which is about as weak as a tie gets. It held for me too. I was the only one in my friend group who thought I could build products and grow without constraints, so I had to go out and make new friends. <a href="https://www.mcgillvc.ca/">McGill Ventures</a> gave me the view from the other side, how investors decide who to invest in. The right friends are harder to find than the decision to go looking. I found a few with the same drive, and they are why I started a club of my own, the first AI builder club at McGill. Anthropic happened to back it. No shade on the friends I started with, who are all still around and, by Granovetter's logic, still the last people likely to tell me anything new.</p>
       </div>
     </aside>
   </div>
@@ -255,25 +329,50 @@
   <div class="rule-thick"></div>
 
   <div class="below">
-    <article class="col story-a">
+    <article class="col story-full">
       <p class="kicker">The Project</p>
-      <h3>SIY</h3>
-      <p class="deck">An agentic ecommerce platform, and the thing I spend my nights on.</p>
-      <div class="text cols2">
-        <p>I started SIY as a closet that tells you what to wear out of clothes you already own. It is turning into something larger. The part I care about most is the recommendation side, which reasons about which pieces actually go together, working from a real wardrobe instead of pushing inventory at you.</p>
-        <p>Agentic ecommerce, the way I mean it, is an agent that understands what you already own, what you genuinely need, and what would work with the rest, and that can act on that understanding rather than hand you another grid of products.</p>
-        <p>That is a harder problem than a recommender, because being right requires knowing what is already in the closet.</p>
+      <h3><a href="https://styleityourself.ca">SIY Gives Away Its Code and Bets on Agents</a></h3>
+      <p class="deck">Built in 24 hours at McHacks, the closet app won Best Beginner Hack and now aims to know your wardrobe well enough to shop for you.</p>
+      <div class="feature">
+      <div class="text cols3">
+        <p>Style It Yourself, or SIY, picks outfits from the clothes you already own, and it's free and open source on purpose, because solving a problem doesn't always mean selling a solution.</p>
+        <p>Four of us built the first version in 24 hours at McHacks and won Best Beginner Hack, an award we were fully qualified for. I led product, design, and the full stack, and the next few months went to rebuilding it.</p>
+        <p>The part I care about most is the color engine I wrote, which treats every color as an angle on a wheel and matches pieces by how far apart their hues sit (see graphic).</p>
+        <p>The next version is an agent that should know what you own, what you need, and what works with the rest, and act on that instead of handing you another grid of products. That's harder than recommending, because being right means knowing what's already in your closet.</p>
+        <p>The long game is an AI operating system for the clothing industry, with a label of my own running on it, because I'd rather be great at one thing than okay at ten.</p>
       </div>
-    </article>
-
-    <article class="col story-b">
-      <p class="kicker">The Internship</p>
-      <h3>When Your User Is an Agent</h3>
-      <p class="deck">Summer 2026. AI Builder Intern at Planned.</p>
-      <div class="text">
-        <p>I spent the summer building internal tooling whose primary user was an AI agent rather than a person. That shift raises the bar on what counts as a good interface.</p>
-        <p>An agent arrives cold. There is no product tour, no colleague to ask, and no intuition about what I meant by a field name. Everything has to be legible from the schema alone, which turns out to be a demanding standard.</p>
-        <p>Working out that difference was the most useful thing I learned all year. The specifics stay inside the company.</p>
+      <figure class="graphic">
+        <div class="g-a">
+          <h4 class="g-title" id="g-title">SIY Matches Colors by Measuring Angles</h4>
+          <p class="g-dek">Each color is a point on a 360° wheel, and two colors match when the angle between them lands in one of three ranges.</p>
+          <dl class="g-rules">
+            <div><dt>Analogous</dt><dd>0° to 30° apart, close enough to read as one family.</dd></div>
+            <div><dt>Triadic</dt><dd>105° to 135° apart, about a third of the way around the wheel.</dd></div>
+            <div><dt>Complementary</dt><dd>165° to 180° apart, as far as two hues get, so each makes the other stand out.</dd></div>
+            <div><dt>Neutral</dt><dd>Black, white, gray, navy, brown, beige, cream, tan, and khaki match any color.</dd></div>
+          </dl>
+        </div>
+        <svg class="g-wheel" viewBox="0 14 340 294" role="img" aria-labelledby="g-title">
+          <g><path d="M169.4 52A108 108 0 0 1 176.2 52.2L175 74.1A86 86 0 0 0 169.5 74Z" fill="#cc3733"/><path d="M175.1 52.1A108 108 0 0 1 181.9 52.7L179.4 74.5A86 86 0 0 0 174.1 74.1Z" fill="#cc3e33"/><path d="M180.7 52.5A108 108 0 0 1 187.5 53.4L183.9 75.1A86 86 0 0 0 178.5 74.4Z" fill="#cc4633"/><path d="M186.3 53.2A108 108 0 0 1 193 54.5L188.3 76A86 86 0 0 0 183 75Z" fill="#cc4e33"/><path d="M191.9 54.2A108 108 0 0 1 198.5 55.8L192.7 77A86 86 0 0 0 187.4 75.8Z" fill="#cc5533"/><path d="M197.4 55.5A108 108 0 0 1 203.9 57.5L197 78.3A86 86 0 0 0 191.8 76.8Z" fill="#cc5d33"/><path d="M202.8 57.1A108 108 0 0 1 209.2 59.4L201.2 79.9A86 86 0 0 0 196.1 78.1Z" fill="#cc6533"/><path d="M208.2 59A108 108 0 0 1 214.4 61.6L205.4 81.6A86 86 0 0 0 200.4 79.6Z" fill="#cc6c33"/><path d="M213.4 61.1A108 108 0 0 1 219.5 64L209.4 83.6A86 86 0 0 0 204.6 81.3Z" fill="#cc7433"/><path d="M218.5 63.5A108 108 0 0 1 224.5 66.8L213.4 85.7A86 86 0 0 0 208.6 83.2Z" fill="#cc7c33"/><path d="M223.5 66.2A108 108 0 0 1 229.3 69.7L217.2 88.1A86 86 0 0 0 212.6 85.3Z" fill="#cc8333"/><path d="M228.3 69.1A108 108 0 0 1 233.9 73L220.9 90.7A86 86 0 0 0 216.5 87.6Z" fill="#cc8b33"/><path d="M233 72.3A108 108 0 0 1 238.4 76.4L224.5 93.4A86 86 0 0 0 220.2 90.2Z" fill="#cc9333"/><path d="M237.5 75.7A108 108 0 0 1 242.7 80.1L227.9 96.4A86 86 0 0 0 223.8 92.9Z" fill="#cc9a33"/><path d="M241.8 79.4A108 108 0 0 1 246.8 84L231.1 99.5A86 86 0 0 0 227.2 95.8Z" fill="#cca233"/><path d="M246 83.2A108 108 0 0 1 250.6 88.2L234.2 102.8A86 86 0 0 0 230.5 98.9Z" fill="#ccaa33"/><path d="M249.9 87.3A108 108 0 0 1 254.3 92.5L237.1 106.2A86 86 0 0 0 233.6 102.1Z" fill="#ccb133"/><path d="M253.6 91.6A108 108 0 0 1 257.7 97L239.8 109.8A86 86 0 0 0 236.6 105.5Z" fill="#ccb933"/><path d="M257 96.1A108 108 0 0 1 260.9 101.7L242.4 113.5A86 86 0 0 0 239.3 109.1Z" fill="#ccc133"/><path d="M260.3 100.7A108 108 0 0 1 263.8 106.5L244.7 117.4A86 86 0 0 0 241.9 112.8Z" fill="#ccc833"/><path d="M263.2 105.5A108 108 0 0 1 266.5 111.5L246.8 121.4A86 86 0 0 0 244.3 116.6Z" fill="#c8cc33"/><path d="M266 110.5A108 108 0 0 1 268.9 116.6L248.7 125.4A86 86 0 0 0 246.4 120.6Z" fill="#c1cc33"/><path d="M268.4 115.6A108 108 0 0 1 271 121.8L250.4 129.6A86 86 0 0 0 248.4 124.6Z" fill="#b9cc33"/><path d="M270.6 120.8A108 108 0 0 1 272.9 127.2L251.9 133.9A86 86 0 0 0 250.1 128.8Z" fill="#b1cc33"/><path d="M272.5 126.1A108 108 0 0 1 274.5 132.6L253.2 138.2A86 86 0 0 0 251.7 133Z" fill="#aacc33"/><path d="M274.2 131.5A108 108 0 0 1 275.8 138.1L254.2 142.6A86 86 0 0 0 253 137.3Z" fill="#a2cc33"/><path d="M275.5 137A108 108 0 0 1 276.8 143.7L255 147A86 86 0 0 0 254 141.7Z" fill="#9acc33"/><path d="M276.6 142.5A108 108 0 0 1 277.5 149.3L255.6 151.5A86 86 0 0 0 254.9 146.1Z" fill="#93cc33"/><path d="M277.3 148.1A108 108 0 0 1 277.9 154.9L255.9 155.9A86 86 0 0 0 255.5 150.6Z" fill="#8bcc33"/><path d="M277.8 153.8A108 108 0 0 1 278 160.6L256 160.5A86 86 0 0 0 255.9 155Z" fill="#83cc33"/><path d="M278 159.4A108 108 0 0 1 277.8 166.2L255.9 165A86 86 0 0 0 256 159.5Z" fill="#7ccc33"/><path d="M277.9 165.1A108 108 0 0 1 277.3 171.9L255.5 169.4A86 86 0 0 0 255.9 164.1Z" fill="#74cc33"/><path d="M277.5 170.7A108 108 0 0 1 276.6 177.5L254.9 173.9A86 86 0 0 0 255.6 168.5Z" fill="#6ccc33"/><path d="M276.8 176.3A108 108 0 0 1 275.5 183L254 178.3A86 86 0 0 0 255 173Z" fill="#65cc33"/><path d="M275.8 181.9A108 108 0 0 1 274.2 188.5L253 182.7A86 86 0 0 0 254.2 177.4Z" fill="#5dcc33"/><path d="M274.5 187.4A108 108 0 0 1 272.5 193.9L251.7 187A86 86 0 0 0 253.2 181.8Z" fill="#55cc33"/><path d="M272.9 192.8A108 108 0 0 1 270.6 199.2L250.1 191.2A86 86 0 0 0 251.9 186.1Z" fill="#4ecc33"/><path d="M271 198.2A108 108 0 0 1 268.4 204.4L248.4 195.4A86 86 0 0 0 250.4 190.4Z" fill="#46cc33"/><path d="M268.9 203.4A108 108 0 0 1 266 209.5L246.4 199.4A86 86 0 0 0 248.7 194.6Z" fill="#3ecc33"/><path d="M266.5 208.5A108 108 0 0 1 263.2 214.5L244.3 203.4A86 86 0 0 0 246.8 198.6Z" fill="#37cc33"/><path d="M263.8 213.5A108 108 0 0 1 260.3 219.3L241.9 207.2A86 86 0 0 0 244.7 202.6Z" fill="#33cc37"/><path d="M260.9 218.3A108 108 0 0 1 257 223.9L239.3 210.9A86 86 0 0 0 242.4 206.5Z" fill="#33cc3e"/><path d="M257.7 223A108 108 0 0 1 253.6 228.4L236.6 214.5A86 86 0 0 0 239.8 210.2Z" fill="#33cc46"/><path d="M254.3 227.5A108 108 0 0 1 249.9 232.7L233.6 217.9A86 86 0 0 0 237.1 213.8Z" fill="#33cc4e"/><path d="M250.6 231.8A108 108 0 0 1 246 236.8L230.5 221.1A86 86 0 0 0 234.2 217.2Z" fill="#33cc55"/><path d="M246.8 236A108 108 0 0 1 241.8 240.6L227.2 224.2A86 86 0 0 0 231.1 220.5Z" fill="#33cc5d"/><path d="M242.7 239.9A108 108 0 0 1 237.5 244.3L223.8 227.1A86 86 0 0 0 227.9 223.6Z" fill="#33cc65"/><path d="M238.4 243.6A108 108 0 0 1 233 247.7L220.2 229.8A86 86 0 0 0 224.5 226.6Z" fill="#33cc6c"/><path d="M233.9 247A108 108 0 0 1 228.3 250.9L216.5 232.4A86 86 0 0 0 220.9 229.3Z" fill="#33cc74"/><path d="M229.3 250.3A108 108 0 0 1 223.5 253.8L212.6 234.7A86 86 0 0 0 217.2 231.9Z" fill="#33cc7c"/><path d="M224.5 253.2A108 108 0 0 1 218.5 256.5L208.6 236.8A86 86 0 0 0 213.4 234.3Z" fill="#33cc83"/><path d="M219.5 256A108 108 0 0 1 213.4 258.9L204.6 238.7A86 86 0 0 0 209.4 236.4Z" fill="#33cc8b"/><path d="M214.4 258.4A108 108 0 0 1 208.2 261L200.4 240.4A86 86 0 0 0 205.4 238.4Z" fill="#33cc93"/><path d="M209.2 260.6A108 108 0 0 1 202.8 262.9L196.1 241.9A86 86 0 0 0 201.2 240.1Z" fill="#33cc9a"/><path d="M203.9 262.5A108 108 0 0 1 197.4 264.5L191.8 243.2A86 86 0 0 0 197 241.7Z" fill="#33cca2"/><path d="M198.5 264.2A108 108 0 0 1 191.9 265.8L187.4 244.2A86 86 0 0 0 192.7 243Z" fill="#33ccaa"/><path d="M193 265.5A108 108 0 0 1 186.3 266.8L183 245A86 86 0 0 0 188.3 244Z" fill="#33ccb1"/><path d="M187.5 266.6A108 108 0 0 1 180.7 267.5L178.5 245.6A86 86 0 0 0 183.9 244.9Z" fill="#33ccb9"/><path d="M181.9 267.3A108 108 0 0 1 175.1 267.9L174.1 245.9A86 86 0 0 0 179.4 245.5Z" fill="#33ccc1"/><path d="M176.2 267.8A108 108 0 0 1 169.4 268L169.5 246A86 86 0 0 0 175 245.9Z" fill="#33ccc8"/><path d="M170.6 268A108 108 0 0 1 163.8 267.8L165 245.9A86 86 0 0 0 170.5 246Z" fill="#33c8cc"/><path d="M164.9 267.9A108 108 0 0 1 158.1 267.3L160.6 245.5A86 86 0 0 0 165.9 245.9Z" fill="#33c1cc"/><path d="M159.3 267.5A108 108 0 0 1 152.5 266.6L156.1 244.9A86 86 0 0 0 161.5 245.6Z" fill="#33b9cc"/><path d="M153.7 266.8A108 108 0 0 1 147 265.5L151.7 244A86 86 0 0 0 157 245Z" fill="#33b1cc"/><path d="M148.1 265.8A108 108 0 0 1 141.5 264.2L147.3 243A86 86 0 0 0 152.6 244.2Z" fill="#33aacc"/><path d="M142.6 264.5A108 108 0 0 1 136.1 262.5L143 241.7A86 86 0 0 0 148.2 243.2Z" fill="#33a2cc"/><path d="M137.2 262.9A108 108 0 0 1 130.8 260.6L138.8 240.1A86 86 0 0 0 143.9 241.9Z" fill="#339acc"/><path d="M131.8 261A108 108 0 0 1 125.6 258.4L134.6 238.4A86 86 0 0 0 139.6 240.4Z" fill="#3393cc"/><path d="M126.6 258.9A108 108 0 0 1 120.5 256L130.6 236.4A86 86 0 0 0 135.4 238.7Z" fill="#338bcc"/><path d="M121.5 256.5A108 108 0 0 1 115.5 253.2L126.6 234.3A86 86 0 0 0 131.4 236.8Z" fill="#3383cc"/><path d="M116.5 253.8A108 108 0 0 1 110.7 250.3L122.8 231.9A86 86 0 0 0 127.4 234.7Z" fill="#337ccc"/><path d="M111.7 250.9A108 108 0 0 1 106.1 247L119.1 229.3A86 86 0 0 0 123.5 232.4Z" fill="#3374cc"/><path d="M107 247.7A108 108 0 0 1 101.6 243.6L115.5 226.6A86 86 0 0 0 119.8 229.8Z" fill="#336ccc"/><path d="M102.5 244.3A108 108 0 0 1 97.3 239.9L112.1 223.6A86 86 0 0 0 116.2 227.1Z" fill="#3365cc"/><path d="M98.2 240.6A108 108 0 0 1 93.2 236L108.9 220.5A86 86 0 0 0 112.8 224.2Z" fill="#335dcc"/><path d="M94 236.8A108 108 0 0 1 89.4 231.8L105.8 217.2A86 86 0 0 0 109.5 221.1Z" fill="#3355cc"/><path d="M90.1 232.7A108 108 0 0 1 85.7 227.5L102.9 213.8A86 86 0 0 0 106.4 217.9Z" fill="#334ecc"/><path d="M86.4 228.4A108 108 0 0 1 82.3 223L100.2 210.2A86 86 0 0 0 103.4 214.5Z" fill="#3346cc"/><path d="M83 223.9A108 108 0 0 1 79.1 218.3L97.6 206.5A86 86 0 0 0 100.7 210.9Z" fill="#333ecc"/><path d="M79.7 219.3A108 108 0 0 1 76.2 213.5L95.3 202.6A86 86 0 0 0 98.1 207.2Z" fill="#3337cc"/><path d="M76.8 214.5A108 108 0 0 1 73.5 208.5L93.2 198.6A86 86 0 0 0 95.7 203.4Z" fill="#3733cc"/><path d="M74 209.5A108 108 0 0 1 71.1 203.4L91.3 194.6A86 86 0 0 0 93.6 199.4Z" fill="#3e33cc"/><path d="M71.6 204.4A108 108 0 0 1 69 198.2L89.6 190.4A86 86 0 0 0 91.6 195.4Z" fill="#4633cc"/><path d="M69.4 199.2A108 108 0 0 1 67.1 192.8L88.1 186.1A86 86 0 0 0 89.9 191.2Z" fill="#4e33cc"/><path d="M67.5 193.9A108 108 0 0 1 65.5 187.4L86.8 181.8A86 86 0 0 0 88.3 187Z" fill="#5533cc"/><path d="M65.8 188.5A108 108 0 0 1 64.2 181.9L85.8 177.4A86 86 0 0 0 87 182.7Z" fill="#5d33cc"/><path d="M64.5 183A108 108 0 0 1 63.2 176.3L85 173A86 86 0 0 0 86 178.3Z" fill="#6533cc"/><path d="M63.4 177.5A108 108 0 0 1 62.5 170.7L84.4 168.5A86 86 0 0 0 85.1 173.9Z" fill="#6c33cc"/><path d="M62.7 171.9A108 108 0 0 1 62.1 165.1L84.1 164.1A86 86 0 0 0 84.5 169.4Z" fill="#7433cc"/><path d="M62.2 166.2A108 108 0 0 1 62 159.4L84 159.5A86 86 0 0 0 84.1 165Z" fill="#7c33cc"/><path d="M62 160.6A108 108 0 0 1 62.2 153.8L84.1 155A86 86 0 0 0 84 160.5Z" fill="#8333cc"/><path d="M62.1 154.9A108 108 0 0 1 62.7 148.1L84.5 150.6A86 86 0 0 0 84.1 155.9Z" fill="#8b33cc"/><path d="M62.5 149.3A108 108 0 0 1 63.4 142.5L85.1 146.1A86 86 0 0 0 84.4 151.5Z" fill="#9333cc"/><path d="M63.2 143.7A108 108 0 0 1 64.5 137L86 141.7A86 86 0 0 0 85 147Z" fill="#9a33cc"/><path d="M64.2 138.1A108 108 0 0 1 65.8 131.5L87 137.3A86 86 0 0 0 85.8 142.6Z" fill="#a233cc"/><path d="M65.5 132.6A108 108 0 0 1 67.5 126.1L88.3 133A86 86 0 0 0 86.8 138.2Z" fill="#aa33cc"/><path d="M67.1 127.2A108 108 0 0 1 69.4 120.8L89.9 128.8A86 86 0 0 0 88.1 133.9Z" fill="#b133cc"/><path d="M69 121.8A108 108 0 0 1 71.6 115.6L91.6 124.6A86 86 0 0 0 89.6 129.6Z" fill="#b933cc"/><path d="M71.1 116.6A108 108 0 0 1 74 110.5L93.6 120.6A86 86 0 0 0 91.3 125.4Z" fill="#c133cc"/><path d="M73.5 111.5A108 108 0 0 1 76.8 105.5L95.7 116.6A86 86 0 0 0 93.2 121.4Z" fill="#c833cc"/><path d="M76.2 106.5A108 108 0 0 1 79.7 100.7L98.1 112.8A86 86 0 0 0 95.3 117.4Z" fill="#cc33c8"/><path d="M79.1 101.7A108 108 0 0 1 83 96.1L100.7 109.1A86 86 0 0 0 97.6 113.5Z" fill="#cc33c1"/><path d="M82.3 97A108 108 0 0 1 86.4 91.6L103.4 105.5A86 86 0 0 0 100.2 109.8Z" fill="#cc33b9"/><path d="M85.7 92.5A108 108 0 0 1 90.1 87.3L106.4 102.1A86 86 0 0 0 102.9 106.2Z" fill="#cc33b1"/><path d="M89.4 88.2A108 108 0 0 1 94 83.2L109.5 98.9A86 86 0 0 0 105.8 102.8Z" fill="#cc33aa"/><path d="M93.2 84A108 108 0 0 1 98.2 79.4L112.8 95.8A86 86 0 0 0 108.9 99.5Z" fill="#cc33a2"/><path d="M97.3 80.1A108 108 0 0 1 102.5 75.7L116.2 92.9A86 86 0 0 0 112.1 96.4Z" fill="#cc339a"/><path d="M101.6 76.4A108 108 0 0 1 107 72.3L119.8 90.2A86 86 0 0 0 115.5 93.4Z" fill="#cc3393"/><path d="M106.1 73A108 108 0 0 1 111.7 69.1L123.5 87.6A86 86 0 0 0 119.1 90.7Z" fill="#cc338b"/><path d="M110.7 69.7A108 108 0 0 1 116.5 66.2L127.4 85.3A86 86 0 0 0 122.8 88.1Z" fill="#cc3383"/><path d="M115.5 66.8A108 108 0 0 1 121.5 63.5L131.4 83.2A86 86 0 0 0 126.6 85.7Z" fill="#cc337c"/><path d="M120.5 64A108 108 0 0 1 126.6 61.1L135.4 81.3A86 86 0 0 0 130.6 83.6Z" fill="#cc3374"/><path d="M125.6 61.6A108 108 0 0 1 131.8 59L139.6 79.6A86 86 0 0 0 134.6 81.6Z" fill="#cc336c"/><path d="M130.8 59.4A108 108 0 0 1 137.2 57.1L143.9 78.1A86 86 0 0 0 138.8 79.9Z" fill="#cc3365"/><path d="M136.1 57.5A108 108 0 0 1 142.6 55.5L148.2 76.8A86 86 0 0 0 143 78.3Z" fill="#cc335d"/><path d="M141.5 55.8A108 108 0 0 1 148.1 54.2L152.6 75.8A86 86 0 0 0 147.3 77Z" fill="#cc3355"/><path d="M147 54.5A108 108 0 0 1 153.7 53.2L157 75A86 86 0 0 0 151.7 76Z" fill="#cc334e"/><path d="M152.5 53.4A108 108 0 0 1 159.3 52.5L161.5 74.4A86 86 0 0 0 156.1 75.1Z" fill="#cc3346"/><path d="M158.1 52.7A108 108 0 0 1 164.9 52.1L165.9 74.1A86 86 0 0 0 160.6 74.5Z" fill="#cc333e"/><path d="M163.8 52.2A108 108 0 0 1 170.6 52L170.5 74A86 86 0 0 0 165 74.1Z" fill="#cc3337"/></g>
+          <g><path class="g-br" d="M102.9 64.2A117 117 0 0 1 219.4 54"/><line class="g-br" x1="105.2" y1="67.4" x2="100.6" y2="60.9"/><line class="g-br" x1="217.8" y1="57.6" x2="221.1" y2="50.3"/><text x="158.6" y="29.5" text-anchor="middle">ANALOGOUS</text><path class="g-br" d="M285.2 180.3A117 117 0 0 1 259.6 235.2"/><line class="g-br" x1="281.3" y1="179.6" x2="289.2" y2="181"/><line class="g-br" x1="256.6" y1="232.6" x2="262.7" y2="237.8"/><text x="288.7" y="218.9" text-anchor="start">TRIADIC</text><path class="g-br" d="M210 269.9A117 117 0 0 1 149.7 275.2"/><line class="g-br" x1="208.6" y1="266.2" x2="211.4" y2="273.7"/><line class="g-br" x1="150.4" y1="271.3" x2="149" y2="279.2"/><text x="181.4" y="299.5" text-anchor="middle">COMPLEMENTARY</text><path class="g-br" d="M94.8 249.6A117 117 0 0 1 60.1 200"/><line class="g-br" x1="97.4" y1="246.6" x2="92.2" y2="252.7"/><line class="g-br" x1="63.8" y1="198.6" x2="56.3" y2="201.4"/><text x="62.7" y="238.6" text-anchor="end">TRIADIC</text></g>
+          <g><line class="g-spoke" x1="170" y1="160" x2="206.3" y2="82.1"/><line class="g-spoke" x1="170" y1="160" x2="120.7" y2="89.6"/><line class="g-spoke" x1="170" y1="160" x2="177.5" y2="245.7"/><line class="g-spoke" x1="170" y1="160" x2="247.9" y2="196.3"/><line class="g-spoke" x1="170" y1="160" x2="99.6" y2="209.3"/><line class="g-spoke g-base" x1="170" y1="160" x2="162.5" y2="74.3"/></g>
+          <circle cx="170" cy="160" r="2.5" fill="currentColor"/>
+          <text class="g-lbl" x="164.9" y="102.2" text-anchor="middle">SWEATER</text>
+          <g><circle class="g-dot" cx="211" cy="72.1" r="8" fill="#B7672D"><title>Orange, analogous, hue 25 degrees</title></circle><circle class="g-dot" cx="114.4" cy="80.5" r="8" fill="#B72D7E"><title>Magenta, analogous, hue 325 degrees</title></circle><circle class="g-dot" cx="178.5" cy="256.6" r="8" fill="#2DB7AC"><title>Teal, complementary, hue 175 degrees</title></circle><circle class="g-dot" cx="257.9" cy="201" r="8" fill="#39B72D"><title>Green, triadic, hue 115 degrees</title></circle><circle class="g-dot" cx="90.5" cy="215.6" r="8" fill="#2D39B7"><title>Violet, triadic, hue 235 degrees</title></circle><circle class="g-dot g-basedot" cx="161.5" cy="63.4" r="10.5" fill="#B72D39"><title>The sweater, red, hue 355 degrees</title></circle></g>
+        </svg>
+        <div class="g-c">
+          <p class="g-sub">For a red sweater, SIY suggests five colors</p>
+          <ul class="g-swatches">
+          <li><i style="background:#B72D39"></i><b>Red</b><span>The sweater</span></li>
+          <li><i style="background:#B7672D"></i><b>Orange</b><span>Analogous</span></li>
+          <li><i style="background:#B72D7E"></i><b>Magenta</b><span>Analogous</span></li>
+          <li><i style="background:#2DB7AC"></i><b>Teal</b><span>Complementary</span></li>
+          <li><i style="background:#39B72D"></i><b>Green</b><span>Triadic</span></li>
+          <li><i style="background:#2D39B7"></i><b>Violet</b><span>Triadic</span></li>
+        </ul>
+          <figcaption class="g-cap">Note: Suggestions keep the sweater's saturation and lightness and change only the hue. The triadic and complementary ranges allow 15° of slack because people see nearby hues as one color. Source: <a href="https://github.com/Paullitsc/Style-It-Yourself/blob/main/backend/app/services/color_harmony.py">SIY's color harmony engine</a></figcaption>
+        </div>
+      </figure>
       </div>
     </article>
   </div>
@@ -281,11 +380,22 @@
   <div class="rule-thin"></div>
 
   <div class="below">
-    <article class="col story-full">
+    <article class="col story-half">
+      <p class="kicker">The Internship</p>
+      <h3>When Your User Is an Agent</h3>
+      <p class="deck">An AI builder internship at Planned taught me to design for a user that only reads the schema.</p>
+      <div class="text cols2">
+        <p>I spent the summer building internal tooling whose primary user was an AI agent rather than a person. That shift raises the bar on what counts as a good interface.</p>
+        <p>An agent arrives cold. There's no product tour, no colleague to ask, and no intuition about what I meant by a field name. Everything has to be legible from the schema alone, which turns out to be a demanding standard.</p>
+        <p>Working out that difference was the most useful thing I learned all year. The specifics stay inside the company.</p>
+      </div>
+    </article>
+
+    <article class="col story-half">
       <p class="kicker">Community</p>
       <h3>Claude Builder Club McGill</h3>
-      <p class="deck">Anthropic's inaugural campus chapter, started from nothing and grown to 300+ members in three months.</p>
-      <div class="text cols3">
+      <p class="deck">Anthropic's first campus chapter grew from nothing to 300+ members in three months.</p>
+      <div class="text cols2">
         <p>Anthropic made me their inaugural Campus Ambassador, and I started the club from nothing: exec team, event operations, sponsor pipeline. It reached 300+ members across every faculty at McGill within three months.</p>
         <p>I ran six technical workshops on AI fluency, Claude Code, and developer tooling. Nineteen or more members have since landed internships at large technology companies, venture funds, startups, and AI research labs.</p>
         <p>We also ran Montreal's first Claude AI hackathon: 280+ applications, 150+ builders in the room, sponsored by Anthropic, Brim Financial, Rootly AI, and PCare+.</p>
@@ -299,19 +409,22 @@
     <p class="ad-label">Advertisement</p>
     <p class="ad-hed">Do you own a closet full of clothes<br>and wear the same five things?</p>
     <p class="ad-name">SIY</p>
-    <p class="ad-copy">An agent that knows what is already in your wardrobe, what actually goes together, and what you do not need to buy again.</p>
-    <p class="ad-foot">Now in development. Inquire within.</p>
+    <p class="ad-copy">An agent that knows what's already in your wardrobe, what actually goes together, and what you don't need to buy again.</p>
+    <p class="ad-foot">Free at <a href="https://styleityourself.ca">styleityourself.ca</a>. Inquire within.</p>
   </aside>
 
   <div class="colophon">
     <p>Say hi &rarr; <a href="mailto:minh.thai.tran@mail.mcgill.ca">minh.thai.tran@mail.mcgill.ca</a></p>
+    <p>&copy; <span id="year">2026</span> Thai Tran</p>
   </div>
 
 </div>
 
 <script>
+  const now = new Date();
   document.getElementById('today').textContent =
-    new Date().toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+    now.toLocaleDateString('en-US',{weekday:'long',month:'long',day:'numeric',year:'numeric'});
+  document.getElementById('year').textContent = now.getFullYear();
 </script>
 </body>
 </html>
