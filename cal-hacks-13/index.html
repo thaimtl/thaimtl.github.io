@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Silent Voice at Cal Hacks</title>
+<meta name="description" content="How four McGill students built a way to talk without making a sound, and placed 2nd overall at Cal Hacks 13.0.">
+<meta property="og:title" content="We placed 2nd at Cal Hacks 13.0">
+<meta property="og:description" content="How four McGill students built a way to talk without making a sound, in 36 hours.">
+<meta property="og:type" content="article">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=Source+Serif+4:opsz,wght@8..60,400..700&family=Libre+Franklin:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ffffff;
+    --ink:#161616;
+    --mute:#5f5f5f;
+    --hair:#e3e3e3;
+    --ph:#f3f3f3;
+    --serif:'Source Serif 4',Georgia,'Times New Roman',serif;
+    --sans:'Libre Franklin','Helvetica Neue',Arial,sans-serif;
+    --name:'UnifrakturMaguntia','Old English Text MT',serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){--bg:#121212;--ink:#ececec;--mute:#a3a3a3;--hair:#2c2c2c;--ph:#1c1c1c}
+  }
+  :root[data-theme="dark"]{--bg:#121212;--ink:#ececec;--mute:#a3a3a3;--hair:#2c2c2c;--ph:#1c1c1c}
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{background:var(--bg);color:var(--ink);font-family:var(--serif);font-size:19px;line-height:1.65}
+  a{color:inherit;text-decoration-thickness:1px;text-underline-offset:3px}
+  a:hover{text-decoration-thickness:2px}
+
+  .top{max-width:720px;margin:0 auto;padding:22px 16px;display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--hair)}
+  .top .home{font-family:var(--name);font-size:30px;line-height:1;text-decoration:none}
+  .top nav{font-family:var(--sans);font-size:14px;display:flex;gap:18px}
+  .top nav a{text-decoration:none;color:var(--mute)}
+  .top nav a:hover{color:var(--ink)}
+
+  article{max-width:720px;margin:0 auto;padding:48px 16px 64px}
+  h1{font-size:clamp(34px,6vw,46px);line-height:1.12;letter-spacing:-.02em;font-weight:700;text-wrap:balance}
+  .dek{font-size:21px;line-height:1.45;color:var(--mute);margin-top:14px;text-wrap:balance}
+  .meta{font-family:var(--sans);font-size:14px;color:var(--mute);margin-top:22px;padding-bottom:28px;border-bottom:1px solid var(--hair)}
+
+  h2{font-size:29px;line-height:1.2;letter-spacing:-.012em;font-weight:700;margin:56px 0 14px}
+  h3{font-size:22px;line-height:1.3;font-weight:700;margin:36px 0 10px}
+  p{margin:0 0 20px}
+  article>p:first-of-type{margin-top:32px}
+  ul{margin:0 0 20px 1.2em}
+  li{margin-bottom:10px}
+  li::marker{color:var(--mute)}
+  strong{font-weight:700}
+
+  figure{margin:32px 0}
+  figure img{display:block;width:100%;height:auto;border-radius:6px}
+  figure.narrow img{max-width:420px;margin:0 auto}
+  figcaption{font-family:var(--sans);font-size:14px;line-height:1.5;color:var(--mute);text-align:center;margin-top:10px}
+  .ph{display:flex;align-items:center;justify-content:center;aspect-ratio:16/9;background:var(--ph);border:1.5px dashed var(--hair);border-radius:6px;font-family:var(--sans);font-size:15px;color:var(--mute);text-align:center;padding:16px}
+  .ph.tall{aspect-ratio:4/5;max-width:420px;margin:0 auto}
+
+  .links{font-family:var(--sans);font-size:16px;border-top:1px solid var(--hair);margin-top:48px;padding-top:24px}
+  .links p{margin-bottom:8px}
+
+  @media (max-width:560px){
+    body{font-size:18px}
+    .dek{font-size:19px}
+    h2{font-size:25px}
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="home" href="/">Thai Tran</a>
+  <nav>
+    <a href="https://github.com/thaimtl">GitHub</a>
+    <a href="https://www.linkedin.com/in/thai-tran-minh">LinkedIn</a>
+  </nav>
+</header>
+
+<article>
+  <h1>We placed 2nd at Cal Hacks 13.0</h1>
+  <p class="dek">How four McGill students built a way to talk without making a sound, in 36 hours.</p>
+  <p class="meta">Thai Tran · October 27, 2026 · 9 min read</p>
+
+  <p>Cal Hacks 13.0 had 1,917 hackers and 652 projects, and our team of four McGillians walked out with 2nd overall and 1st in Cartesia's voice AI challenge.</p>
+  <p>I came to San Francisco to have fun with Frank, so the winning part still feels like a bonus.</p>
+  <p>This is the long version, what we built, how it works, what broke, and what I'd do again.</p>
+
+  <figure>
+    <div class="ph">Photo: the four of us on stage with the award</div>
+    <figcaption>Frank, Austin, Evan, and me at closing ceremony.</figcaption>
+  </figure>
+
+  <h2>Silent Voice</h2>
+  <p>Silent Voice lets you mouth words without making a sound and be heard in your own voice, even on a phone call.</p>
+  <p>We built it for people who lost their voice box to a laryngectomy, usually after throat cancer.
+  They keep their lips, tongue, and jaw, so the words are all still there and only the sound is gone.
+  Most of them talk through an electrolarynx, a buzzer held against the neck that sounds robotic and ties up a hand, and we thought they deserved a voice that sounds like them.</p>
+  <p>Our demo was a real phone call.
+  Austin, our demo speaker, called a judge standing right in front of our table, the judge talked normally, and Austin only mouthed his side.
+  The judge heard him on the phone, in his own cloned voice, while his lips were still moving.</p>
+
+  <figure>
+    <div class="ph">Screenshot or short clip: the dashboard during a live call, words going from grey to black</div>
+    <figcaption>The dashboard judges watched during the call.</figcaption>
+  </figure>
+
+  <h2>How it works</h2>
+  <p>No single sensor reads silent speech well enough on its own, so we used three readers that each see something the others can't.</p>
+  <ul>
+    <li><strong>A camera reads the lips.</strong> It does most of the work, but a lot of sounds look identical on the lips, like "bat", "mat", and "pat", and the tongue is invisible to it.</li>
+    <li><strong>Four pairs of pads read the face muscles.</strong> The pad under the chin picks up the muscles that move the tongue, which is exactly what the camera can't see.</li>
+    <li><strong>Claude reads the conversation.</strong> If the judge just asked about medicine, "pills" beats "bills" even though they look the same on the lips.</li>
+  </ul>
+
+  <figure>
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="img/overview-dark.png">
+      <img src="img/overview-light.png" width="3200" height="1500" alt="The webcam and the EMG pads feed two readers. A joint search with Claude locks each word, which goes to live captions and to Cartesia in Austin's cloned voice, into the phone call. Cartesia Ink turns the judge's speech into text for Claude.">
+    </picture>
+    <figcaption>The whole system, on one laptop.</figcaption>
+  </figure>
+
+  <p>Every 100 ms, one joint search combines all three readers and locks a word in once they're confident enough together.
+  A locked word turns from grey to black on screen and goes straight to the voice.
+  Claude can never lock a word by itself, and when nobody's sure, the screen says "Please repeat" instead of guessing.</p>
+
+  <h3>Making a lip reader live</h3>
+  <p>The lip reader we built on, Auto-AVSR, was made to read finished clips, which is why lip-reading apps make you finish your sentence and then wait.
+  We kept the model and changed how we use it, so every 100 ms we hand it everything since Austin started the sentence and let it read the whole thing again.
+  Each pass sees a bit more and earlier guesses get firmer, and on a laptop GPU a re-read only costs tens of milliseconds.</p>
+
+  <h3>The voice</h3>
+  <p>Cartesia speaks each word as soon as it locks, so Austin is heard while he's still mouthing.
+  The words go out as natural phrases, at his pauses or every four words or so, because a word sent alone gets read like its own tiny sentence.
+  His face sets the emotion, and how fast and how hard he mouths sets the speed and the volume.</p>
+
+  <h2>What I worked on</h2>
+  <p>I'm the only computer engineering major on the team, so I took the hardware and the Claude side, and I played PM for everything else, from shaping the vision to designing the dashboard in Figma and getting the pitch right.</p>
+
+  <h3>The rig</h3>
+  <p>The rig is four amplifier boards on a breadboard, feeding an Arduino Uno that reads each channel 1,000 times a second and sends the raw numbers to the laptop over USB.
+  Claude laid out the breadboard with me, wrote the firmware and the serial reader, and helped me pick pad sites from Berkeley's 2020 silent speech paper, so our signals would look like the data we pre-train on.</p>
+
+  <figure>
+    <img src="img/wiring.png" width="2400" height="1440" alt="Breadboard wiring for the Arduino Uno and the four BioAmp boards, each taking power from the breadboard and sending its output to its own analog pin" loading="lazy">
+    <figcaption>The breadboard layout Claude and I worked out.</figcaption>
+  </figure>
+
+  <p>We started with six channels and cut to four.
+  There wasn't room for clean contact on Austin's face and hair behind his ears kept loosening the reference pads, and a noisy channel hurts the model more than a missing one.</p>
+
+  <figure class="narrow">
+    <img src="img/austin-front.jpg" width="900" height="1200" alt="Austin from the front with pad pairs on the right cheek below the mouth, the left cheek above the mouth, the left chin corner, and under the chin" loading="lazy">
+    <figcaption>Austin wearing all four channels.</figcaption>
+  </figure>
+
+  <p>One rule had no exception.
+  The pads connect Austin's face to the laptop through the Uno, and we didn't have a USB isolator, so the laptop stayed off its charger whenever the pads were on his skin.</p>
+
+  <h3>Claude</h3>
+  <p>Claude predicts what Austin will say before he mouths it, starting while the judge is still talking, and fixes look-alike words in the captions afterwards.
+  It only ever picks between words the camera and the pads already proposed, so it can't put ideas in Austin's mouth.</p>
+
+  <h3>The harness</h3>
+  <p>I'm a Claude Builder Campus Ambassador, and this was the weekend all my Claude Code setup paid off.
+  Every decision we made went into one CLAUDE.md file, so no agent wasted an hour re-arguing them.
+  Main was locked so every change had to be a PR, and every PR went through a review loop I set up that pushed back every single time.
+  It caught 2 to 3 severe issues each round, and we fixed them just in time.</p>
+  <p>Claude wrote most of the code, but I knew how every piece worked and why it was there, which freed me up for what I actually love, building and shaping the product.</p>
+
+  <figure>
+    <div class="ph">Screenshot: the review loop pushing back on one of our PRs</div>
+    <figcaption>The review loop, doing its job.</figcaption>
+  </figure>
+
+  <h2>What broke</h2>
+  <p><strong>The voice was too slow at first.</strong>
+  With Cartesia's default buffer, 14 of 15 words waited for the sentence to end, and the judge sat through 4.9 s of nothing.
+  Sending phrases with no buffer fixed it, and now the first sound lands 0.6 s after Austin starts and he's done 1.0 s after he stops.</p>
+  <p><strong>Our first model choice was too slow too.</strong>
+  We started on Claude Opus, which took 5.7 to 6.9 s a call, and that kills a phone conversation.
+  We timed every option on live calls and moved predictions to Haiku with thinking off, at about 2 to 3 s, and kept Opus for the caption fixes, since those never touch the voice.</p>
+  <p><strong>The expo floor was loud.</strong>
+  Cartesia Ink is great at hearing everyone, which is a problem when everyone is the crowd behind the judge.
+  On test calls the judge came in at -20 to -12 dBFS and the crowd at -60 to -40, so we gate the call audio around the caller's own level.</p>
+  <p><strong>The venue hummed.</strong>
+  The room's wiring puts a 60 Hz hum on everything, so we filter it out live, one sample at a time.
+  Training runs the exact same filter, so the model never sees cleaner data than it gets on stage.</p>
+
+  <h2>Fun times</h2>
+  <p>I met Frank at Toronto Tech Week through Project Atlas a few months ago.
+  We stayed in the same room, bonded fast, and now we treat each other like brothers, so when he asked me to join his team, I had to.</p>
+  <p>It was my first time in San Francisco and my first hackathon outside Montreal.
+  We rode Lime scooters everywhere, slept way less than we should have, and won on top of it, so core memory unlocked.</p>
+
+  <figure>
+    <div class="ph">Photo: Frank and me on Lime scooters in SF</div>
+    <figcaption>Our main mode of transport.</figcaption>
+  </figure>
+
+  <p>There were so many Canadian hackers there too.
+  I know exceptional people in Montreal who didn't get into Cal Hacks and would've built something crazier than us, so keep an eye on Montreal.</p>
+
+  <h2>What I'd do again</h2>
+  <p><strong>Pick a problem people feel.</strong>
+  Nobody needs a chart to understand what losing your voice means, and the judges got it in one sentence.</p>
+  <p><strong>Demo something that sounds impossible.</strong>
+  A real phone call where the speaker never makes a sound beats any slide we could have made.</p>
+  <p><strong>Set up your harness before you land.</strong>
+  Our 36 hours went to building, not to re-explaining the plan to agents every morning.</p>
+
+  <h2>What's next</h2>
+  <p>So many judges told us to turn this into a startup.
+  After the hackathon we linked up with our friend Aditya from Graypass (YC W26) to figure out how to give a voice back to more people who need it.
+  Austin is healthy, so the next step is putting Silent Voice in front of people who've actually lost theirs.</p>
+  <p>Huge thanks to the Cal Hacks team for putting it all together, the lineup was stacked and the judges and mentors were super supportive.</p>
+
+  <div class="links">
+    <p>Code: <a href="https://github.com/thaimtl/Reclaim">github.com/thaimtl/Reclaim</a></p>
+    <p>Devpost: <a href="https://devpost.com/software/silent-voice-s1f74p">devpost.com/software/silent-voice-s1f74p</a></p>
+  </div>
+</article>
+
+</body>
+</html>
