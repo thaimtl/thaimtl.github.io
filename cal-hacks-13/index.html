@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
 <title>Silent Voice at Cal Hacks</title>
 <meta name="description" content="How four McGill students built a way to talk without making a sound, and placed 2nd overall at Cal Hacks 13.0.">
 <meta property="og:title" content="We placed 2nd at Cal Hacks 13.0">
@@ -22,10 +23,6 @@
     --sans:'Libre Franklin','Helvetica Neue',Arial,sans-serif;
     --name:'UnifrakturMaguntia','Old English Text MT',serif;
   }
-  @media (prefers-color-scheme:dark){
-    :root:not([data-theme="light"]){--bg:#121212;--ink:#ececec;--mute:#a3a3a3;--hair:#2c2c2c;--ph:#1c1c1c}
-  }
-  :root[data-theme="dark"]{--bg:#121212;--ink:#ececec;--mute:#a3a3a3;--hair:#2c2c2c;--ph:#1c1c1c}
 
   *{box-sizing:border-box;margin:0;padding:0}
   html{-webkit-text-size-adjust:100%}
@@ -118,7 +115,6 @@
 
   <figure>
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="img/overview-dark.png">
       <img src="img/overview-light.png" width="3200" height="1500" alt="The webcam and the EMG pads feed two readers. A joint search with Claude locks each word, which goes to live captions and to Cartesia in Austin's cloned voice, into the phone call. Cartesia Ink turns the judge's speech into text for Claude.">
     </picture>
     <figcaption>The whole system, on one laptop.</figcaption>
