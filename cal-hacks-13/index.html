@@ -53,12 +53,43 @@
   figure{margin:32px 0}
   figure img{display:block;width:100%;height:auto;border-radius:6px}
   figure.narrow img{max-width:420px;margin:0 auto}
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .pair img{aspect-ratio:3/4;object-fit:cover}
+  @media (max-width:560px){.pair{grid-template-columns:1fr}}
   figcaption{font-family:var(--sans);font-size:14px;line-height:1.5;color:var(--mute);text-align:center;margin-top:10px}
   .ph{display:flex;align-items:center;justify-content:center;aspect-ratio:16/9;background:var(--ph);border:1.5px dashed var(--hair);border-radius:6px;font-family:var(--sans);font-size:15px;color:var(--mute);text-align:center;padding:16px}
   .ph.tall{aspect-ratio:4/5;max-width:420px;margin:0 auto}
 
   .links{font-family:var(--sans);font-size:16px;border-top:1px solid var(--hair);margin-top:48px;padding-top:24px}
   .links p{margin-bottom:8px}
+
+  html{scroll-behavior:smooth}
+  @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+  [id]{scroll-margin-top:24px}
+
+  .zoomable{display:block;cursor:zoom-in}
+  .parts{font-family:var(--sans);font-size:15px;display:flex;flex-wrap:wrap;justify-content:center;gap:6px 22px;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);padding:12px 0;margin:-12px 0 32px}
+  .parts a{color:var(--mute);text-decoration:none}
+  .parts a:hover{color:var(--ink);text-decoration:underline}
+
+  dialog.zoom{border:0;padding:0;margin:0;width:100vw;height:100vh;max-width:none;max-height:none;background:var(--bg);overflow:auto;cursor:zoom-out}
+  dialog.zoom[open]{display:grid;place-items:safe center}
+  dialog.zoom::backdrop{background:var(--bg)}
+  dialog.zoom img{display:block;max-width:none;height:auto;width:min(max(96vw,1100px),calc((100vh - 48px) * var(--r,2)));padding:24px 0}
+  dialog.zoom button{position:fixed;top:12px;right:16px;font-family:var(--sans);font-size:14px;color:var(--ink);background:var(--bg);border:1px solid var(--hair);border-radius:6px;padding:6px 12px;cursor:pointer}
+
+  .toc{font-family:var(--sans);font-size:14px;line-height:1.4;margin-top:24px;border-bottom:1px solid var(--hair)}
+  .toc summary{cursor:pointer;color:var(--mute);padding-bottom:12px}
+  .toc ol{list-style:none;margin:0 0 16px}
+  .toc li{margin:0}
+  .toc a{display:block;padding:5px 0 5px 12px;border-left:2px solid var(--hair);color:var(--mute);text-decoration:none}
+  .toc a.sub{padding-left:24px;font-size:13px}
+  .toc a:hover{color:var(--ink)}
+  .toc a.on{color:var(--ink);border-left-color:var(--ink)}
+  @media (min-width:1200px){
+    .toc{position:fixed;top:110px;left:max(24px,calc(50% - 360px - 260px));width:220px;max-height:calc(100vh - 140px);overflow:auto;margin:0;border:0}
+    .toc summary{display:none}
+  }
 
   @media (max-width:560px){
     body{font-size:18px}
@@ -80,18 +111,32 @@
 <article>
   <h1>We placed 2nd at Cal Hacks 13.0</h1>
   <p class="dek">How four McGill students built a way to talk without making a sound, in 36 hours.</p>
-  <p class="meta">Thai Tran · October 27, 2026 · 9 min read</p>
-
-  <p>Cal Hacks 13.0 had 1,917 hackers and 652 projects, and our team of four McGillians walked out with 2nd overall and 1st in Cartesia's voice AI challenge.</p>
-  <p>I came to San Francisco to have fun with Frank, so the winning part still feels like a bonus.</p>
-  <p>This is the long version, what we built, how it works, what broke, and what I'd do again.</p>
+  <p class="meta">Thai Tran · October 27, 2026 · 10 min read</p>
+  <details class="toc" id="toc"><summary>Contents</summary><ol></ol></details>
 
   <figure>
-    <div class="ph">Photo: the four of us on stage with the award</div>
-    <figcaption>Frank, Austin, Evan, and me at closing ceremony.</figcaption>
+    <img src="img/venue.jpg" width="1600" height="1200" alt="The Cal Hacks 13.0 hacking floor, a huge hangar with a glass roof and hundreds of hackers at long tables">
+    <figcaption>The hacking floor, where we spent most of the weekend.</figcaption>
   </figure>
 
-  <h2>Silent Voice</h2>
+  <p>It all started with the acceptance emails.
+  I got into Cal Hacks first, and Evan and Austin got in too, but I didn't know either of them yet.</p>
+  <p>Then Frank got in and asked me to join his team.
+  I was already halfway into forming a team with two friends of mine from McGill, but I'm way closer with Frank and we just vibe so well, so I told them I had to go with him (don't worry, we're still on good terms).</p>
+  <p>Frank and I only met a few months ago at Toronto Tech Week through Project Atlas, and since then we've hung out in Toronto, then New York, and now San Francisco, so we basically completed a streak :D</p>
+  <p>Fast forward 36 hours, and out of 1,917 hackers and 652 projects, the four of us walked out with 2nd overall and 1st in Cartesia's voice AI challenge.</p>
+  <p>Funny thing is I only came to San Francisco to have fun with Frank, so the winning part still feels like a bonus ngl.
+  At closing ceremony the rest of the team was losing it, and I was lowkey so unfazed lol.</p>
+  <p>The organizers were super supportive the whole weekend, and the mentors and judges were great too.
+  They got so excited about our project and gave us a bunch of good feedback, and some of them even told us we should take this further as a startup and that they know VCs who could help.</p>
+  <p>Anyway, this is the long version, what we built, how it works, what broke, and what I'd do again.</p>
+
+  <figure>
+    <img src="img/cartesia-win.jpg" width="1600" height="1200" alt="The Silent Voice team holding their Meta Ray-Ban boxes on stage with two people from Cartesia, after winning Cartesia's voice AI challenge" loading="lazy">
+    <figcaption>Winning Cartesia's voice AI challenge.</figcaption>
+  </figure>
+
+  <h2 id="silent-voice">Silent Voice</h2>
   <p>Silent Voice lets you mouth words without making a sound and be heard in your own voice, even on a phone call.</p>
   <p>We built it for people who lost their voice box to a laryngectomy, usually after throat cancer.
   They keep their lips, tongue, and jaw, so the words are all still there and only the sound is gone.
@@ -100,12 +145,12 @@
   Austin, our demo speaker, called a judge standing right in front of our table, the judge talked normally, and Austin only mouthed his side.
   The judge heard him on the phone, in his own cloned voice, while his lips were still moving.</p>
 
-  <figure>
-    <div class="ph">Screenshot or short clip: the dashboard during a live call, words going from grey to black</div>
-    <figcaption>The dashboard judges watched during the call.</figcaption>
+  <figure class="narrow">
+    <img src="img/rig-at-table.jpg" width="900" height="1200" alt="Austin wearing the EMG pads at our table, wires running down to the breadboard and Arduino Uno, while a teammate points at the laptop" loading="lazy">
+    <figcaption>Austin with the pads on, mid test run at our table.</figcaption>
   </figure>
 
-  <h2>How it works</h2>
+  <h2 id="how-it-works">How it works</h2>
   <p>No single sensor reads silent speech well enough on its own, so we used three readers that each see something the others can't.</p>
   <ul>
     <li><strong>A camera reads the lips.</strong> It does most of the work, but a lot of sounds look identical on the lips, like "bat", "mat", and "pat", and the tongue is invisible to it.</li>
@@ -114,105 +159,162 @@
   </ul>
 
   <figure>
-    <picture>
+    <a class="zoomable" href="img/overview-light.png">
       <img src="img/overview-light.png" width="3200" height="1500" alt="The webcam and the EMG pads feed two readers. A joint search with Claude locks each word, which goes to live captions and to Cartesia in Austin's cloned voice, into the phone call. Cartesia Ink turns the judge's speech into text for Claude.">
-    </picture>
-    <figcaption>The whole system, on one laptop.</figcaption>
+    </a>
+    <figcaption>The whole system, on one laptop. Click to expand.</figcaption>
   </figure>
+  <nav class="parts" aria-label="Parts of the system">
+    <a href="#lip-reader">Auto-AVSR</a>
+    <a href="#rig">EMG pads</a>
+    <a href="#svr-1">SVR-1</a>
+    <a href="#joint-search">Joint search</a>
+    <a href="#claude">Claude</a>
+    <a href="#voice">Cartesia Sonic</a>
+    <a href="#judge-audio">Cartesia Ink</a>
+  </nav>
 
-  <p>Every 100 ms, one joint search combines all three readers and locks a word in once they're confident enough together.
+  <p id="joint-search">Every 100 ms, one <strong>joint search</strong> combines all three readers and locks a word in once they're confident enough together.
   A locked word turns from grey to black on screen and goes straight to the voice.
   Claude can never lock a word by itself, and when nobody's sure, the screen says "Please repeat" instead of guessing.</p>
 
-  <h3>Making a lip reader live</h3>
-  <p>The lip reader we built on, Auto-AVSR, was made to read finished clips, which is why lip-reading apps make you finish your sentence and then wait.
-  We kept the model and changed how we use it, so every 100 ms we hand it everything since Austin started the sentence and let it read the whole thing again.
+  <figure>
+    <a class="zoomable" href="img/dashboard-reading.png"><img src="img/dashboard-reading.png" width="1920" height="1080" alt="The Silent Voice dashboard mid call. The judge asks what you would order at a coffee shop. Austin's words read I'd love a in black and coffee in grey, with bars showing how much the lips, muscles, and Claude each back coffee against the lock threshold. On the right, the four pads on his face and the words already heard on the call." loading="lazy"></a>
+    <figcaption>The dashboard on our scripted test call. "I'd love a" is locked and already on the call, and "coffee" is still grey until it crosses the lock line. Click to expand.</figcaption>
+  </figure>
+
+  <h3 id="lip-reader">Making a lip reader live</h3>
+  <p>This part is Evan's.
+  The lip reader he built on, <strong>Auto-AVSR</strong>, was made to read finished clips, which is why lip-reading apps make you finish your sentence and then wait.
+  Evan kept the model and changed how we use it, so every 100 ms it gets everything since Austin started the sentence and reads the whole thing again.
   Each pass sees a bit more and earlier guesses get firmer, and on a laptop GPU a re-read only costs tens of milliseconds.</p>
 
-  <h3>The voice</h3>
-  <p>Cartesia speaks each word as soon as it locks, so Austin is heard while he's still mouthing.
-  The words go out as natural phrases, at his pauses or every four words or so, because a word sent alone gets read like its own tiny sentence.
-  His face sets the emotion, and how fast and how hard he mouths sets the speed and the volume.</p>
+  <p>He also trained a small face adapter on Austin's own recordings, so the reader got used to how Austin in particular moves his lips.</p>
 
-  <h2>What I worked on</h2>
+  <h3 id="svr-1">The muscle model</h3>
+  <p>The muscle side is <strong>SVR-1</strong>, the one model we trained ourselves, and it's all Austin.
+  It's a 45M-parameter Transformer that turns the raw signal from the four pads into about 86 frames a second, and every frame gets to look at the rest of the sentence, since whether a burst of muscle activity is an "m" or a "b" depends on what comes around it.</p>
+  <p>Austin pre-trained it on 19 hours of Berkeley's silent speech recordings, cut down to our four pad sites and run through our own hum filter, then fine-tuned it on his own sessions.
+  His best trick was training it to settle look-alikes, so for every sentence it learns to pick the true one over copies with lip look-alikes swapped in, like "grab the mat" over "grab the bat".
+  On Berkeley's test set, SVR-1 picks the right sentence out of 10 look-alikes 72.3% of the time, against 27.7% for Berkeley's own released model on the same four sites.</p>
+  <p>Austin built the joint search on top of it too, along with its language model, which learned from 72 million words of everyday dialogue instead of audiobooks, so it expects the way people actually talk on a call.</p>
+
+  <h3 id="voice">The voice</h3>
+  <p>The voice is Frank's part, along with the Twilio call, the live captions, and the dashboard he built from my Figma design.
+  <strong>Cartesia Sonic</strong> speaks each word as soon as it locks, so Austin is heard while he's still mouthing.
+  The words go out as natural phrases, at his pauses or every four words or so, because a word sent alone gets read like its own tiny sentence.
+  Austin's face sets the emotion, and how fast and how hard he mouths sets the speed and the volume.</p>
+
+  <h2 id="how-we-worked">How we worked</h2>
+  <p>Everything we built, we built with Claude.</p>
+  <p>It started with brainstorming.
+  We dug through articles and papers on voice AI and silent speech, and the best ones came out of Berkeley (shout out to them), including the 2020 paper our pad sites come from.</p>
+  <p>Frank and Evan kept pushing for crazier, more ambitious ideas, because we started from what would make the judges go WOW and worked our way backward.
+  I was the "sane" voice, pushing back on what was technically feasible, what we could actually guarantee in 36 hours, and how to split the work.
+  Austin, our ML goat, was the compromise in between.</p>
+  <p>So we were pushing right at the edge, and not everything came out 100% perfect.
+  The voice isn't technically real time, for example, since it lands about a second behind Austin on average.
+  But hey, we had 36 hours, so we worked with what we got.</p>
+  <p>For the setup, I blocked everyone from pushing straight to main, so every change had to be a PR, and every PR got reviewed by me or by Claude Code running my code review skill.</p>
+
+  <h2 id="what-i-worked-on">What I worked on</h2>
   <p>I'm the only computer engineering major on the team, so I took the hardware and the Claude side, and I played PM for everything else, from shaping the vision to designing the dashboard in Figma and getting the pitch right.</p>
 
-  <h3>The rig</h3>
-  <p>The rig is four amplifier boards on a breadboard, feeding an Arduino Uno that reads each channel 1,000 times a second and sends the raw numbers to the laptop over USB.
+  <h3 id="rig">The rig</h3>
+  <p>The rig starts with the <strong>EMG pads</strong>, four pairs on Austin's face that pick up his muscle signals.
+  They feed four amplifier boards on a breadboard and an Arduino Uno, which reads each channel 1,000 times a second and sends the raw numbers to the laptop over USB.
   Claude laid out the breadboard with me, wrote the firmware and the serial reader, and helped me pick pad sites from Berkeley's 2020 silent speech paper, so our signals would look like the data we pre-train on.</p>
 
   <figure>
-    <img src="img/wiring.png" width="2400" height="1440" alt="Breadboard wiring for the Arduino Uno and the four BioAmp boards, each taking power from the breadboard and sending its output to its own analog pin" loading="lazy">
-    <figcaption>The breadboard layout Claude and I worked out.</figcaption>
+    <a class="zoomable" href="img/wiring.png"><img src="img/wiring.png" width="2400" height="1440" alt="Breadboard wiring for the Arduino Uno and the four BioAmp boards, each taking power from the breadboard and sending its output to its own analog pin" loading="lazy"></a>
+    <figcaption>The breadboard layout Claude and I worked out. Click to expand.</figcaption>
   </figure>
 
   <p>We started with six channels and cut to four.
   There wasn't room for clean contact on Austin's face and hair behind his ears kept loosening the reference pads, and a noisy channel hurts the model more than a missing one.</p>
 
-  <figure class="narrow">
-    <img src="img/austin-front.jpg" width="900" height="1200" alt="Austin from the front with pad pairs on the right cheek below the mouth, the left cheek above the mouth, the left chin corner, and under the chin" loading="lazy">
-    <figcaption>Austin wearing all four channels.</figcaption>
+  <figure>
+    <div class="pair">
+      <img src="img/attaching-pads.jpg" width="750" height="1000" alt="Thai attaching the EMG pads and their wires to Austin's face on the hacking floor, under the Cal Hacks sponsor banners" loading="lazy">
+      <img src="img/austin-front.jpg" width="900" height="1200" alt="Austin from the front with pad pairs on the right cheek below the mouth, the left cheek above the mouth, the left chin corner, and under the chin" loading="lazy">
+    </div>
+    <figcaption>Me putting the pads on Austin, and all four channels on.</figcaption>
   </figure>
 
   <p>One rule had no exception.
   The pads connect Austin's face to the laptop through the Uno, and we didn't have a USB isolator, so the laptop stayed off its charger whenever the pads were on his skin.</p>
 
-  <h3>Claude</h3>
-  <p>Claude predicts what Austin will say before he mouths it, starting while the judge is still talking, and fixes look-alike words in the captions afterwards.
+  <h3 id="claude">Claude</h3>
+  <p><strong>Claude</strong> predicts what Austin will say before he mouths it, starting while the judge is still talking, and fixes look-alike words in the captions afterwards.
   It only ever picks between words the camera and the pads already proposed, so it can't put ideas in Austin's mouth.</p>
 
-  <h3>The harness</h3>
-  <p>I'm a Claude Builder Campus Ambassador, and this was the weekend all my Claude Code setup paid off.
-  Every decision we made went into one CLAUDE.md file, so no agent wasted an hour re-arguing them.
-  Main was locked so every change had to be a PR, and every PR went through a review loop I set up that pushed back every single time.
-  It caught 2 to 3 severe issues each round, and we fixed them just in time.</p>
-  <p>Claude wrote most of the code, but I knew how every piece worked and why it was there, which freed me up for what I actually love, building and shaping the product.</p>
-
-  <figure>
-    <div class="ph">Screenshot: the review loop pushing back on one of our PRs</div>
-    <figcaption>The review loop, doing its job.</figcaption>
-  </figure>
-
-  <h2>What broke</h2>
+  <h2 id="what-broke">What broke</h2>
   <p><strong>The voice was too slow at first.</strong>
-  With Cartesia's default buffer, 14 of 15 words waited for the sentence to end, and the judge sat through 4.9 s of nothing.
-  Sending phrases with no buffer fixed it, and now the first sound lands 0.6 s after Austin starts and he's done 1.0 s after he stops.</p>
+  With Cartesia's default buffer, 14 of 15 words waited for the sentence to end on our test calls, so a judge would have sat through 4.9 s of nothing.
+  Frank fixed it by streaming phrases with no buffer, and now the first sound lands 0.6 s after Austin starts and he's done 1.0 s after he stops.</p>
   <p><strong>Our first model choice was too slow too.</strong>
-  We started on Claude Opus, which took 5.7 to 6.9 s a call, and that kills a phone conversation.
-  We timed every option on live calls and moved predictions to Haiku with thinking off, at about 2 to 3 s, and kept Opus for the caption fixes, since those never touch the voice.</p>
-  <p><strong>The expo floor was loud.</strong>
-  Cartesia Ink is great at hearing everyone, which is a problem when everyone is the crowd behind the judge.
+  Claude never sits between Austin's lips and the voice, it works beside the loop, guessing his next words while the judge is still talking.
+  That only helps if the guess is ready before Austin starts mouthing, and Claude Opus took 5.7 to 6.9 s a call, so its guesses showed up after he'd already said the words.
+  We timed every option on live calls and moved predictions to Haiku with thinking off, at about 2 to 3 s, and kept Opus for the caption fixes, since those never touch the voice.
+  So the voice's delay of about a second comes from locking words and streaming them to Cartesia, not from waiting on Claude.</p>
+  <p><strong>Next time I'd try Jev.</strong>
+  It's TypeSafe AI's classifier, and on LiteLLM's benchmark it answered in about 127 ms against about 690 ms for Claude Haiku, fast enough to settle look-alikes like "bills" and "pills" inside the 100 ms loop, so the hard words could reach the voice sooner.
+  To test it, I'd replay our logged calls with Jev picking between the readers' look-alikes, then compare how fast those words lock and how often they're right.
+  The catch is it only picks from a fixed list, so Claude stays for guessing what Austin says next.</p>
+  <p id="judge-audio"><strong>The expo floor was loud.</strong>
+  The judge's side of the call goes through <strong>Cartesia Ink</strong>, which turns their speech into text for Claude and the captions.
+  It's great at hearing everyone, which is a problem when everyone is the crowd behind the judge.
   On test calls the judge came in at -20 to -12 dBFS and the crowd at -60 to -40, so we gate the call audio around the caller's own level.</p>
   <p><strong>The venue hummed.</strong>
   The room's wiring puts a 60 Hz hum on everything, so we filter it out live, one sample at a time.
   Training runs the exact same filter, so the model never sees cleaner data than it gets on stage.</p>
 
-  <h2>Fun times</h2>
-  <p>I met Frank at Toronto Tech Week through Project Atlas a few months ago.
-  We stayed in the same room, bonded fast, and now we treat each other like brothers, so when he asked me to join his team, I had to.</p>
+  <h2 id="fun-times">Fun times</h2>
   <p>It was my first time in San Francisco and my first hackathon outside Montreal.
-  We rode Lime scooters everywhere, slept way less than we should have, and won on top of it, so core memory unlocked.</p>
+  We rode Lime scooters everywhere, slept way less than we should have, and won on top of it.</p>
+  <p>Oh, and I also got admitted to the ER lol.
+  Around 1am the fatigue and abdominal pain caught up with me, and next thing I know I'm on IV fluids and getting my first ever dose of fentanyl (prescribed).
+  I pulled back up to the venue around 8am, which was so clutch, because MLH rules say every team member has to be there for judging.
+  I literally larped too hard, died, and came back.</p>
+  <p>This whole trip felt like a movie, and I still can't believe all of it happened in 36 hours.
+  Core memory unlocked.</p>
 
   <figure>
-    <div class="ph">Photo: Frank and me on Lime scooters in SF</div>
-    <figcaption>Our main mode of transport.</figcaption>
+    <div class="pair">
+      <img src="img/frank-selfie.jpg" width="900" height="1200" alt="Thai and Frank taking a selfie with peace signs on the hacking floor" loading="lazy">
+      <img src="img/er-bracelet.jpg" width="900" height="1200" alt="Thai's wrist with a hospital bracelet, the details blurred" loading="lazy">
+    </div>
+    <figcaption>Frank and me on the hacking floor, and my ER bracelet.</figcaption>
   </figure>
 
-  <p>There were so many Canadian hackers there too.
-  I know exceptional people in Montreal who didn't get into Cal Hacks and would've built something crazier than us, so keep an eye on Montreal.</p>
+  <figure>
+    <img src="img/bear-backdrop.jpg" width="1600" height="1200" alt="Two hackers saluting in front of the Cal Hacks 13.0 backdrop, next to a giant stuffed bear" loading="lazy">
+    <figcaption>Saluting the Cal Hacks bear.</figcaption>
+  </figure>
 
-  <h2>What I'd do again</h2>
+
+  <h2 id="do-again">What I'd do again</h2>
   <p><strong>Pick a problem people feel.</strong>
   Nobody needs a chart to understand what losing your voice means, and the judges got it in one sentence.</p>
   <p><strong>Demo something that sounds impossible.</strong>
   A real phone call where the speaker never makes a sound beats any slide we could have made.</p>
-  <p><strong>Set up your harness before you land.</strong>
-  Our 36 hours went to building, not to re-explaining the plan to agents every morning.</p>
+  <p><strong>Lean on agentic engineering.</strong>
+  Get comfortable with plugins, skills, and the rest of your Claude Code setup before the hackathon starts.
+  The less time you spend debugging, the more time goes into the idea itself.</p>
+  <p><strong>Put the plan in one file.</strong>
+  Start with a super ambitious idea, then break it down into a PRD or MVP doc that the whole team agrees on and Claude judges feasible.
+  Everyone runs their own Claude instance, so they'd better all read from the same .md file.
+  That way even pivoting from the plan gets way easier later, because everyone, Claude included, already has the context.</p>
 
-  <h2>What's next</h2>
-  <p>So many judges told us to turn this into a startup.
-  After the hackathon we linked up with our friend Aditya from Graypass (YC W26) to figure out how to give a voice back to more people who need it.
-  Austin is healthy, so the next step is putting Silent Voice in front of people who've actually lost theirs.</p>
+  <h2 id="whats-next">What's next</h2>
+  <p>Like I said, a bunch of judges told us to turn this into a startup.
+  After the hackathon our team linked up with our friend Aditya, an ex-McGillian who dropped out to do YC with Graypass (W26).
+  We talked startups and business for hours, how we could actually turn this into something that gives a voice back to more people who need it, and I walked out so inspired.</p>
+  <figure class="narrow">
+    <img src="img/with-aditya.jpg" width="900" height="1200" alt="Thai, Frank, and Aditya smiling in a selfie at night in San Francisco" loading="lazy">
+    <figcaption>Me, Frank, and Aditya after the hackathon.</figcaption>
+  </figure>
+
   <p>Huge thanks to the Cal Hacks team for putting it all together, the lineup was stacked and the judges and mentors were super supportive.</p>
 
   <div class="links">
@@ -221,5 +323,39 @@
   </div>
 </article>
 
+<dialog class="zoom" id="zoom" aria-label="Expanded image"><button type="button">Close</button><img alt=""></dialog>
+
+<script>
+const toc = document.getElementById('toc'), list = toc.querySelector('ol');
+const heads = [...document.querySelectorAll('article h2[id], article h3[id]')];
+for (const h of heads) {
+  const a = Object.assign(document.createElement('a'), {href: '#' + h.id, textContent: h.textContent});
+  if (h.tagName === 'H3') a.className = 'sub';
+  const li = document.createElement('li');
+  li.append(a);
+  list.append(li);
+}
+const wide = matchMedia('(min-width:1200px)');
+const sync = () => { toc.open = wide.matches; };
+sync(); wide.addEventListener('change', sync);
+list.addEventListener('click', e => { if (e.target.matches('a') && !wide.matches) toc.open = false; });
+const links = [...list.querySelectorAll('a')];
+const mark = () => {
+  let on = -1;
+  heads.forEach((h, i) => { if (h.getBoundingClientRect().top < 140) on = i; });
+  links.forEach((a, i) => a.classList.toggle('on', i === on));
+};
+addEventListener('scroll', () => requestAnimationFrame(mark), {passive: true}); mark();
+
+const zoom = document.getElementById('zoom'), big = zoom.querySelector('img');
+document.querySelectorAll('a.zoomable').forEach(a => a.addEventListener('click', e => {
+  e.preventDefault();
+  const img = a.querySelector('img');
+  big.src = img.currentSrc || img.src; big.alt = img.alt;
+  big.style.setProperty('--r', img.naturalWidth / img.naturalHeight || 2);
+  zoom.showModal();
+}));
+zoom.addEventListener('click', () => zoom.close());
+</script>
 </body>
 </html>
