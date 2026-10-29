@@ -1,0 +1,550 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Thai Tran</title>
+<meta name="description" content="Thai Tran, computer engineering at McGill. I build things with AI and show other people how.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' fill='%232448e0' stroke='%2317171a' stroke-width='3'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght,BNCE,INFM,SPAC@300..800,-100..100,0..100,0..100&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#17171a;--muted:#5b5b66;--blue:#2448e0;--hi:#d9f85f;--red:#e0332b;--grid:#e9edf6;--paper:#fff;--hand:'Shantell Sans',ui-rounded,system-ui,sans-serif;--hb:20px 6px 18px 5px/5px 18px 6px 20px}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--hand);font-variation-settings:"INFM" 0;color:var(--ink);background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px;font-size:18px;line-height:1.55;overflow-x:hidden}
+a{color:inherit}
+::selection{background:var(--hi)}
+:focus-visible{outline:2.5px dashed var(--blue);outline-offset:4px}
+.wobble{font-variation-settings:"INFM" 100}
+.page{position:relative;max-width:1140px;margin:0 auto;padding:0 28px 0 104px}
+#wire{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:0}
+#wire .ghost{fill:none;stroke:#c3c8d6;stroke-width:2;stroke-dasharray:3 9;stroke-linecap:round}
+#wire .live{fill:none;stroke:var(--blue);stroke-width:2.6;stroke-linecap:round}
+#wire .tip{fill:var(--blue)}
+#wire .ring{fill:none;stroke:var(--blue);stroke-width:2;transform-box:fill-box;transform-origin:center;animation:ping 1.6s ease-out infinite}
+@keyframes ping{from{transform:scale(.6);opacity:.8}to{transform:scale(2.4);opacity:0}}
+.pin{position:absolute;left:-72px;top:.45em;width:20px;height:20px;border:2.5px solid var(--ink);border-radius:50%;background:var(--paper);z-index:1;transition:background .3s,box-shadow .3s}
+.pin.on{background:var(--blue);box-shadow:0 0 0 6px rgba(36,72,224,.16)}
+section{position:relative;padding-top:clamp(84px,11vw,140px)}
+.top{position:relative;display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:76px;z-index:2}
+.logo{font-weight:800;font-size:26px;text-decoration:none;font-variation-settings:"INFM" 100}
+.top nav{display:flex;gap:22px;font-size:16px;font-weight:500}
+.top nav a{text-decoration:none;position:relative}
+.scrib{position:relative;text-decoration:none;white-space:nowrap}
+.scrib svg{position:absolute;left:-4%;bottom:-6px;width:108%;height:12px;overflow:visible;pointer-events:none}
+.scrib path{fill:none;stroke:var(--blue);stroke-width:2.4;stroke-linecap:round;stroke-dasharray:1 1.2;stroke-dashoffset:1.1;transition:stroke-dashoffset .4s cubic-bezier(.6,0,.2,1)}
+.scrib:hover path,.scrib:focus-visible path{stroke-dashoffset:0}
+.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center;padding-top:clamp(40px,7vw,90px)}
+.hero>div:first-child{position:relative}
+.hero .hey{font-size:24px;font-weight:600;color:var(--muted);font-variation-settings:"INFM" 100}
+.hero h1{font-weight:800;font-size:clamp(64px,9.4vw,132px);line-height:.9;letter-spacing:-.02em;font-variation-settings:"INFM" 100,"BNCE" 0;transition:font-variation-settings .5s;clip-path:inset(0 100% 0 0);animation:write 1.2s .2s cubic-bezier(.6,0,.2,1) forwards}
+@keyframes write{to{clip-path:inset(0 -10% 0 0)}}
+h1:hover,h2:hover{font-variation-settings:"INFM" 100,"BNCE" 100}
+.hero .claim{font-size:clamp(24px,2.6vw,32px);font-weight:600;line-height:1.2;margin-top:18px;max-width:17em;font-variation-settings:"INFM" 60}
+.mark{background:linear-gradient(var(--hi),var(--hi)) no-repeat 0 72%/0 46%;animation:sweep .7s 1.3s ease forwards;padding:0 .08em}
+@keyframes sweep{to{background-size:100% 46%}}
+.hero .lede{margin-top:22px;max-width:31em;color:var(--muted)}
+.hero .lede b{color:var(--ink);font-weight:600}
+.follow{display:flex;align-items:center;gap:10px;margin-top:34px;font-size:20px;font-weight:600;color:var(--blue);font-variation-settings:"INFM" 100}
+.follow svg{width:46px;height:40px}
+.follow path{fill:none;stroke:var(--blue);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
+.laptop{position:relative;max-width:440px;justify-self:end;width:100%}
+.screen{position:relative;border:2.6px solid var(--ink);border-radius:var(--hb);background:var(--paper);padding:20px 22px;min-height:210px}
+.screen .dots{display:flex;gap:7px;margin-bottom:14px}
+.screen .dots i{width:11px;height:11px;border:2px solid var(--ink);border-radius:50%}
+.screen .dots i:first-child{background:var(--red)}
+.screen ol{list-style:none;font-size:17px;font-weight:500}
+.screen li{display:flex;gap:10px;min-height:1.7em}
+.screen li::before{content:">";color:var(--blue);font-weight:700}
+.screen li.done::after{content:"✓";color:#1c9a4f;font-weight:700;margin-left:auto}
+.caret{display:inline-block;width:9px;height:1.1em;background:var(--ink);vertical-align:-.15em;margin-left:2px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.base{display:block;width:118%;margin-left:-9%;height:34px;overflow:visible}
+.base path{fill:var(--paper);stroke:var(--ink);stroke-width:2.6;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+.laptop .note{position:absolute;left:-18px;bottom:-62px;font-size:19px;font-weight:600;color:var(--muted);font-variation-settings:"INFM" 100;transform:rotate(-3deg)}
+h2{font-weight:800;font-size:clamp(44px,6vw,76px);line-height:.95;letter-spacing:-.015em;font-variation-settings:"INFM" 100,"BNCE" 0;transition:font-variation-settings .5s;max-width:13em}
+.sub{margin-top:22px;max-width:34em;color:var(--muted);font-size:19px}
+.hb{border:2.5px solid var(--ink);border-radius:var(--hb);background:var(--paper)}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;margin-top:48px}
+.card{padding:28px;position:relative}
+.card.wide{grid-column:1/-1;display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:center}
+.card h3{font-weight:800;font-size:34px;line-height:1;font-variation-settings:"INFM" 100}
+.card .role{font-size:16px;font-weight:600;color:var(--blue);margin-top:8px}
+.card p{margin-top:12px;color:#33333b;font-size:17px}
+.card .go{display:inline-block;margin-top:16px;font-weight:700}
+.stats{display:flex;flex-wrap:wrap;gap:12px 26px;margin-top:18px}
+.stats div{line-height:1.1}
+.stats b{display:block;font-size:36px;font-weight:800;color:var(--blue);font-variation-settings:"INFM" 100}
+.stats span{font-size:15px;color:var(--muted)}
+.doodle{display:block;overflow:visible}
+.doodle .d{fill:none;stroke:var(--ink);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1 1.2;stroke-dashoffset:1.1;transition:stroke-dashoffset 1s cubic-bezier(.6,0,.2,1) calc(var(--i,0) * 160ms)}
+.doodle .d.b{stroke:var(--blue)}
+.in .doodle .d,.doodle.in .d{stroke-dashoffset:0}
+.doodle text{font-family:var(--hand);font-weight:700;fill:var(--ink);font-variation-settings:"INFM" 100}
+.card .doodle{width:120px;height:90px;margin-bottom:14px}
+.frame{position:relative}
+.frame .scr{border:2.6px solid var(--ink);border-radius:12px 5px 10px 4px/4px 10px 5px 12px;overflow:hidden;background:#eee;aspect-ratio:16/8.75}
+.frame img{display:block;width:100%;height:100%;object-fit:cover}
+.frame .base{width:106%;margin-left:-3%;height:22px}
+.taped{position:relative;transform:rotate(2deg);margin:10px 4px 6px;padding:10px 10px 0;background:var(--paper);border:2.5px solid var(--ink);box-shadow:5px 6px 0 var(--ink)}
+.taped::before{content:"";position:absolute;top:-14px;left:50%;width:84px;height:26px;margin-left:-42px;background:rgba(217,248,95,.85);transform:rotate(-4deg)}
+.taped img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:center 35%}
+.taped figcaption{font-size:17px;font-weight:600;padding:8px 2px 10px;font-variation-settings:"INFM" 100}
+.badge{position:absolute;top:-22px;right:-14px;width:96px;height:96px;display:grid;place-items:center;text-align:center;line-height:1;font-weight:800;font-size:15px;color:var(--paper);background:var(--blue);border:2.5px solid var(--ink);border-radius:50%;transform:rotate(10deg);font-variation-settings:"INFM" 100}
+.badge b{display:block;font-size:30px}
+.heads{display:flex;flex-wrap:wrap;gap:5px;margin-top:18px;max-width:360px}
+.heads i{width:16px;height:16px;border:2px solid var(--ink);border-radius:50%;transform:scale(0);transition:transform .3s cubic-bezier(.3,1.6,.5,1) calc(var(--i) * 18ms)}
+.heads i:nth-child(7n){background:var(--hi)}
+.heads i:nth-child(11n){background:var(--blue)}
+.in .heads i{transform:scale(1)}
+.siy .wheelbox{display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap}
+.wheel{position:relative;width:210px;height:210px;border-radius:50%;border:2.6px solid var(--ink);background:conic-gradient(hsl(0 72% 60%),hsl(60 72% 60%),hsl(120 72% 60%),hsl(180 72% 60%),hsl(240 72% 60%),hsl(300 72% 60%),hsl(360 72% 60%));cursor:grab;touch-action:none;flex:none}
+.wheel::after{content:"";position:absolute;inset:34%;border-radius:50%;background:var(--paper);border:2.5px solid var(--ink)}
+.wheel svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;z-index:1;pointer-events:none}
+.wheel polygon{fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linejoin:round}
+.wheel circle{fill:var(--paper);stroke:var(--ink);stroke-width:2.6}
+.outfit{width:150px;height:210px;flex:none}
+.outfit path{stroke:var(--ink);stroke-width:2.6;stroke-linejoin:round;transition:fill .25s}
+.hint{font-size:16px;color:var(--muted);margin-top:14px;font-variation-settings:"INFM" 100}
+.parser{margin-top:44px;padding:clamp(22px,3.4vw,40px)}
+.sent{font-size:clamp(20px,2.4vw,28px);font-weight:600;line-height:1.7;min-height:3.4em}
+.tok{position:relative;display:inline-block;white-space:nowrap}
+.tok.c{margin:0 .3em}
+.tok.c svg{position:absolute;left:-12%;top:-18%;width:124%;height:136%;overflow:visible;pointer-events:none}
+.tok.c path{fill:none;stroke:var(--blue);stroke-width:2.6;stroke-linecap:round;stroke-dasharray:1 1.2;stroke-dashoffset:1.1;transition:stroke-dashoffset .4s ease}
+.tok.c.on path{stroke-dashoffset:0}
+.tok.o{background:linear-gradient(var(--hi),var(--hi)) no-repeat 0 70%/0 52%;transition:background-size .35s ease}
+.tok.o.on{background-size:100% 52%}
+.tree{display:block;width:100%;max-width:640px;height:auto;margin:18px auto 0;overflow:visible}
+.tree .ln{fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;stroke-dasharray:1 1.2;stroke-dashoffset:1.1;transition:stroke-dashoffset .5s ease calc(var(--i) * 120ms)}
+.tree .nd{opacity:0;transform:translateY(6px);transition:opacity .35s ease calc(var(--i) * 120ms),transform .35s ease calc(var(--i) * 120ms)}
+.tree.in .ln{stroke-dashoffset:0}
+.tree.in .nd{opacity:1;transform:none}
+.tree rect{fill:var(--paper);stroke:var(--ink);stroke-width:2.4}
+.tree .op rect{fill:var(--hi)}
+.tree text{font-family:var(--hand);font-size:19px;font-weight:700;fill:var(--ink);text-anchor:middle;dominant-baseline:central;font-variation-settings:"INFM" 100}
+.tree .shrug{font-size:24px;fill:var(--muted)}
+.prow{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:22px}
+.prow p{font-size:16px;color:var(--muted);max-width:36em}
+.btn{font:inherit;font-weight:700;font-size:18px;color:var(--ink);background:var(--hi);border:2.5px solid var(--ink);border-radius:var(--hb);padding:12px 20px;min-height:48px;cursor:pointer;box-shadow:4px 4px 0 var(--ink);transition:transform .15s,box-shadow .15s;font-variation-settings:"INFM" 100}
+.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
+.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
+.life{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin-top:48px}
+.life .card{display:flex;flex-direction:column}
+.life .card .art{height:150px;display:grid;place-items:center;margin-bottom:10px}
+.piece{width:132px;height:132px;border:0;background:none;cursor:pointer;perspective:600px;font:inherit}
+.piece .flip{position:relative;display:block;width:100%;height:100%;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.4,1.4,.5,1)}
+.piece.turned .flip{transform:rotateY(180deg)}
+.piece .face{position:absolute;inset:0;display:grid;place-items:center;border-radius:50%;border:2.6px solid var(--ink);background:#f6e3c4;box-shadow:inset 0 0 0 8px #f6e3c4,inset 0 0 0 10.5px var(--red);backface-visibility:hidden}
+.piece .front span{font-size:58px;color:var(--red);font-family:"PingFang SC","Noto Serif SC","Songti SC",serif;font-weight:700}
+.piece .back{transform:rotateY(180deg);font-size:17px;font-weight:700;line-height:1.1;padding:22px;text-align:center;font-variation-settings:"INFM" 100}
+.art .doodle{width:190px;height:140px}
+.todo{margin-top:48px;padding:clamp(22px,3.4vw,36px);max-width:760px}
+.todo h3{font-size:32px;font-weight:800;font-variation-settings:"INFM" 100}
+.todo ul{list-style:none;margin-top:12px}
+.todo li{display:flex;gap:14px;align-items:flex-start;padding:10px 0;border-bottom:2px dashed #d5d8e2}
+.todo li:last-child{border-bottom:0}
+.todo svg{width:28px;height:28px;flex:none;margin-top:2px;overflow:visible}
+.todo .sq{fill:none;stroke:var(--ink);stroke-width:2.4}
+.todo .tick{fill:none;stroke:var(--blue);stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1 1.2;stroke-dashoffset:1.1;transition:stroke-dashoffset .4s ease calc(var(--i) * 260ms + 300ms)}
+.todo.in .tick{stroke-dashoffset:0}
+.todo li.done span{text-decoration:line-through;text-decoration-color:var(--blue);text-decoration-thickness:2px;color:var(--muted)}
+.todo small{display:block;font-size:15px;color:var(--muted)}
+.hi{padding-bottom:40px}
+.mail{display:inline-block;margin-top:30px;font-size:clamp(22px,3.6vw,44px);font-weight:800;font-variation-settings:"INFM" 100}
+.mail.scrib{white-space:normal}
+.links{display:flex;flex-wrap:wrap;gap:14px 30px;margin-top:30px;font-size:19px;font-weight:600}
+.bulbwrap{position:relative}
+.pin.bulb{width:34px;height:34px;left:-79px;top:-2px}
+.pin.bulb.on{background:var(--hi);box-shadow:0 0 0 10px rgba(217,248,95,.45),0 0 40px 10px rgba(217,248,95,.9)}
+footer{margin-top:90px;padding:26px 0 36px;border-top:2.5px solid var(--ink);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:15px;color:var(--muted)}
+[data-r]{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+[data-r].in{opacity:1;transform:none}
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr;gap:70px}
+  .laptop{justify-self:start;max-width:400px}
+  .card.wide{grid-template-columns:1fr}
+  .life{grid-template-columns:1fr 1fr}
+}
+@media (max-width:640px){
+  body{font-size:17px}
+  .page{padding:0 16px 0 52px}
+  .pin{left:-44px;width:18px;height:18px}
+  .pin.bulb{left:-51px;width:30px;height:30px}
+  .top nav{gap:14px;font-size:15px}
+  .top nav a:nth-child(-n+2){display:none}
+  .cards,.life{grid-template-columns:1fr}
+  .card{padding:22px}
+  .badge{right:-8px;width:84px;height:84px;font-size:13px}
+  .badge b{font-size:26px}
+  .laptop .note{left:0}
+  .laptop>.base{width:104%;margin-left:-2%}
+  .wheel{width:180px;height:180px}
+  .outfit{width:120px;height:170px}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .hero h1{clip-path:none}
+  .mark{background-size:100% 46%}
+  [data-r]{opacity:1;transform:none}
+  .doodle .d,.tok.c path,.tree .ln,.todo .tick{stroke-dashoffset:0}
+  .heads i{transform:none}
+  .tree .nd{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="boil"><feTurbulence id="boilNoise" type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="1"/><feDisplacementMap in="SourceGraphic" scale="3.2"/></filter>
+</svg>
+
+<div class="page" id="page">
+<svg id="wire" aria-hidden="true"><path class="ghost"/><path class="live"/><circle class="ring" r="6"/><circle class="tip" r="5"/></svg>
+
+<header class="top">
+  <a class="logo" href="#">thai.</a>
+  <nav aria-label="Sections">
+    <a class="scrib" href="#work">work<svg viewBox="0 0 100 12" preserveAspectRatio="none"><path pathLength="1" d="M2 8c20-5 44-6 96-2"/></svg></a>
+    <a class="scrib" href="#parser">tinkering<svg viewBox="0 0 100 12" preserveAspectRatio="none"><path pathLength="1" d="M2 8c20-5 44-6 96-2"/></svg></a>
+    <a class="scrib" href="#life">life<svg viewBox="0 0 100 12" preserveAspectRatio="none"><path pathLength="1" d="M2 8c20-5 44-6 96-2"/></svg></a>
+    <a class="scrib" href="#hi">say hi<svg viewBox="0 0 100 12" preserveAspectRatio="none"><path pathLength="1" d="M2 8c20-5 44-6 96-2"/></svg></a>
+  </nav>
+</header>
+
+<section class="hero" aria-labelledby="name">
+  <div>
+    <span class="pin" data-pin></span>
+    <p class="hey">hi, I'm</p>
+    <h1 id="name">Thai Tran</h1>
+    <p class="claim">I build things with AI, then <span class="mark">show other people how</span>.</p>
+    <p class="lede">Computer engineering at McGill, class of 2028. This past summer I shipped <b>50+ agent tools</b> at a Montréal startup, and the rest of the year I run <b>Claude Builder Club McGill</b>. I say yes to the weird thing and something good falls out of it.</p>
+    <p class="follow"><svg viewBox="0 0 46 40" aria-hidden="true" class="doodle"><path d="M40 4C30 6 14 10 12 22c-1 6 2 10 4 14M16 36l-6-7M16 36l5-8"/></svg>follow the wire</p>
+  </div>
+  <div class="laptop" aria-label="A doodled laptop typing things I've done">
+    <div class="screen">
+      <div class="dots"><i></i><i></i><i></i></div>
+      <ol id="term"></ol>
+    </div>
+    <svg class="base" viewBox="0 0 120 10" preserveAspectRatio="none" aria-hidden="true"><path d="M9 1h102l8 7c0 1-1 1.6-2 1.6H3C2 9.6 1 9 1 8z"/></svg>
+    <p class="note">things it typed this year ↑</p>
+  </div>
+</section>
+
+<section id="work" aria-labelledby="work-h">
+  <span class="pin" data-pin></span>
+  <h2 id="work-h" data-r>Things I'm building</h2>
+  <p class="sub" data-r>Most of them started as a sidequest. A few turned into something people use every day.</p>
+
+  <div class="cards">
+    <article class="card wide hb" data-r>
+      <div class="frame">
+        <div class="scr"><img src="img/plan-your-degree.jpg" alt="Plan Your Degree, a McGill degree planner, open in a browser" width="1600" height="875" loading="lazy"></div>
+        <svg class="base" viewBox="0 0 120 10" preserveAspectRatio="none" aria-hidden="true"><path d="M9 1h102l8 7c0 1-1 1.6-2 1.6H3C2 9.6 1 9 1 8z"/></svg>
+      </div>
+      <div>
+        <h3>Plan Your Degree</h3>
+        <p class="role">building it since February</p>
+        <p>A degree planner for McGill students. It reads the whole course catalogue so you don't have to, and 870 students used it in the first three days, 81% of them on a phone.</p>
+        <div class="stats">
+          <div><b>944</b><span>programs</span></div>
+          <div><b>9,000+</b><span>courses</span></div>
+          <div><b>100+</b><span>PRs merged on green</span></div>
+        </div>
+        <a class="go scrib" href="https://plan-your-degree.vercel.app" target="_blank" rel="noopener">try it →<svg viewBox="0 0 100 12" preserveAspectRatio="none"><path pathLength="1" d="M2 8c20-5 44-6 96-2"/></svg></a>
+      </div>
+    </article>
+
+    <article class="card hb" data-r>
+      <svg class="doodle" viewBox="0 0 120 90" aria-hidden="true" filter="url(#boil)">
+        <path class="d" pathLength="1" style="--i:0" d="M10 34h100v46H10z"/>
+        <path class="d" pathLength="1" style="--i:1" d="M42 34v-12c0-5 3-8 8-8h20c5 0 8 3 8 8v12"/>
+        <path class="d b" pathLength="1" style="--i:2" d="M10 52h100M54 46h12v12H54z"/>
+        <text x="104" y="75" font-size="17" text-anchor="end">50+</text>
+      </svg>
+      <h3>Planned</h3>
+      <p class="role">AI builder intern · Apr to Aug 2026</p>
+      <p>Series A startup in Montréal. I shipped a package of 50+ agent tools the engineers built on, plus the skills and docs that let non-technical operators run workflows in Claude without writing code.</p>
+    </article>
+
+    <article class="card hb" data-r>
+      <svg class="doodle" viewBox="0 0 120 90" aria-hidden="true" filter="url(#boil)">
+        <path class="d" pathLength="1" style="--i:0" d="M14 74c4-16 14-24 26-24s22 8 26 24"/>
+        <path class="d" pathLength="1" style="--i:1" d="M40 44a12 12 0 1 0 0-24a12 12 0 1 0 0 24"/>
+        <path class="d b" pathLength="1" style="--i:2" d="M62 74c3-12 11-18 21-18s18 6 21 18M83 50a10 10 0 1 0 0-20a10 10 0 1 0 0 20"/>
+      </svg>
+      <h3>Claude Builder Club McGill</h3>
+      <p class="role">Anthropic campus ambassador · since Jan 2026</p>
+      <p>I started the club and got it to 300+ members in three months, then ran Montréal's first Claude hackathon, 280+ apps from 150+ builders. Professors also brought me into their engineering and management classes to teach workshops.</p>
+      <div class="heads" id="heads" aria-hidden="true"></div>
+    </article>
+
+    <article class="card wide hb" data-r>
+      <figure class="taped">
+        <div class="badge"><span><b>2nd</b>of 652</span></div>
+        <img src="img/cal-hacks.jpg" alt="The Silent Voice team at Cal Hacks 13" width="1600" height="1200" loading="lazy">
+        <figcaption>Cal Hacks 13, Berkeley</figcaption>
+      </figure>
+      <div>
+        <h3>Silent Voice</h3>
+        <p class="role">team of 4 · 36 hours</p>
+        <p>You mouth words without making a sound and get heard in your own voice, even on a phone call. We built it for people who lost their voice box to a laryngectomy. 2nd overall out of 652 projects, and 1st in Cartesia's voice AI challenge.</p>
+      </div>
+    </article>
+
+    <article class="card wide hb" data-r>
+      <div>
+        <h3>Style It Yourself</h3>
+        <p class="role">McHacks Best Beginner Hack · open source</p>
+        <p>Color matching for the clothes you already own, plus AI try-on. I led product, design, and full stack, and wrote the HSL color harmony engine. It's free and open source on purpose, because not everything needs a subscription.</p>
+        <a class="go scrib" href="https://styleityourself.ca" target="_blank" rel="noopener">styleityourself.ca →<svg viewBox="0 0 100 12" preserveAspectRatio="none"><path pathLength="1" d="M2 8c20-5 44-6 96-2"/></svg></a>
+      </div>
+      <div class="siy">
+        <div class="wheelbox">
+          <div class="wheel" id="wheel" role="slider" tabindex="0" aria-label="Shirt hue" aria-valuemin="0" aria-valuemax="359" aria-valuenow="220">
+            <svg viewBox="0 0 100 100" aria-hidden="true"><polygon id="tri"/><circle r="5.5" id="k0"/><circle r="4.5" id="k1"/><circle r="4.5" id="k2"/></svg>
+          </div>
+          <svg class="outfit" viewBox="0 0 120 170" aria-hidden="true">
+            <path id="shirt" d="M40 8l-24 12-12 22 16 8 6-10v52h68V40l6 10 16-8-12-22-24-12c-2 8-10 12-20 12S42 16 40 8z"/>
+            <path id="pants" d="M28 96h64l4 54H70l-10-36-10 36H24z"/>
+            <path id="shoes" d="M22 152h28c2 0 3 2 3 4v6H14c0-6 3-10 8-10zM70 152h28c5 0 8 4 8 10H67v-6c0-2 1-4 3-4z"/>
+          </svg>
+        </div>
+        <p class="hint">Drag around the wheel. Three hues, 120° apart, worked out in HSL.</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section id="parser" aria-labelledby="parser-h">
+  <span class="pin" data-pin></span>
+  <h2 id="parser-h" data-r>Teaching a computer to read prerequisites</h2>
+  <p class="sub" data-r>McGill writes prerequisites as English sentences. Plan Your Degree turns about 70% of the 4,600 sentences in the catalogue into trees like the one below.</p>
+  <div class="parser hb" data-r>
+    <p class="sent" id="sent" aria-live="polite"></p>
+    <svg class="tree" id="tree" viewBox="0 0 640 250" role="img" aria-label="Parsed prerequisite tree"></svg>
+    <div class="prow">
+      <p>Example sentences in the catalogue's style.</p>
+      <button class="btn" id="next" type="button">parse another one</button>
+    </div>
+  </div>
+</section>
+
+<section id="life" aria-labelledby="life-h">
+  <span class="pin" data-pin></span>
+  <h2 id="life-h" data-r>Away from the keyboard</h2>
+  <div class="life">
+    <article class="card hb" data-r>
+      <div class="art">
+        <button class="piece" id="piece" type="button" aria-label="Flip the Chinese chess piece" aria-pressed="false"><span class="flip"><span class="face front"><span>帥</span></span><span class="face back">no idea what this says</span></span></button>
+      </div>
+      <h3>Chinese chess</h3>
+      <p>I played my grandfather every afternoon, then my dad, who's exceptional. In 9th grade I won my school's tournament as the only 9th grader in it. I still can't read the characters on the pieces.</p>
+    </article>
+    <article class="card hb" data-r>
+      <div class="art">
+        <svg class="doodle" viewBox="0 0 190 140" aria-hidden="true" filter="url(#boil)">
+          <path class="d" pathLength="1" style="--i:0" d="M20 98c-2-12 6-20 18-22l34-8c8-2 14-8 18-16l6-14c2-4 6-5 10-3l20 9c4 2 5 5 4 9l-3 10c12 8 28 12 44 14 8 1 12 8 12 14v7z"/>
+          <path class="d" pathLength="1" style="--i:1" d="M14 105h164c0 6-4 10-10 10H22c-5 0-8-4-8-10z"/>
+          <path class="d b" pathLength="1" style="--i:2" d="M98 52l14 6M92 62l14 6M86 72l14 6"/>
+          <path class="d b" pathLength="1" style="--i:3" d="M24 128c40 8 100 8 150-6"/>
+        </svg>
+      </div>
+      <h3>Three years of shoes</h3>
+      <p>I sold shoes at New Balance and Sports Experts from 2021 to 2024. I learned French on the job and picked up more foot biomechanics than I ever expected to.</p>
+    </article>
+    <article class="card hb" data-r>
+      <div class="art">
+        <svg class="doodle" viewBox="0 0 190 140" aria-hidden="true" filter="url(#boil)">
+          <path class="d" pathLength="1" style="--i:0" d="M150 106c-6-6-4-16 2-20s6-12 0-16 2-14 10-12"/>
+          <path class="d" pathLength="1" style="--i:1" d="M30 46c4-6 14-8 20-2s2 14 8 16"/>
+          <path class="d b" pathLength="1" style="--i:2" d="M154 98C120 30 70 20 42 44"/>
+          <text x="150" y="128" font-size="15" text-anchor="middle">Vietnam</text>
+          <text x="38" y="28" font-size="15" text-anchor="middle">Montréal</text>
+        </svg>
+      </div>
+      <h3>Vietnam to Montréal</h3>
+      <p>I grew up in Vietnam and I live in Montréal now. Someday I want to build an AI operating system for the clothing industry, with my own label running on it. I'd rather be great at one thing than okay at ten.</p>
+    </article>
+  </div>
+
+  <div class="todo hb" data-r>
+    <h3>Current sidequests</h3>
+    <ul>
+      <li class="done"><svg viewBox="0 0 28 28" aria-hidden="true"><rect class="sq" x="2" y="2" width="24" height="24" rx="4"/><path class="tick" style="--i:0" pathLength="1" d="M7 15l5 5 10-13"/></svg><span>Get into Cal Hacks<small>went, came back with 2nd place</small></span></li>
+      <li class="done"><svg viewBox="0 0 28 28" aria-hidden="true"><rect class="sq" x="2" y="2" width="24" height="24" rx="4"/><path class="tick" style="--i:1" pathLength="1" d="M7 15l5 5 10-13"/></svg><span>Scout for Northside Ventures<small>after pitching VCs myself</small></span></li>
+      <li><svg viewBox="0 0 28 28" aria-hidden="true"><rect class="sq" x="2" y="2" width="24" height="24" rx="4"/></svg><span>Redesign the McGill Ventures website<small>lead dev, in progress</small></span></li>
+      <li><svg viewBox="0 0 28 28" aria-hidden="true"><rect class="sq" x="2" y="2" width="24" height="24" rx="4"/></svg><span>TreeHacks 2027<small>applied, waiting to hear back</small></span></li>
+    </ul>
+  </div>
+</section>
+
+<section id="hi" class="hi" aria-labelledby="hi-h">
+  <div class="bulbwrap"><span class="pin bulb" data-pin></span></div>
+  <h2 id="hi-h" data-r>Say hi</h2>
+  <p class="sub" data-r>Try my stuff, break it, tell me what's wrong. Or just tell me what you're building.</p>
+  <a class="mail scrib" href="mailto:minh.thai.tran@mail.mcgill.ca" data-r>minh.thai.tran@<wbr>mail.mcgill.ca<svg viewBox="0 0 100 12" preserveAspectRatio="none"><path pathLength="1" d="M2 8c20-5 44-6 96-2"/></svg></a>
+  <div class="links" data-r>
+    <a class="scrib" href="https://github.com/thaimtl" target="_blank" rel="noopener">GitHub<svg viewBox="0 0 100 12" preserveAspectRatio="none"><path pathLength="1" d="M2 8c20-5 44-6 96-2"/></svg></a>
+    <a class="scrib" href="https://www.linkedin.com/in/thai-tran-minh" target="_blank" rel="noopener">LinkedIn<svg viewBox="0 0 100 12" preserveAspectRatio="none"><path pathLength="1" d="M2 8c20-5 44-6 96-2"/></svg></a>
+    <a class="scrib" href="https://devpost.com/thaimtl" target="_blank" rel="noopener">Devpost<svg viewBox="0 0 100 12" preserveAspectRatio="none"><path pathLength="1" d="M2 8c20-5 44-6 96-2"/></svg></a>
+  </div>
+  <footer>
+    <span>Drawn in Montréal, 2026.</span>
+    <span>Thai Tran</span>
+  </footer>
+</section>
+</div>
+
+<script>
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const $ = s => document.querySelector(s);
+
+// reveal on scroll
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .18 });
+document.querySelectorAll('[data-r],.doodle').forEach(el => io.observe(el));
+
+// hand-drawn jitter
+if (!reduce) { const n = $('#boilNoise'); let s = 0; setInterval(() => n.setAttribute('seed', s = (s + 1) % 4), 140); }
+
+// club crowd
+$('#heads').innerHTML = Array.from({ length: 60 }, (_, i) => `<i style="--i:${i}"></i>`).join('');
+
+// the wire
+const page = $('#page'), wire = $('#wire'), ghost = wire.querySelector('.ghost'), live = wire.querySelector('.live');
+const tip = wire.querySelector('.tip'), ring = wire.querySelector('.ring');
+const pins = [...document.querySelectorAll('[data-pin]')];
+let len = 0, pinYs = [];
+function build() {
+  const pr = page.getBoundingClientRect();
+  const pts = pins.map(p => { const r = p.getBoundingClientRect(); return [r.left - pr.left + r.width / 2, r.top - pr.top + r.height / 2]; });
+  pinYs = pts.map(p => p[1]);
+  wire.setAttribute('viewBox', `0 0 ${pr.width} ${pr.height}`);
+  let d = `M${pts[0][0]} ${pts[0][1]}`;
+  for (let i = 1; i < pts.length; i++) {
+    const [x0, y0] = pts[i - 1], [x1, y1] = pts[i], dy = y1 - y0, a = Math.min(30, dy * .06) * (i % 2 ? 1 : -1);
+    d += `C${x0 + a} ${y0 + dy * .35} ${x1 - a} ${y0 + dy * .65} ${x1} ${y1}`;
+  }
+  ghost.setAttribute('d', d); live.setAttribute('d', d);
+  len = live.getTotalLength();
+  live.style.strokeDasharray = len;
+  draw();
+}
+function draw() {
+  const target = scrollY + innerHeight * .62 - (page.getBoundingClientRect().top + scrollY);
+  const done = target >= pinYs[pinYs.length - 1];
+  let lo = 0, hi = len;
+  if (done) lo = len;
+  else for (let k = 0; k < 18; k++) { const m = (lo + hi) / 2; live.getPointAtLength(m).y < target ? lo = m : hi = m; }
+  live.style.strokeDashoffset = len - lo;
+  const p = live.getPointAtLength(lo);
+  for (const c of [tip, ring]) { c.setAttribute('cx', p.x); c.setAttribute('cy', p.y); }
+  ring.style.display = done ? 'none' : '';
+  pins.forEach((el, i) => el.classList.toggle('on', pinYs[i] <= target + 1));
+}
+let raf = 0;
+addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; draw(); }); }, { passive: true });
+new ResizeObserver(build).observe(page);
+document.fonts.ready.then(build);
+
+// typing laptop
+const lines = ['parse 4,600 prereq sentences', 'ship 50+ agent tools', 'host a Claude hackathon', 'merge only on green'];
+const term = $('#term');
+async function type() {
+  const wait = ms => new Promise(r => setTimeout(r, ms));
+  for (;;) {
+    term.innerHTML = '';
+    for (const t of lines) {
+      const li = document.createElement('li'), span = document.createElement('span'), caret = document.createElement('i');
+      caret.className = 'caret'; li.append(span, caret); term.append(li);
+      for (const ch of t) { span.textContent += ch; await wait(reduce ? 0 : 38 + Math.random() * 50); }
+      await wait(reduce ? 0 : 380); caret.remove(); li.classList.add('done');
+    }
+    if (reduce) return;
+    await wait(3200);
+  }
+}
+type();
+
+// color wheel
+const wheel = $('#wheel'), tri = $('#tri'), knobs = [0, 1, 2].map(i => $('#k' + i));
+function setHue(h) {
+  h = (Math.round(h) % 360 + 360) % 360;
+  const hs = [h, h + 120, h + 240];
+  const pts = hs.map(x => { const a = (x - 90) * Math.PI / 180; return [50 + 41 * Math.cos(a), 50 + 41 * Math.sin(a)]; });
+  tri.setAttribute('points', pts.map(p => p.join(',')).join(' '));
+  knobs.forEach((k, i) => { k.setAttribute('cx', pts[i][0]); k.setAttribute('cy', pts[i][1]); });
+  $('#shirt').style.fill = `hsl(${hs[0]} 70% 60%)`;
+  $('#pants').style.fill = `hsl(${hs[1] % 360} 40% 38%)`;
+  $('#shoes').style.fill = `hsl(${hs[2] % 360} 75% 55%)`;
+  wheel.setAttribute('aria-valuenow', h);
+  wheel.dataset.h = h;
+}
+function fromPointer(e) {
+  const r = wheel.getBoundingClientRect();
+  setHue(Math.atan2(e.clientX - r.left - r.width / 2, -(e.clientY - r.top - r.height / 2)) * 180 / Math.PI);
+}
+wheel.addEventListener('pointerdown', e => { wheel.setPointerCapture(e.pointerId); fromPointer(e); });
+wheel.addEventListener('pointermove', e => { if (wheel.hasPointerCapture(e.pointerId)) fromPointer(e); });
+wheel.addEventListener('keydown', e => {
+  const step = { ArrowRight: 10, ArrowUp: 10, ArrowLeft: -10, ArrowDown: -10 }[e.key];
+  if (step) { e.preventDefault(); setHue(+wheel.dataset.h + step); }
+});
+setHue(220);
+
+// prerequisite parser
+const examples = [
+  { s: [['Prerequisite: '], ['COMP 250', 'c'], [' '], ['and', 'o'], [' '], ['MATH 240', 'c'], ['.']], t: { op: 'AND', kids: ['COMP 250', 'MATH 240'] } },
+  { s: [['Prerequisite: '], ['ECSE 202', 'c'], [' '], ['or', 'o'], [' '], ['COMP 202', 'c'], [', '], ['and', 'o'], [' '], ['MATH 141', 'c'], ['.']], t: { op: 'AND', kids: [{ op: 'OR', kids: ['ECSE 202', 'COMP 202'] }, 'MATH 141'] } },
+  { s: [['Prerequisite: '], ['MATH 222', 'c'], [', '], ['or', 'o'], [' permission of the instructor.']], t: { op: 'OR', kids: ['MATH 222', "instructor's OK"] } },
+  { s: [['Prerequisite: a reasonable background in programming.']], t: null }
+];
+const sent = $('#sent'), tree = $('#tree'), NS = 'http://www.w3.org/2000/svg';
+let ex = 0, run = 0;
+const circle = '<svg viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M60 4C30 2 4 8 4 20s24 18 50 17 44-6 42-18S70 1 40 5"/></svg>';
+const depth = n => typeof n === "string" ? 0 : 1 + Math.max(...n.kids.map(depth));
+function place(n, d, acc) {
+  if (typeof n === 'string') return { label: n, x: acc.i++ + .5, d };
+  const kids = n.kids.map(k => place(k, d + 1, acc));
+  return { label: n.op, op: 1, d, kids, x: kids.reduce((s, k) => s + k.x, 0) / kids.length };
+}
+function drawTree(t) {
+  tree.classList.remove('in');
+  tree.innerHTML = '';
+  if (!t) {
+    tree.setAttribute("viewBox", "0 0 640 200");
+    tree.innerHTML = '<text class="shrug nd" style="--i:0" x="320" y="110">no course codes here, so there\'s no tree to build ¯\\_(ツ)_/¯</text>';
+  } else {
+    const acc = { i: 0 }, root = place(t, 0, acc), W = Math.max(440, Math.min(640, tree.getBoundingClientRect().width)), xs = W / acc.i, Y = d => 34 + d * 96;
+    tree.setAttribute("viewBox", `0 0 ${W} ${Y(depth(t)) + 24}`);
+    const out = { ln: '', nd: '' };
+    let i = 0;
+    (function walk(n) {
+      const x = n.x * xs, y = Y(n.d), w = n.label.length * 10.5 + 30, k = i++;
+      out.nd += `<g class="nd${n.op ? ' op' : ''}" style="--i:${k}"><rect x="${x - w / 2}" y="${y - 19}" width="${w}" height="38" rx="7"/><text x="${x}" y="${y}">${n.label}</text></g>`;
+      (n.kids || []).forEach(c => { out.ln += `<path class="ln" style="--i:${k + 1}" pathLength="1" d="M${x} ${y + 19}C${x} ${y + 50} ${c.x * xs} ${Y(c.d) - 50} ${c.x * xs} ${Y(c.d) - 19}"/>`; walk(c); });
+    })(root);
+    tree.innerHTML = `<g filter="url(#boil)">${out.ln}</g>${out.nd}`;
+  }
+  tree.getBoundingClientRect();
+  tree.classList.add('in');
+}
+async function parse() {
+  const id = ++run, e = examples[ex], wait = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
+  sent.innerHTML = e.s.map(([txt, k]) => k ? `<span class="tok ${k}">${txt}${k === 'c' ? circle : ''}</span>` : txt).join('');
+  tree.classList.remove('in');
+  tree.innerHTML = '';
+  for (const t of sent.querySelectorAll('.tok')) { await wait(320); if (id !== run) return; t.classList.add('on'); }
+  await wait(400); if (id !== run) return;
+  drawTree(e.t);
+}
+$('#next').addEventListener('click', () => { ex = (ex + 1) % examples.length; parse(); });
+new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { parse(); o.disconnect(); } }, { threshold: .4 }).observe($('.parser'));
+
+// chess piece
+const piece = $('#piece');
+piece.addEventListener('click', () => { const on = piece.classList.toggle('turned'); piece.setAttribute('aria-pressed', on); });
+</script>
+</body>
+</html>
