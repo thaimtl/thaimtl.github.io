@@ -374,8 +374,12 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
 /* flex would make each side of the <wbr> its own item, with a gap between */
 #contact .btn{display:inline-block}
 #contact .links{margin:12px 0 -10px}
+#contact .links a{gap:8px}
+#contact .ico{flex:none;width:16px;height:16px;fill:currentColor}
+#contact .btn .ico{margin-right:10px;vertical-align:-2px}
 .foot{padding-block:18px;font-size:14px;line-height:20px;color:var(--muted)}
 .foot .sig{color:var(--ink);font-weight:500}
 .foot .sig+p{margin-top:2px}
 .foot span{display:inline-block;text-wrap:balance}
 @media (max-width:639px){#contact .hook{font-size:22px;line-height:30px}#contact .btn{padding-inline:16px}.foot{padding-block:14px}}
+@media (max-width:359px){#contact .links{column-gap:12px}#contact .links a{gap:6px}}
