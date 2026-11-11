@@ -384,33 +384,3 @@
     mate.querySelectorAll('.m-x').forEach((x, i) => on(x, .44 + i * .08));
   }
 }
-
-{
-  const track = document.querySelector('#writing .posts');
-  const steps = document.querySelector('#writing .steps');
-  if (track && steps) {
-    const [prev, next] = steps.querySelectorAll('button');
-    let target = null;
-    const update = () => {
-      const max = track.scrollWidth - track.clientWidth;
-      if (Math.abs(track.scrollLeft - target) < 1) target = null;
-      prev.setAttribute('aria-disabled', track.scrollLeft <= 1);
-      next.setAttribute('aria-disabled', track.scrollLeft >= max - 1);
-    };
-    const behavior = () => matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
-    const step = dir => () => {
-      const stride = track.children[1].offsetLeft - track.firstElementChild.offsetLeft;
-      const max = track.scrollWidth - track.clientWidth;
-      const from = Math.round((target ?? track.scrollLeft) / stride - dir * 0.49);
-      target = Math.min(max, Math.max(0, (from + dir) * stride));
-      track.scrollTo({ left: target, behavior: behavior() });
-    };
-    prev.addEventListener('click', step(-1));
-    next.addEventListener('click', step(1));
-    track.addEventListener('focusin', e => e.target.closest('li')?.scrollIntoView({ inline: 'start', block: 'nearest', behavior: behavior() }));
-    track.addEventListener('scroll', update, { passive: true });
-    addEventListener('resize', update);
-    steps.hidden = false;
-    update();
-  }
-}
