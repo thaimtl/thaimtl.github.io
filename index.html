@@ -3,549 +3,281 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="light">
 <title>Thai Tran</title>
-<meta name="description" content="Thai Tran, computer engineering at McGill. I build things with AI and show other people how.">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='11' fill='%232448e0' stroke='%2317171a' stroke-width='3'/%3E%3C/svg%3E">
+<meta name="description" content="Thai Tran studies computer engineering at McGill and builds with AI. Silent Voice, Plan Your Degree, and the Claude Builder Club.">
+<meta property="og:title" content="Thai Tran">
+<meta property="og:description" content="Thai Tran studies computer engineering at McGill and builds with AI. Silent Voice, Plan Your Degree, and the Claude Builder Club.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://thaimtl.github.io/">
+<meta property="og:image" content="https://thaimtl.github.io/img/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="A pixel-art scene of a boy and his grandfather playing Chinese chess at a wooden table in a garden.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='13' fill='%23fff' stroke='%23121316' stroke-width='2.5'/%3E%3Ccircle cx='16' cy='16' r='8.5' fill='none' stroke='%23c8281f' stroke-width='2.5'/%3E%3C/svg%3E">
+<script>document.documentElement.className = 'js'</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Shantell+Sans:wght,BNCE,INFM,SPAC@300..800,-100..100,0..100,0..100&display=swap" rel="stylesheet">
-<style>
-:root{--ink:#17171a;--muted:#5b5b66;--blue:#2448e0;--hi:#d9f85f;--red:#e0332b;--grid:#e9edf6;--paper:#fff;--hand:'Shantell Sans',ui-rounded,system-ui,sans-serif;--hb:20px 6px 18px 5px/5px 18px 6px 20px}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:var(--hand);font-variation-settings:"INFM" 0;color:var(--ink);background-color:var(--paper);background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);background-size:28px 28px;font-size:18px;line-height:1.55;overflow-x:hidden}
-a{color:inherit}
-::selection{background:var(--hi)}
-:focus-visible{outline:2.5px dashed var(--blue);outline-offset:4px}
-.wobble{font-variation-settings:"INFM" 100}
-.page{position:relative;max-width:1140px;margin:0 auto;padding:0 28px 0 104px}
-#wire{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none;overflow:visible;z-index:0}
-#wire .ghost{fill:none;stroke:#c3c8d6;stroke-width:2;stroke-dasharray:3 9;stroke-linecap:round}
-#wire .live{fill:none;stroke:var(--blue);stroke-width:2.6;stroke-linecap:round}
-#wire .tip{fill:var(--blue)}
-#wire .ring{fill:none;stroke:var(--blue);stroke-width:2;transform-box:fill-box;transform-origin:center;animation:ping 1.6s ease-out infinite}
-@keyframes ping{from{transform:scale(.6);opacity:.8}to{transform:scale(2.4);opacity:0}}
-.pin{position:absolute;left:-72px;top:.45em;width:20px;height:20px;border:2.5px solid var(--ink);border-radius:50%;background:var(--paper);z-index:1;transition:background .3s,box-shadow .3s}
-.pin.on{background:var(--blue);box-shadow:0 0 0 6px rgba(36,72,224,.16)}
-section{position:relative;padding-top:clamp(84px,11vw,140px)}
-.top{position:relative;display:flex;justify-content:space-between;align-items:center;gap:16px;min-height:76px;z-index:2}
-.logo{font-weight:800;font-size:26px;text-decoration:none;font-variation-settings:"INFM" 100}
-.top nav{display:flex;gap:22px;font-size:16px;font-weight:500}
-.top nav a{text-decoration:none;position:relative}
-.scrib{position:relative;text-decoration:none;white-space:nowrap}
-.scrib svg{position:absolute;left:-4%;bottom:-6px;width:108%;height:12px;overflow:visible;pointer-events:none}
-.scrib path{fill:none;stroke:var(--blue);stroke-width:2.4;stroke-linecap:round;stroke-dasharray:1 1.2;stroke-dashoffset:1.1;transition:stroke-dashoffset .4s cubic-bezier(.6,0,.2,1)}
-.scrib:hover path,.scrib:focus-visible path{stroke-dashoffset:0}
-.hero{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center;padding-top:clamp(40px,7vw,90px)}
-.hero>div:first-child{position:relative}
-.hero .hey{font-size:24px;font-weight:600;color:var(--muted);font-variation-settings:"INFM" 100}
-.hero h1{font-weight:800;font-size:clamp(64px,9.4vw,132px);line-height:.9;letter-spacing:-.02em;font-variation-settings:"INFM" 100,"BNCE" 0;transition:font-variation-settings .5s;clip-path:inset(0 100% 0 0);animation:write 1.2s .2s cubic-bezier(.6,0,.2,1) forwards}
-@keyframes write{to{clip-path:inset(0 -10% 0 0)}}
-h1:hover,h2:hover{font-variation-settings:"INFM" 100,"BNCE" 100}
-.hero .claim{font-size:clamp(24px,2.6vw,32px);font-weight:600;line-height:1.2;margin-top:18px;max-width:17em;font-variation-settings:"INFM" 60}
-.mark{background:linear-gradient(var(--hi),var(--hi)) no-repeat 0 72%/0 46%;animation:sweep .7s 1.3s ease forwards;padding:0 .08em}
-@keyframes sweep{to{background-size:100% 46%}}
-.hero .lede{margin-top:22px;max-width:31em;color:var(--muted)}
-.hero .lede b{color:var(--ink);font-weight:600}
-.follow{display:flex;align-items:center;gap:10px;margin-top:34px;font-size:20px;font-weight:600;color:var(--blue);font-variation-settings:"INFM" 100}
-.follow svg{width:46px;height:40px}
-.follow path{fill:none;stroke:var(--blue);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round}
-.laptop{position:relative;max-width:440px;justify-self:end;width:100%}
-.screen{position:relative;border:2.6px solid var(--ink);border-radius:var(--hb);background:var(--paper);padding:20px 22px;min-height:210px}
-.screen .dots{display:flex;gap:7px;margin-bottom:14px}
-.screen .dots i{width:11px;height:11px;border:2px solid var(--ink);border-radius:50%}
-.screen .dots i:first-child{background:var(--red)}
-.screen ol{list-style:none;font-size:17px;font-weight:500}
-.screen li{display:flex;gap:10px;min-height:1.7em}
-.screen li::before{content:">";color:var(--blue);font-weight:700}
-.screen li.done::after{content:"✓";color:#1c9a4f;font-weight:700;margin-left:auto}
-.caret{display:inline-block;width:9px;height:1.1em;background:var(--ink);vertical-align:-.15em;margin-left:2px;animation:blink 1s steps(1) infinite}
-@keyframes blink{50%{opacity:0}}
-.base{display:block;width:118%;margin-left:-9%;height:34px;overflow:visible}
-.base path{fill:var(--paper);stroke:var(--ink);stroke-width:2.6;stroke-linejoin:round;vector-effect:non-scaling-stroke}
-.laptop .note{position:absolute;left:-18px;bottom:-62px;font-size:19px;font-weight:600;color:var(--muted);font-variation-settings:"INFM" 100;transform:rotate(-3deg)}
-h2{font-weight:800;font-size:clamp(44px,6vw,76px);line-height:.95;letter-spacing:-.015em;font-variation-settings:"INFM" 100,"BNCE" 0;transition:font-variation-settings .5s;max-width:13em}
-.sub{margin-top:22px;max-width:34em;color:var(--muted);font-size:19px}
-.hb{border:2.5px solid var(--ink);border-radius:var(--hb);background:var(--paper)}
-.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:28px;margin-top:48px}
-.card{padding:28px;position:relative}
-.card.wide{grid-column:1/-1;display:grid;grid-template-columns:1.1fr 1fr;gap:32px;align-items:center}
-.card h3{font-weight:800;font-size:34px;line-height:1;font-variation-settings:"INFM" 100}
-.card .role{font-size:16px;font-weight:600;color:var(--blue);margin-top:8px}
-.card p{margin-top:12px;color:#33333b;font-size:17px}
-.card .go{display:inline-block;margin-top:16px;font-weight:700}
-.stats{display:flex;flex-wrap:wrap;gap:12px 26px;margin-top:18px}
-.stats div{line-height:1.1}
-.stats b{display:block;font-size:36px;font-weight:800;color:var(--blue);font-variation-settings:"INFM" 100}
-.stats span{font-size:15px;color:var(--muted)}
-.doodle{display:block;overflow:visible}
-.doodle .d{fill:none;stroke:var(--ink);stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1 1.2;stroke-dashoffset:1.1;transition:stroke-dashoffset 1s cubic-bezier(.6,0,.2,1) calc(var(--i,0) * 160ms)}
-.doodle .d.b{stroke:var(--blue)}
-.in .doodle .d,.doodle.in .d{stroke-dashoffset:0}
-.doodle text{font-family:var(--hand);font-weight:700;fill:var(--ink);font-variation-settings:"INFM" 100}
-.card .doodle{width:120px;height:90px;margin-bottom:14px}
-.frame{position:relative}
-.frame .scr{border:2.6px solid var(--ink);border-radius:12px 5px 10px 4px/4px 10px 5px 12px;overflow:hidden;background:#eee;aspect-ratio:16/8.75}
-.frame img{display:block;width:100%;height:100%;object-fit:cover}
-.frame .base{width:106%;margin-left:-3%;height:22px}
-.taped{position:relative;transform:rotate(2deg);margin:10px 4px 6px;padding:10px 10px 0;background:var(--paper);border:2.5px solid var(--ink);box-shadow:5px 6px 0 var(--ink)}
-.taped::before{content:"";position:absolute;top:-14px;left:50%;width:84px;height:26px;margin-left:-42px;background:rgba(217,248,95,.85);transform:rotate(-4deg)}
-.taped img{display:block;width:100%;height:auto;aspect-ratio:4/3;object-fit:cover;object-position:center 35%}
-.taped figcaption{font-size:17px;font-weight:600;padding:8px 2px 10px;font-variation-settings:"INFM" 100}
-.badge{position:absolute;top:-22px;right:-14px;width:96px;height:96px;display:grid;place-items:center;text-align:center;line-height:1;font-weight:800;font-size:15px;color:var(--paper);background:var(--blue);border:2.5px solid var(--ink);border-radius:50%;transform:rotate(10deg);font-variation-settings:"INFM" 100}
-.badge b{display:block;font-size:30px}
-.heads{display:flex;flex-wrap:wrap;gap:5px;margin-top:18px;max-width:360px}
-.heads i{width:16px;height:16px;border:2px solid var(--ink);border-radius:50%;transform:scale(0);transition:transform .3s cubic-bezier(.3,1.6,.5,1) calc(var(--i) * 18ms)}
-.heads i:nth-child(7n){background:var(--hi)}
-.heads i:nth-child(11n){background:var(--blue)}
-.in .heads i{transform:scale(1)}
-.siy .wheelbox{display:flex;align-items:center;justify-content:center;gap:28px;flex-wrap:wrap}
-.wheel{position:relative;width:210px;height:210px;border-radius:50%;border:2.6px solid var(--ink);background:conic-gradient(hsl(0 72% 60%),hsl(60 72% 60%),hsl(120 72% 60%),hsl(180 72% 60%),hsl(240 72% 60%),hsl(300 72% 60%),hsl(360 72% 60%));cursor:grab;touch-action:none;flex:none}
-.wheel::after{content:"";position:absolute;inset:34%;border-radius:50%;background:var(--paper);border:2.5px solid var(--ink)}
-.wheel svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;z-index:1;pointer-events:none}
-.wheel polygon{fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linejoin:round}
-.wheel circle{fill:var(--paper);stroke:var(--ink);stroke-width:2.6}
-.outfit{width:150px;height:210px;flex:none}
-.outfit path{stroke:var(--ink);stroke-width:2.6;stroke-linejoin:round;transition:fill .25s}
-.hint{font-size:16px;color:var(--muted);margin-top:14px;font-variation-settings:"INFM" 100}
-.parser{margin-top:44px;padding:clamp(22px,3.4vw,40px)}
-.sent{font-size:clamp(20px,2.4vw,28px);font-weight:600;line-height:1.7;min-height:3.4em}
-.tok{position:relative;display:inline-block;white-space:nowrap}
-.tok.c{margin:0 .3em}
-.tok.c svg{position:absolute;left:-12%;top:-18%;width:124%;height:136%;overflow:visible;pointer-events:none}
-.tok.c path{fill:none;stroke:var(--blue);stroke-width:2.6;stroke-linecap:round;stroke-dasharray:1 1.2;stroke-dashoffset:1.1;transition:stroke-dashoffset .4s ease}
-.tok.c.on path{stroke-dashoffset:0}
-.tok.o{background:linear-gradient(var(--hi),var(--hi)) no-repeat 0 70%/0 52%;transition:background-size .35s ease}
-.tok.o.on{background-size:100% 52%}
-.tree{display:block;width:100%;max-width:640px;height:auto;margin:18px auto 0;overflow:visible}
-.tree .ln{fill:none;stroke:var(--ink);stroke-width:2.4;stroke-linecap:round;stroke-dasharray:1 1.2;stroke-dashoffset:1.1;transition:stroke-dashoffset .5s ease calc(var(--i) * 120ms)}
-.tree .nd{opacity:0;transform:translateY(6px);transition:opacity .35s ease calc(var(--i) * 120ms),transform .35s ease calc(var(--i) * 120ms)}
-.tree.in .ln{stroke-dashoffset:0}
-.tree.in .nd{opacity:1;transform:none}
-.tree rect{fill:var(--paper);stroke:var(--ink);stroke-width:2.4}
-.tree .op rect{fill:var(--hi)}
-.tree text{font-family:var(--hand);font-size:19px;font-weight:700;fill:var(--ink);text-anchor:middle;dominant-baseline:central;font-variation-settings:"INFM" 100}
-.tree .shrug{font-size:24px;fill:var(--muted)}
-.prow{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-top:22px}
-.prow p{font-size:16px;color:var(--muted);max-width:36em}
-.btn{font:inherit;font-weight:700;font-size:18px;color:var(--ink);background:var(--hi);border:2.5px solid var(--ink);border-radius:var(--hb);padding:12px 20px;min-height:48px;cursor:pointer;box-shadow:4px 4px 0 var(--ink);transition:transform .15s,box-shadow .15s;font-variation-settings:"INFM" 100}
-.btn:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--ink)}
-.btn:active{transform:translate(3px,3px);box-shadow:1px 1px 0 var(--ink)}
-.life{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin-top:48px}
-.life .card{display:flex;flex-direction:column}
-.life .card .art{height:150px;display:grid;place-items:center;margin-bottom:10px}
-.piece{width:132px;height:132px;border:0;background:none;cursor:pointer;perspective:600px;font:inherit}
-.piece .flip{position:relative;display:block;width:100%;height:100%;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.4,1.4,.5,1)}
-.piece.turned .flip{transform:rotateY(180deg)}
-.piece .face{position:absolute;inset:0;display:grid;place-items:center;border-radius:50%;border:2.6px solid var(--ink);background:#f6e3c4;box-shadow:inset 0 0 0 8px #f6e3c4,inset 0 0 0 10.5px var(--red);backface-visibility:hidden}
-.piece .front span{font-size:58px;color:var(--red);font-family:"PingFang SC","Noto Serif SC","Songti SC",serif;font-weight:700}
-.piece .back{transform:rotateY(180deg);font-size:17px;font-weight:700;line-height:1.1;padding:22px;text-align:center;font-variation-settings:"INFM" 100}
-.art .doodle{width:190px;height:140px}
-.todo{margin-top:48px;padding:clamp(22px,3.4vw,36px);max-width:760px}
-.todo h3{font-size:32px;font-weight:800;font-variation-settings:"INFM" 100}
-.todo ul{list-style:none;margin-top:12px}
-.todo li{display:flex;gap:14px;align-items:flex-start;padding:10px 0;border-bottom:2px dashed #d5d8e2}
-.todo li:last-child{border-bottom:0}
-.todo svg{width:28px;height:28px;flex:none;margin-top:2px;overflow:visible}
-.todo .sq{fill:none;stroke:var(--ink);stroke-width:2.4}
-.todo .tick{fill:none;stroke:var(--blue);stroke-width:3.4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1 1.2;stroke-dashoffset:1.1;transition:stroke-dashoffset .4s ease calc(var(--i) * 260ms + 300ms)}
-.todo.in .tick{stroke-dashoffset:0}
-.todo li.done span{text-decoration:line-through;text-decoration-color:var(--blue);text-decoration-thickness:2px;color:var(--muted)}
-.todo small{display:block;font-size:15px;color:var(--muted)}
-.hi{padding-bottom:40px}
-.mail{display:inline-block;margin-top:30px;font-size:clamp(22px,3.6vw,44px);font-weight:800;font-variation-settings:"INFM" 100}
-.mail.scrib{white-space:normal}
-.links{display:flex;flex-wrap:wrap;gap:14px 30px;margin-top:30px;font-size:19px;font-weight:600}
-.bulbwrap{position:relative}
-.pin.bulb{width:34px;height:34px;left:-79px;top:-2px}
-.pin.bulb.on{background:var(--hi);box-shadow:0 0 0 10px rgba(217,248,95,.45),0 0 40px 10px rgba(217,248,95,.9)}
-footer{margin-top:90px;padding:26px 0 36px;border-top:2.5px solid var(--ink);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:15px;color:var(--muted)}
-[data-r]{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
-[data-r].in{opacity:1;transform:none}
-@media (max-width:900px){
-  .hero{grid-template-columns:1fr;gap:70px}
-  .laptop{justify-self:start;max-width:400px}
-  .card.wide{grid-template-columns:1fr}
-  .life{grid-template-columns:1fr 1fr}
-}
-@media (max-width:640px){
-  body{font-size:17px}
-  .page{padding:0 16px 0 52px}
-  .pin{left:-44px;width:18px;height:18px}
-  .pin.bulb{left:-51px;width:30px;height:30px}
-  .top nav{gap:14px;font-size:15px}
-  .top nav a:nth-child(-n+2){display:none}
-  .cards,.life{grid-template-columns:1fr}
-  .card{padding:22px}
-  .badge{right:-8px;width:84px;height:84px;font-size:13px}
-  .badge b{font-size:26px}
-  .laptop .note{left:0}
-  .laptop>.base{width:104%;margin-left:-2%}
-  .wheel{width:180px;height:180px}
-  .outfit{width:120px;height:170px}
-}
-@media (prefers-reduced-motion:reduce){
-  *,*::before,*::after{animation:none!important;transition:none!important}
-  .hero h1{clip-path:none}
-  .mark{background-size:100% 46%}
-  [data-r]{opacity:1;transform:none}
-  .doodle .d,.tok.c path,.tree .ln,.todo .tick{stroke-dashoffset:0}
-  .heads i{transform:none}
-  .tree .nd{opacity:1;transform:none}
-}
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <filter id="boil"><feTurbulence id="boilNoise" type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="1"/><feDisplacementMap in="SourceGraphic" scale="3.2"/></filter>
+<symbol id="g-shuai" viewBox="0 0 100 100"><path fill="currentColor" d="M59 2.9C58.1 3.8 58.1 3.9 59.5 7.6C60.1 9.3 60.4 12.5 60.4 20.7L60.5 31.6 53.4 31.7C44.5 31.7 44.2 31.9 46.1 36.6C47.6 40.9 47.3 46.8 45.1 52.9C43.8 57 43.8 57.2 44.5 60.1C45.9 64.8 48.5 66.6 50.5 64.5C52 62.7 54 54.3 54.6 46L55.4 38.1 57.2 37.7C60.7 36.7 60.4 34.6 60.5 66C60.7 96.7 60.7 97.6 63.3 97.9C66.5 98.4 68.3 92.1 68.9 77.5C69.2 71.7 69.7 59.9 69.9 51.4L70.3 35.8 74.7 35.4C77.2 35.1 79.3 35.1 79.5 35.4C79.9 35.8 79.9 49.9 79.5 54.6C79.2 58.1 79.8 58 73.8 57.2C71.4 56.9 71.1 56.9 71.1 57.8C71.1 58.3 72.4 60.2 74.1 62.1C75.8 63.9 77.9 66.3 78.9 67.3C80.8 69.7 81.8 69.7 84 67.7C87.7 64.5 88.9 59.6 89.5 45.7C89.7 40.9 90.1 37 90.8 35.5C91.5 33.1 91.5 32.9 90.5 31.7C89.7 30.9 87.9 29.7 86 29L82.8 27.4 79.2 28.2C77.2 28.8 74.4 29.3 72.9 29.3L70.3 29.4 70.5 21.2C70.5 16.6 70.9 11.3 71.2 9.3C71.8 5.6 71.8 5.6 70.5 4.5C67.6 2.3 60.7 1.2 59 2.9M23.9 4.7C23.5 5.2 23 6.7 22.7 8.1C22.4 11 18.9 20.4 17.1 23.2C16.1 24.8 16 25 13.7 24.7C11.1 24.2 9.1 25 9.1 26.4C9.1 26.7 9.6 28 10.2 29.1C10.7 30.2 11.3 31.9 11.4 32.9C12 35.8 10.8 57.8 9.9 62.8C8.4 71.2 8.4 72.6 9.6 75.3C11.1 78.9 12.6 80.5 14.6 80.5C15.8 80.5 16.1 80.2 16.8 78.1L17.4 75.8 20.9 75.3C22.7 75.2 27.4 74.7 31.1 74.3C34.9 74 38.3 73.4 38.7 73.1C39.8 72.1 39.8 70.9 38.7 70C37.8 69.4 37.8 69.1 39 65.3C39.6 62.8 40.7 59.8 41.5 58.4C43.3 54.9 43 53.8 39.8 52C35.7 49.9 33.8 49.7 30.5 51.4C26.7 53.2 19.2 55.2 18.7 54.3C18.4 53.7 18.6 48.3 19 48C19.2 47.9 22.7 47.4 27.1 47C31.4 46.5 35.7 46 36.3 45.9C38.1 45.3 38.9 43.9 38 42.4C37.5 41.3 37.5 40.6 39 36.9C39.9 34.6 41.3 32 41.9 31.2C42.7 30.3 43.3 29.3 43.3 28.7C43.3 27.3 40.4 25.1 37.2 24.1C34.9 23.3 34.8 23.3 30.2 24.8C24.8 26.7 20.3 27.4 20.3 26.7C20.3 26.4 21.2 25.5 22.2 24.7C24.7 22.9 34.1 10.8 34.1 9.6C34.1 8.2 32.3 6.5 29.4 5.2C26.7 3.9 25.1 3.8 23.9 4.7M31.6 31.2C31.6 32.5 29.9 39.6 29.6 39.9C29.3 40.3 27 40.7 24.2 41.2L19.2 41.8 19.2 37L19.2 32.3 21 32.3C21.9 32.3 24.1 32 25.8 31.6C29.4 30.8 31.6 30.6 31.6 31.2M30.9 59.8C30.9 64.2 30.3 67.7 29.4 68.2C28 68.9 18.7 70 18.3 69.5C18 69.2 18 67 18.1 64.5L18.4 59.9 23.2 59C25.8 58.6 28 58 28.2 57.8C28.4 57.6 29.1 57.5 29.7 57.5C30.9 57.5 30.9 57.8 30.9 59.8"/></symbol>
+<symbol id="g-shi" viewBox="0 0 100 100"><path fill="currentColor" d="M30.3 9.5C29.9 9.9 29.6 11 29.6 11.9C29.6 14.1 27.3 20.4 24.8 25.5C20.9 33.3 13 44.3 5.5 52.2C2.7 55.4 1.8 56.4 2.1 57.3C2.4 57.9 3 58.4 3.7 58.4C5.3 58.4 14 52.1 18.9 47.2L22.8 43.4 22.5 57.3C22.4 64.9 21.9 72.6 21.8 74.4C20.6 81.7 20.4 83.3 21.5 86C23.4 91.1 25.2 92.5 27.3 90.2C29.6 87.8 29.7 86.6 29.9 67.8C30 51.8 30.3 46.1 31.4 42.7C31.7 41.9 31.1 41 29.6 39.4L27.3 37 28.7 35.2C30.2 33.4 33.6 27.6 36.6 22.2C37.6 20.2 39 18.3 39.6 17.7C41.5 15.9 41.8 15 40.6 13.4C37.9 9.6 32.3 7.5 30.3 9.5M54.7 12.8C54.2 13.8 54.2 14.4 55.3 16.7C56.5 19.2 56.5 20.1 56.6 31.5L56.8 43.4 46 44.9C33.7 46.7 31.7 47.2 31.7 48.2C31.7 50.4 33.5 51.6 37.8 52.7C40 53.1 41.2 53 46.2 51.9C49.3 51.2 53 50.4 54.5 50.3L57.4 49.8 57.4 60.8L57.4 71.7 48.7 72.9C37.9 74.5 37.9 74.4 37.9 75.9C37.9 78.3 42.9 80.6 46.8 80.2C47.8 80 53.2 79.3 58.6 78.6C64.1 77.8 72.6 77.1 77.7 76.8C87.6 76.2 88.5 76 89.2 74.5C90 73.2 88.3 71.2 84.7 69.6C81.7 68.1 79.5 68.1 73.8 69.1C71.6 69.6 69 69.9 68 69.9L66.2 69.9 66.2 59.4C66.2 53.7 66.3 48.9 66.6 48.8C67.1 48.5 74.4 47.8 87.9 46.9C97.1 46.3 97.4 46.1 97.9 44.5C98.3 42.8 97.6 41.9 93.8 40C90.4 38.2 88.3 38.2 82.5 39.2C76.7 40.4 67.1 41.6 66.6 41.2C66.5 41 66.5 36.8 66.6 31.9C67.1 24.7 67.4 22.5 68.3 20.2C69.3 17.7 69.3 17.3 68.6 16.2C67.4 14.4 62.3 12.2 58.6 11.9C55.6 11.7 55.3 11.7 54.7 12.8"/></symbol>
+<symbol id="g-xiang" viewBox="0 0 100 100"><path fill="currentColor" d="M32.3 5.5C31.3 6.3 31.1 8.1 32.2 11.6C32.8 13.4 32.9 16.8 32.9 23.3L32.9 32.6 31.6 32.9C30.7 33.1 26.5 33.5 22.4 34.1C18.2 34.6 14.5 35.4 14.1 35.7C12.7 36.6 13.6 38.4 16.2 39.6C18.6 40.7 22 41 27.9 40.2C29.6 39.9 31 39.9 31.1 40.1C31.4 40.5 23.5 53.5 21.1 56.5C18.5 59.9 10.7 67.8 8 69.8C6.3 71 5.8 71.6 6 72.7C6.1 73.7 6.4 74 7.5 73.9C9.6 73.7 16.2 70.4 20.3 67.3C23.5 65 25.3 63.1 31.3 55.3L32.5 53.8 32.2 59.1C31.7 67.3 31 74.6 30 79.5C29.6 81.9 29.3 85 29.4 86.2C29.7 89.4 31.9 93.5 33.7 94.4C34.9 95.2 35.2 95.2 36.4 94C39 91.5 39.3 89.3 39.6 69.9C39.9 60 40.2 51.9 40.6 52.1C40.7 52.3 41.3 53.5 41.9 54.7C43.3 57.6 46.9 60.9 48.8 60.9C51.8 60.9 53.5 56.1 51.4 53C50.3 51.5 44.7 47.8 42.7 47.4C40.2 46.8 39.9 46.2 40.4 42.1C40.7 38.5 40.9 38.2 42.1 38.1C45.6 37.6 52.6 35.7 53.3 34.9C54.7 33.8 54.6 33.1 53.2 31.7C51.2 30 47.4 29.1 44.5 29.9C40.4 30.9 40.6 31.4 41.3 23.8C41.6 20 42.2 15.4 42.7 13.6C43.3 10.4 43.3 10.2 42.1 9C40.6 7.3 36 4.9 34.3 5C33.7 5 32.8 5.2 32.3 5.5M79.2 21.8C73.9 23.6 67 24.8 61.1 24.8C58.2 25 55.8 25.1 55.3 25.6C55 25.9 55.2 27.1 56.1 29.6C57.2 32.8 57.3 33.5 57.2 46.3C57.2 55 56.7 62.2 56.2 66.3C54.7 77.8 54.6 79.7 55.6 81.8C56.8 84.2 58.5 85.9 59.7 85.9C60.8 85.9 62.3 84.4 62.3 83.2C62.3 82.7 62.5 82.3 62.8 82.1C63.1 81.8 66.7 81.5 70.9 81.2C75.1 80.9 78.9 80.4 79.4 80.4C80.1 80.1 80.8 81 81.8 83.6C83.6 87.9 84.7 88.8 86.8 88C88.7 87.4 90.3 85.3 92.2 81.9C93.5 79.1 93.5 76 92.3 66.6C91.3 56.8 91.6 34.6 92.9 31.1C94.5 27 94.5 27 92.6 25.1C90 22.9 85.8 20.4 84.1 20.4C83.5 20.6 81.2 21 79.2 21.8M82.4 29.1C82.9 29.4 83 31.7 83 35.2L83 40.7 81.4 40.4C80.3 40.2 78.6 40.4 77.4 40.7C72.5 42.1 65.4 43.3 64.8 42.8C64.6 42.5 64.5 39.9 64.8 36.4L65.1 30.6 67.2 30C72.7 28.5 81.4 28 82.4 29.1M83 51.8L83 57 80 56.8C78 56.7 75.4 57 72.7 57.6C68.9 58.6 66.3 59 64.6 58.8C64.2 58.8 63.9 57.6 63.9 54.8C63.9 49.7 64.2 49.2 66.4 49.2C68.1 49.2 80 47.2 81.2 46.8C82.9 46.2 83 46.6 83 51.8M82.9 64.6C82.7 65.7 82.6 68.1 82.6 70.1C82.6 73 82.4 73.6 81.8 73.4C81.4 73.3 77.6 73.6 73.1 74.2C68.7 74.8 64.8 75.2 64.3 74.9C63.5 74.8 63.4 73.9 63.4 70.7C63.4 68.4 63.5 66.3 63.9 66C64 65.7 66 65.2 68.1 65C70.4 64.7 74.2 64.1 76.8 63.7C83.5 62.2 83.3 62.2 82.9 64.6"/></symbol>
+<symbol id="g-ma" viewBox="0 0 100 100"><path fill="currentColor" d="M30.7 7.5C30.2 8.1 29.8 9.3 29.8 10.8C29.8 14.3 28.7 17.9 26.5 22.4C22 31.5 15.3 40.7 8.4 47.9C3.7 52.7 3.1 54.4 5.7 54.7C7.5 54.9 12.8 51.2 18.3 45.8C20.9 43.4 23.2 41.4 23.3 41.6C24.2 42.5 22.6 65.1 21 72.2C19.7 78.1 19.8 80.9 21.6 84.5C23.2 87.6 23.5 87.7 25.1 87.7C26.8 87.7 27.1 87.6 28.1 85.3C29.3 82.9 29.5 82 29.9 66.3C30.1 57.3 30.7 47.3 31 44.3L31.6 38.7 29.6 36.9L27.7 35.3 30.1 31.6C31.3 29.7 33.7 25.6 35.4 22.6C37 19.6 39 16.4 39.9 15.5C40.8 14.6 41.4 13.4 41.4 13C41.4 11.7 38.5 8.6 36.7 7.5C34.8 6.5 31.7 6.6 30.7 7.5M70.5 9.9C61.1 11.9 52.2 12.5 48.5 11.6C43.8 10.4 42.8 11.4 44.4 15.5C45.2 17.3 45.3 19.3 45 29.2C44.7 41.3 44.1 46.3 42.8 49.7C41.8 51.7 41.8 51.7 43.2 54.6C44.9 57.9 45.8 58.3 48 57.4C54.1 55 58.6 54.1 71.8 52.9C83 52 82.8 52 83.9 53C84.8 53.8 84.8 54.6 84.5 58.3C83.6 69.8 81.6 77.5 78.9 79.9C76.8 81.5 75.9 81.5 72.6 79.9C69.7 78.4 67.6 78.1 67.2 79.3C67 79.6 68.2 82 69.7 84.4C71.2 86.8 72.6 89.1 72.6 89.4C72.6 89.8 73.2 90.7 73.9 91.6C75.8 93.7 77.9 93.7 81.3 91.6C84.3 89.8 86.3 87.6 88 84.7C89.6 81.5 91.4 73.4 92.6 64.8C93.2 59.2 93.8 56.7 94.7 55.3C97 51.5 96 50 89.3 46.6L86.5 45.1 80.7 46C77.6 46.4 73.8 46.9 72.3 47L69.7 47.2 69.6 44.6C69.4 43.1 69.6 41.7 69.7 41.6C70 41.3 72.4 40.8 75.2 40.5C81.8 39.8 83.9 39 84 37.5C84.5 35.3 78.2 33.8 72.1 34.8L69.9 35.3 70 31.9L70.2 28.6 76.2 27.9C83.1 26.8 84.8 26.2 84.7 24.6C84.3 22.9 80 21.4 77 21.7C75.8 22 73.6 22.3 72.3 22.4L69.9 22.7 70.2 21.2C70.9 16.6 71.2 16 72.6 15.8C76.8 15.4 85.1 14 85.9 13.6C86.5 13.3 86.8 12.5 86.8 11.7C86.8 10.7 86.3 10.2 84.7 9.3C81.6 8.1 79.8 8.1 70.5 9.9M61.4 17.9C61.7 18.4 62 19.7 62 21.2L62 24 58.7 24.6C56.8 25 54.7 25.2 53.9 25.2C52.4 25.2 52.4 25.2 52.8 22.7C53.5 18.2 53.6 17.9 55.4 17.8C58.9 17.3 60.8 17.3 61.4 17.9M62 33.1C62 36.6 62.2 36.5 56.5 37.1C51.8 37.7 51.6 37.5 51.9 33.9L52.2 30.7 55.7 30.4C62.8 29.8 62 29.5 62 33.1M62 43.7C62 44.5 61.9 45.8 61.7 46.7C61.4 48.4 61.3 48.4 56.5 49.3C53.8 49.7 51.3 50 51.2 50C51.2 49.9 51.2 48.2 51.3 46.1C51.5 43.8 51.8 42.6 52.2 42.8C52.5 42.9 54.4 42.8 56.2 42.6C62.2 42 62 41.9 62 43.7M67.3 57.1C66.9 57.7 67.3 59.1 69.6 63.6C72.7 70.1 74.4 71.7 76.5 70.7C78.3 69.9 79.7 66.8 79.2 64.3C78.9 61.9 76.2 59.2 72.9 57.6C69.9 56.2 68.2 56.1 67.3 57.1M39 60.1C38.7 60.6 38.1 62.1 37.6 63.7C37 65.4 35.8 68.1 34.8 69.9C32.7 73.8 32.5 76.6 34.2 79.1C36 81.7 37.8 81.7 40 79.1C42.3 76.4 43.1 74.1 43.4 68.4C43.8 62.8 42.9 59.8 40.9 59.7C40.2 59.5 39.3 59.8 39 60.1M56 59.8C55.4 60.6 55.7 62.1 58.3 67.2C61.9 74.6 64.2 76 66.7 72.2C69 68.9 67.8 65 63.7 62.1C60.8 60 57.1 58.9 56 59.8M45.9 62.5C45.5 63.7 48.3 72.6 49.7 74.7C52.4 78.4 56.2 76.1 56.2 71C56.2 68.7 56 67.8 54.7 66.2C51.5 62.4 46.7 60.4 45.9 62.5"/></symbol>
+<symbol id="g-ju" viewBox="0 0 100 100"><path fill="currentColor" d="M55.3 6.2C53.6 7.2 53.6 8.8 55.2 10.3C57 12.1 57.4 13.9 57.3 17.9L57.2 21.6 55.4 22.1C54.4 22.2 50.9 22.5 47.6 22.8C40.7 23.1 39.7 23.5 41.1 25.8C42.6 27.8 45.6 28.9 49.9 28.9C52 28.9 54.6 28.6 55.6 28.5L57.4 28.1 57.4 30.5C57.4 32.6 57.3 32.9 56 33.1C52.3 33.9 47.1 34.4 42.6 34.4C35.8 34.5 35.7 34.6 38.4 41.2C39.4 43.9 40.7 47.9 41.1 50C41.7 52 42.3 54.5 42.6 55.7C43.4 59.1 47.1 61.8 48.3 59.8C48.7 59.1 53.4 58 56 58C57.4 58 57.4 58 57.4 61.1L57.4 64.4 55.9 64.7C54.9 64.8 49.4 65.3 43.7 65.8C37.7 66.3 33 67 32.6 67.3C31.7 67.8 31.7 68 32.6 69.3C33.6 71 37 73 39.1 73C40 73 42.6 72.7 44.9 72.3C47.3 71.8 51 71.3 53.3 71.1L57.3 70.8 57.4 79.4C57.4 84.1 57.7 89 58 90.4C58.9 94.4 61 95.7 62.9 93.3C64.2 91.7 64.5 88.9 64.9 78.6L65.2 70.3 79.3 70.3C91.3 70.3 93.6 70.1 94.1 69.4C95.3 67.3 93.8 65.1 88.8 62.5L86.2 61.3 77.8 62.1C73 62.5 68.2 63 67 63L64.9 63 65 60.1L65.2 57.2 69.5 57.1C73.5 57 73.9 57 74.9 58.2C76.6 60 79 60 80.3 58.1C81.6 56.4 82 54.7 83.6 47.7C84.3 43.7 85 41.7 86.2 39.9C87 38.7 87.9 37.2 88.2 36.7C88.6 35.5 85.5 32.6 81.6 30.8L78.5 29.4 75 30.2C73.2 30.6 70.2 31.1 68.5 31.1L65.2 31.2 65 29.4C64.9 27.1 65.3 26.8 71.7 25.9C74.2 25.6 77.3 25.2 78.6 24.9C82.9 23.9 83.8 21.1 80.3 19.2C77.5 17.8 74.3 17.6 69.9 18.8C67.9 19.3 66 19.6 65.7 19.5C65.3 19.2 65.9 15.8 66.7 13.6C67.2 12.6 67.5 11.6 67.5 11.2C67.5 10 64.6 7.8 61.6 6.6C58.2 5.2 57.2 5.2 55.3 6.2M29 11.2C28.4 11.8 28.4 12.3 29 14.3C29.6 16.8 29.6 17.1 28.1 20.2C25.1 27.4 18 37.9 9.4 47.9C5 53.1 4.5 54.5 7.1 54.8C9 55.1 12.7 52.5 17.3 47.9C19.3 45.9 21 44.4 21.1 44.5C23.1 46.5 22.7 62.1 20.4 73.4C19.4 77.7 19.4 78.8 19.8 80.8C21.8 89 26 90.7 28.1 84.4C29 82.1 29.1 79.3 29.4 64.7C29.7 55.4 30 47.1 30.1 46.4C30.6 44.8 29.4 42.5 27.1 40.5C26.6 39.8 25.8 39.1 25.8 38.9C25.8 38.7 26.8 37.5 27.8 36.2C29 34.9 31.6 31.6 33.6 28.8C35.6 25.9 38 22.8 39 21.5C41.7 18.6 41.6 17.1 38.6 14.2C37.3 12.9 35.6 11.6 34.7 11.2C32.6 10.2 29.7 10.2 29 11.2M75.7 37.7C76.8 39.8 76.2 40.2 70.9 40.8C68 41.1 65.6 41.2 65.3 41.1C65.2 40.9 64.9 39.9 64.9 38.9C64.9 37.1 65 36.9 67 36.7C73.2 35.9 75.2 36.1 75.7 37.7M57.4 40.4C57.4 43.2 57.7 43.1 51.4 43.9C49.4 44.1 47.6 44.2 47.3 43.9C47.1 43.8 46.9 42.8 46.7 41.8C46.4 40.2 46.4 39.9 47.6 39.7C49 39.4 55.9 38.1 56.9 37.9C57.3 37.9 57.4 38.8 57.4 40.4M74.7 48.5C74.6 49.7 74.3 50.7 74.3 50.8C74.2 50.8 66.5 51.1 65.6 51C65.2 51 64.9 50.4 65 49.1L65.2 47.2 68.9 46.9C71 46.8 73.2 46.5 73.9 46.5C75 46.5 75 46.5 74.7 48.5M57.3 50.4L57.2 52.7 53.3 52.8C51 53 49.1 52.8 48.9 52.7C48.7 52.4 48.4 51.7 48.3 51C48 49.7 48 49.5 51.6 48.8C57.6 47.5 57.6 47.5 57.3 50.4"/></symbol>
+<symbol id="g-pao" viewBox="0 0 100 100"><path fill="currentColor" d="M53.7 7.6C53.2 8 52.6 9.9 52.3 12.6C51.2 20.2 46.9 31.4 41.9 39.8C40.8 42 39.9 43.7 40 44.6C40.2 45.2 39.9 46.2 39.6 46.7C39 47.2 39 48 39.5 50.3C39.9 52.5 40 56.8 39.7 65.4C39.5 75.9 39.5 78 40.2 80.5C41.8 85.7 46.5 89.4 54.1 91.2C70 95 85.6 92.8 93.5 85.7C96.4 83.3 96.7 81.9 95.1 79.6C93.6 77.4 92.6 74.2 91.7 69.6C91.1 66.6 90.2 64.8 89.2 64.8C87.8 64.8 87 66.6 86.3 71C85 79.7 82.9 82.1 75.8 83.8C71.9 84.9 70.5 85 63.3 84.7C52.5 84.3 48.7 83.3 46.8 79.6C45.7 77.5 45.6 67.6 46.6 67C46.9 66.7 49.6 66.1 52.5 65.7C59.1 64.5 59.9 64.2 60.7 63.2C61.1 62.6 61 62.2 60.2 61.3C59.4 60.4 59.4 60.3 60.7 56.3C61.4 54.1 62.6 51.5 63.3 50.5C64 49.6 64.5 48.4 64.5 47.8C64.5 46.7 61.4 44.6 58.3 43.9C56.1 43.3 55.7 43.3 52.9 44.6C49.6 46.1 43.4 47 42.8 46.1C42.7 45.8 43.4 44.8 44.4 43.9C45.6 43 47.5 41 49 39.3C51.3 36.4 51.3 36.4 53.2 36.9C54.8 37.3 55.8 37.1 59.5 35.8C65.2 33.8 70.6 32.5 72.8 32.8L74.6 32.9 74.4 37.9C74.3 45.8 72.1 56.9 70.3 58.8C69.6 59.5 69.5 59.5 66.7 58.5C64 57.6 63.5 57.6 62.9 58.2C62.4 58.5 62 59 62 59.2C62 59.4 63 61 64.5 62.8C65.8 64.4 67.3 66.6 67.9 67.6C69.8 70.5 73.1 69.9 76.2 66C78.2 63.2 80.1 57.3 81.2 49.9C82.2 43.1 83.8 35 84.5 32.8C85.3 30.7 84.5 29.2 81.3 27C78.1 24.9 77.4 24.7 73 26.2C68.4 27.6 56.7 30.6 55.3 30.6C54.1 30.6 54.1 29.8 55.1 29C55.6 28.5 57.2 26 58.5 23.2C59.8 20.3 61.7 16.9 62.6 15.6L64.2 13.1 63.2 11.7C62 10.1 57 7 55.6 7C55 7 54.1 7.3 53.7 7.6M19.4 10.5C18.7 11.5 18.7 12 19.7 14.9C20.6 17.8 20.7 19.1 20.7 32.6C20.7 45.2 20.6 48.1 19.5 54.1C17.6 66.3 13.8 74.6 6.8 83C4 86.3 3.6 87.1 4.2 87.6C5.1 88.8 6.2 88.7 9 86.9C14.9 83.1 22 74.3 23.6 68.9C23.9 67.7 24.4 66.4 24.7 66.3C24.8 66 26.4 67.9 28.2 70.5C29.8 73 31.8 75.5 32.6 75.9C33.6 76.7 33.9 76.7 35.4 75.9C37.6 74.8 38.4 71.8 37.1 69.2C36.1 67.2 32.1 64.5 28 63.2C26.1 62.6 26 62.5 26.3 61C27.3 55.4 27.6 53.2 27.9 48.6C28.2 44.6 28.5 43 29.2 42.6C31.3 41 39.6 34.8 41.1 33.9C43.6 32.3 43.6 30.6 41.2 28.1C38.9 25.7 35.4 24.4 34.2 25.4C33.7 25.7 33 27.3 32.6 29C31.6 32.2 29.9 35.7 29.2 35.7C28.6 35.7 29.2 23.2 29.9 18.4C30.4 16.2 30.7 14 30.7 13.6C30.7 12.4 26 10.1 22.9 9.8C20.4 9.5 20 9.6 19.4 10.5M5.8 38.3C4.8 39.3 4.9 40.4 7.1 44.8C9.7 50 11.4 52.2 13.4 53.1C15.4 54 17.2 52.8 17.9 50C18.8 47.4 18.2 44.8 16.3 42.6C13.5 39.5 7.3 36.9 5.8 38.3M53.8 51.5C53.8 52.7 53.5 54.3 52.5 58.7C52.2 59.8 50.9 60.6 48.1 60.9L46.3 61 46.5 58.2C46.9 52.4 47.7 51.2 51.5 50.3C53.5 49.9 53.8 50 53.8 51.5"/></symbol>
+<symbol id="g-bing" viewBox="0 0 100 100"><path fill="currentColor" d="M57 7.6C53.7 10.9 42.9 17.1 36.8 18.9C34.6 19.5 34.2 19.5 32.2 18.7C29.4 17.4 27 17.1 25.6 17.7C24.1 18.1 24.1 19 25.1 22.1C26.2 25.2 31.5 58.8 30.9 59.3C30.4 59.7 21.7 60.6 14 60.9C5.3 61.2 4.2 61.7 4.8 63.6C5.3 64.8 10.3 67.9 12.7 68.2C13.6 68.3 16.1 68.2 18.2 67.7C33.1 64.3 54.4 62.7 84.8 62.5C94.3 62.4 95.3 62.1 95.3 59.9C95.3 58.2 93.4 56.9 88.8 55.4C85.5 54.4 84.9 54.2 81.4 54.8C76.6 55.6 64.4 56.6 63.8 56.3C63.2 56.2 66.6 44.5 67.6 42.7C68.8 41.1 68.1 39.3 65.8 38C64.9 37.5 64.2 36.9 64.2 36.8C64.2 36.6 67.2 36.2 70.7 35.9C74.3 35.4 77.7 35 78.3 34.7C80.9 33.2 77.5 30.1 72.2 28.9C70 28.5 69.1 28.6 66.3 29.5C64.4 30 60.4 31 57.2 31.6C54.1 32.2 48.4 33.2 44.5 34C40.8 34.7 37.4 35.1 37.3 35.1C36.8 35.1 36.7 34 35.9 28.2L35.6 25.5 38.6 24.6C45.7 22.6 60.7 18.6 64.2 17.8C68.5 16.9 69.8 16 69.8 14.1C69.8 12.6 67.2 9.8 63.5 7.8C60.2 5.8 58.6 5.8 57 7.6M56.7 39.9C57.1 41.8 56.1 56.5 55.5 57.1C55.3 57.2 51.6 57.7 47.3 57.8L39.5 58.1 38.6 51.3C38.1 47.4 37.7 43.6 37.6 42.7L37.3 41.1 46.1 39.6C51.2 38.7 55.3 38 55.6 38.1C55.9 38.1 56.4 39 56.7 39.9M34 68C33.6 68.6 33.1 69.9 32.8 71C32.4 73.4 23 82.7 15.8 87.9C11.1 91.4 9.9 92.9 11.6 93.6C14 94.5 28.1 87.1 36.8 80.6C39.5 78.5 42.6 76.3 43.9 75.7C47.6 73.8 46.7 71.7 40.8 68.5C37.4 66.5 35 66.4 34 68M55 69.5C54.6 69.9 54.3 70.4 54.3 70.5C54.3 70.8 56.4 73.2 58.9 75.9C61.4 78.4 65.1 82.7 67.3 85.2C73.2 92.3 77.4 94.4 79.8 91.3C80.8 90.1 80.8 89.5 80.6 87C80.5 85.3 80.1 83.3 79.5 82.4C77.2 78.1 70.9 73.8 61.4 70.5C56.4 68.8 55.9 68.6 55 69.5"/></symbol>
+<symbol id="g-jiang" viewBox="0 0 100 100"><path fill="currentColor" d="M62.1 7.5C61.5 8.1 60.6 9.9 60.2 11.5C59.6 13.3 58.6 15.7 57.8 16.7C56.3 18.9 49.9 25.2 47.7 26.7C46.8 27.3 46.4 28 46.5 28.6C46.7 30.4 49 30.4 52.5 28.5C54.1 27.6 55.7 26.8 56 26.8C56.9 26.8 65.1 34.6 65.1 35.4C65.1 36.8 53.4 45.1 47.6 47.8C44.3 49.3 43.7 50.2 45 51.4C46.7 52.7 54.4 50 62.1 45.7C64.7 44.2 66.9 43 67.2 43C67.8 43 69.6 48.4 69.1 49.4C69 49.9 65.8 50.3 57.8 51.2C51.6 51.9 45.5 52.5 44 52.5C42.6 52.7 41 52.8 40.6 53.1C39.8 53.4 39.8 52.5 40 43.2C40.3 27.4 40.9 18.6 41.9 16.1C42.9 13.4 42.5 12.2 39.7 10.8C36.7 9.3 34 8.7 32.5 9.3C31 9.7 31 10.2 32.2 15.4C32.8 18.2 33 24.4 32.5 30.1C32.1 34.7 32.4 34.4 26.4 35L22.9 35.3 23.3 31.7C23.5 29.8 24.1 27 24.5 25.3C25.7 21.8 25.2 21 21.4 18.9C16.5 16.4 14.5 17.3 15.6 21.8C16.3 24.6 16.2 27.6 14.5 34.3C13.4 39.3 13.5 40.6 15.6 43C17.4 45 18.7 45 20.8 43.3C21.7 42.6 24.5 41.2 27.3 40.2L32.4 38.6 32.2 45L32.1 51.5 24.8 52.7C20.2 53.4 17.1 53.6 16.6 53.4C16.2 53.1 14.7 52.8 13.5 52.8C9.2 52.8 8.7 55.1 12.3 58.5C13.7 59.7 15.1 60.7 15.7 60.7C16.8 60.7 16.8 60.9 16.5 62.7C16 65.2 12.6 72.5 10.5 75.4C9.6 76.8 7.7 79.2 6.2 80.6C2.1 85 3.8 86.6 9.5 83.6C14.5 80.9 19.3 75.3 23.6 67.3C27.2 60.6 27.6 59.2 26.6 58.3C26.1 57.9 26.9 57.5 28.8 56.7C30.3 56.1 31.6 55.7 31.8 55.8C32.2 56.1 31.3 70.2 30.5 74.8C30 77.4 29.7 80.3 29.7 81.5C29.7 84.4 31.9 89.1 33.6 90C34.8 90.5 35.1 90.5 36.4 89.1C39.2 86.4 39.5 84.4 39.5 68.9C39.5 61.3 39.7 54.9 39.8 54.9C40 54.9 41 55.5 42.3 56.3C45.9 58.5 47.9 58.8 51.7 57.9C53.5 57.5 57.4 56.9 60.3 56.6C63.5 56.3 66.7 56 67.8 55.8L69.7 55.5 69.7 64C69.7 72.5 69.1 79.8 68.4 80.6C68.1 80.8 66.1 80.6 63.9 80.2C59.6 79.3 58.3 79.5 58.3 80.8C58.3 82 68.7 93 69.9 93C71.8 93 75.4 88.8 76.7 85.4C77.9 82 78 78.9 77.6 64.3L77.4 55.8 86.4 55.7C94.5 55.5 95.3 55.4 95.9 54.5C96.6 52.8 95.1 50.6 92.3 49.3C89.6 47.9 88 47.8 81.6 48.5C79.4 48.7 77.6 48.8 77.6 48.7C77.6 48.5 77.9 47.2 78.2 45.6C78.8 42.3 78.2 41.4 74.3 40.2L71.8 39.3 75.8 35C78 32.8 81.2 29.2 82.8 27.3C84.3 25.3 86.5 23.3 87.5 22.5C89.8 21 90.5 19.1 89.5 17.8C88.3 16.1 82.6 12.8 81.5 12.8C80.7 12.8 78.8 13.4 77 14.2C73.9 15.5 69.3 16.4 69.3 15.8C69.3 15.5 69.9 14.8 70.7 14.2C72.1 13 72.1 12.8 71.3 11.5C70.7 10.5 69.3 9.4 66.9 8.4C63.3 6.7 63 6.7 62.1 7.5M76 22.8C75.4 23.8 73.9 25.8 72.7 27.3L70.7 30.1 68.5 28C66.6 26.4 64.2 25 61.4 24.1C60.8 24 60.3 23.5 60.3 23.4C60.3 22.5 62.4 22.2 67.2 22.2C69.6 22.1 72.2 21.9 73.1 21.6C74 21.5 75.2 21.3 76 21.2L77.1 21.2 76 22.8M55.4 34C53.2 34.6 49.9 35.1 48.3 35.1C44.6 35.3 42.6 35.9 42.6 37.2C42.6 38.4 47.7 43 48.9 43C49.5 43 51 42.3 52.5 41.4C53.8 40.5 56.8 38.7 59 37.2C62 35.4 63 34.4 62.9 33.8C62.7 32.5 60.3 32.5 55.4 34M47.6 60C46.4 60.6 46.8 62.2 49.8 67C53.1 72.2 54.7 73.8 56.8 73.7C59.3 73.7 60.9 71.4 60.9 68C60.9 66.1 60.6 65.5 58.9 63.8C56.3 61.3 49.6 59.1 47.6 60"/></symbol>
+<symbol id="g-shi-b" viewBox="0 0 100 100"><path fill="currentColor" d="M39.6 9.6C39.3 10.4 39.6 11.5 40.7 13.9L42.4 17.2 42.3 32.6L42.1 48.1 39.6 48.6C35 49.2 12.9 51.7 8 52C2.5 52.3 1.7 52.6 2.2 54.7C2.5 55.6 3.8 56.9 6 58.3C10.4 61.2 12.1 61.5 16.2 60.1C19.4 59 27.8 57.2 35.5 56.1C37.5 55.8 40 55.3 40.8 55.2L42.3 54.9 42.3 68.4C42.3 76 42.1 82.1 41.9 82.1C41.6 82.1 37.4 82.6 32.3 83.1C27.4 83.7 22.1 84.2 20.5 84.2C16.9 84.3 15.9 84.6 15.8 85.9C15.8 87.3 18.8 89.5 22.2 90.6C25.1 91.6 25.5 91.6 30.9 90.6C42.1 88.9 46.8 88.4 63.8 88.1C80.6 87.8 81.2 87.8 81.8 86.7C82.6 85.6 82.4 85.4 81.5 84.2C80.1 82.3 73.9 79.8 70.9 79.9C69.5 79.9 67.6 80.1 66.4 80.4C65.1 80.7 61.3 81 57.9 81.3L51.6 81.6 51.9 68.3C52 61 52.3 54.9 52.5 54.5C53.3 53.8 61.3 53.4 77.9 53.4C87.3 53.4 95.5 53.1 96.3 53C98.2 52.5 98.5 50.3 96.6 48.4C94.6 46.2 88.9 43.7 85.9 43.8C84.5 43.8 77.7 44.5 70.8 45.2C63.8 46 56.9 46.7 55.3 46.7L52.3 46.7 52.3 44.6C52.3 43.5 52.7 37.8 53.1 32.2C53.8 22.2 54.2 19.7 56 16.4C56.8 14.8 56.3 13.6 53.9 12C49.7 9 40.8 7.6 39.6 9.6"/></symbol>
+<symbol id="g-xiang-b" viewBox="0 0 100 100"><path fill="currentColor" d="M36.1 3C35.6 3.3 34.9 4.6 34.3 6C33.3 9 26.7 17.1 22.5 20.4C19.8 22.7 19.1 24.3 20.6 24.9C21.9 25.4 26.4 23.6 30.6 20.6C34.6 18 35 17.9 37.3 18C38.6 18.2 40.9 18.2 42.4 17.7C44 17.4 45.4 17.3 45.5 17.4C45.7 17.6 44 19.5 41.8 21.8L37.9 25.8 27.6 26C22.1 26.1 17.4 26.3 17.1 26.4C16.4 26.9 16.7 28.1 17.9 29.4C19.4 31.1 19.5 31.2 20.6 37.1C21 39.5 21.8 42.1 22.2 43C23.3 45.2 25.1 45.8 26.4 44.5C27 44 28.7 43.4 30.3 43.1L33.2 42.8 28.8 46.7C26.6 48.8 21.8 52.3 18.5 54.4C12.3 58 11 59.5 12.8 60.1C14.9 61 25.5 56.6 31.7 52.7C35.6 50 35.8 50 36.7 51.1C38.2 52.9 25.5 62.9 15.3 68.2C12.2 69.8 9.6 71.5 9.6 71.8C9.6 74.2 13.4 73.8 21.5 70.9C28.1 68.5 39.2 60.8 41.3 57.4C41.8 56.5 41.9 56.5 42.4 57.1C43.7 59 43 60.4 38.3 65C31.8 71.2 25.7 75.6 16.2 80.2C11.9 82.3 8.3 84.4 8.3 84.7C8.3 85.2 8.6 85.8 9 86.1C9.8 86.7 10.7 86.7 14 85.8C23.4 83.7 33 79 40.1 73.3C42.5 71.3 44.8 69.8 44.8 69.7C45.4 69.7 45.1 75.6 44.3 78.4C43.1 82.6 41.9 84.7 40.4 84.9C39.7 85 37.6 84.6 35.5 84C32.1 82.9 31.8 82.8 30.9 83.7C30.2 84.4 30.3 84.7 33.3 87.7C35 89.5 37.4 92.4 38.8 94C41.2 97.5 42.2 97.9 44.3 97C50.8 94.6 54.8 82.3 53.5 69.5C53.2 67 53 64.7 53 64.7C53.2 64.6 55.1 66.7 57.2 69.4C67.3 81.4 71.2 85.2 74.2 85.8C77.8 86.5 90.4 83.5 91.5 81.7C92.2 80.2 91.5 79.8 86.5 78.7C81.4 77.5 72.9 73.5 68.7 70.1C67 68.9 63.4 65.8 60.7 63.1L55.7 58.3 61.7 55.3C65 53.6 68.7 52.1 69.7 52C71.8 51.7 72.7 50.3 71.8 48.7C69.7 44.5 65.8 41.6 63.7 42.5C63.1 42.7 62.3 43.6 62 44.5C61.3 46.3 56.8 51.8 54.2 53.8C52.4 55.1 52.4 55.1 50.2 54.4C49 53.9 47.3 52.7 46.6 51.7C45.7 50.6 44 49.1 42.7 48.4L40.1 47 41.8 46.3C43.4 45.7 44.3 44.2 43.7 42.8C43.4 42.2 44 41.9 47 41.6C49 41.5 51.7 41.3 53 41.2C55.3 41 55.6 41 56.5 42.4C57.7 44 60.2 44.2 61.9 42.7C62.5 42.1 64.1 39.3 65.7 36.6C67 33.9 68.8 30.8 69.7 29.6C71.1 27.9 71.2 27.5 70.8 26.3C70 24.9 64.7 21.5 62.5 21C61.7 20.9 59 21.3 56.6 22.1C54.2 22.8 51.1 23.6 49.6 23.7L47 24.2 48.8 22.5C52 20 56.8 16.4 58.6 15.5C60.8 14.3 61.1 13.4 60.1 11.7C59.2 10.2 55.3 8.2 53.3 8.2C52.6 8.2 49.7 9.2 47 10.2C44.2 11.3 41.8 11.9 41.5 11.7C41.3 11.4 41.6 11 42.1 10.7C44.8 9.2 45.2 8.4 44.9 7C44.6 6 43.7 5.2 41.3 4C37.9 2.4 37.4 2.2 36.1 3M59.2 29.3C59.2 30 58.9 31.8 58.3 33.2L57.2 35.9 51.7 36L46.1 36.2 46.1 32.7C46.1 30.3 46.3 29.3 46.7 29.3C47.2 29.3 49.3 28.8 51.7 28.5C57.7 27.5 59 27.6 59.2 29.3M38.8 33.9L38.8 37.7 33.3 37.7L27.8 37.7 27.5 34.7C27.3 33 27.3 31.5 27.5 31.4C27.8 31.1 32.9 30.6 36.8 30.5L38.8 30.3 38.8 33.9"/></symbol>
+<symbol id="g-ma-b" viewBox="0 0 100 100"><path fill="currentColor" d="M66 4.2C57.2 6.9 34.8 9.3 31.4 8.2C28.8 7.3 25.6 7.4 24.7 8.4C24.2 9.2 24.2 9.8 25.2 11.7C26.9 15.2 27.2 19.8 26.4 30.1C25.6 41.2 25 45.4 23.6 48.1C22.5 50.5 22.8 51.9 25 55.1C27.1 57.6 28.2 57.8 32.1 56.2C36.7 54.3 42 53.2 50.8 52.3C60 51.1 77.1 50.2 78.9 50.7C80.9 51.1 81.1 52.9 80 61.8C78.4 74.6 76 82.4 73.3 83C72.7 83 70.2 82.4 67.6 81.6C63.5 80.1 63 80 62.2 80.8C61.5 81.6 61.6 82 64.5 86C66.2 88.5 68.3 91.7 69.1 93.3C70.3 95.7 70.8 96 72.4 96.1C76.2 96.6 82.5 90.8 85.2 84.4C87.1 80 87.9 75.9 89.2 65.6C90 57.5 90.4 55.1 91.6 52.9C93.9 48.3 93.6 47.7 86.6 44.3L82.4 42.3 76.5 43.2C73.2 43.7 67 44.3 62.6 44.5L54.6 45 54.6 42.1C54.6 38.6 54 38.9 64.3 37.8C72.1 36.9 74.3 36.3 74.6 34.4C74.9 31.8 68.7 29.9 63 30.9C61 31.2 58.4 31.3 57.3 31.3C55.3 31.3 55.3 31.3 55.3 29.3C55.3 28 55.4 26.9 55.7 26.7C55.9 26.6 59.2 26.1 63 25.6C71.4 24.5 73.3 23.9 74 22.5C74.8 19.6 68.4 17.6 61.9 18.5C59.9 19 57.5 19.1 56.7 19.1C55.4 19.1 55.4 19.1 55.9 16.9C56.2 15.5 56.5 14.1 56.7 13.4C56.7 12.5 57.8 12.2 65.4 11.1C74.6 9.8 76.3 9.3 76.3 7.6C76.3 4.7 70.6 3 66 4.2M45.5 15.2C45.8 15.7 45.8 17.2 45.8 18.7L45.8 21.4 42.4 21.7C40.5 21.8 38 22 36.9 22C34.8 22 34.8 21.8 34.8 20.3C34.8 19.1 35 17.4 35.2 16.3L35.5 14.2 40.4 14.2C44.2 14.2 45.3 14.4 45.5 15.2M45.8 30.7L45.8 33.4 41.3 33.9C33.6 34.5 33.6 34.5 33.7 32.5C33.7 28.3 33.7 28.3 40.1 28.2L45.8 28 45.8 30.7M45.8 43.5L45.8 46.9 42.4 47.5C40.5 47.8 37.4 48.1 35.6 48.5C32.3 48.8 32.3 48.8 32.8 47.5C32.9 46.7 33.1 45 33.1 43.5L33.1 40.8 38 40.7C40.5 40.5 43.5 40.5 44.3 40.4C45.8 40.4 45.8 40.4 45.8 43.5M57 57.6C56.4 58.4 56.4 58.8 57.2 60C58.9 62.7 65.4 69.8 67.2 70.8C69.2 72.2 71.4 71.4 72.7 68.9C74.9 64.1 73 61 66.4 58.9C60 56.9 57.8 56.7 57 57.6M13.4 59.2C13 60 12.5 61.4 12.3 62.4C12 63.5 10.8 66.5 9.5 69.1C7.4 72.7 7.1 74.1 7.1 76.5C7.1 80.6 8.5 83 11.2 83C12.8 83 13.4 82.7 14.7 80.8C18.7 75.4 20.3 64.5 17.7 60.2C16.5 58 14.6 57.5 13.4 59.2M41.3 61C41.3 62.7 46.2 70 48.6 72.1C50.8 74 51.6 74 53.7 71.9C55.3 70.3 55.4 70 55.1 67.5C55 65.6 54.5 64.1 53.5 63.3C51.9 61.4 47 59.7 43.9 59.7C41.6 59.7 41.3 59.9 41.3 61M25.5 61.1C24.4 61.6 24.7 62.9 27.4 67.8C30.7 74 33.7 76.5 36.3 74.8C38.2 73.5 38.6 69.1 37.2 66.4C35.9 63.8 27.7 60.2 25.5 61.1"/></symbol>
+<symbol id="g-ju-b" viewBox="0 0 100 100"><path fill="currentColor" d="M44.3 4.2C43.6 5.1 43.7 6.1 44.7 11.1C45 12.7 45.2 14.8 45.2 15.8L45 17.5 41.2 18.2C39.2 18.5 35.3 19 32.5 19.3C29.5 19.6 27.1 20 27 20.4C26.3 21.4 27.5 23.3 29.5 24C31.6 24.8 38.2 25 42.3 24.2C43.7 24.1 44.9 24.1 45 24.2C45.2 24.5 45 25.9 44.9 27.6L44.6 30.6 41.8 30.9C40.4 31.2 36 31.3 32 31.4C28.2 31.4 24.9 31.7 24.6 31.9C23.9 32.3 23.9 34 24.6 34.4C25.8 35.2 27 38.9 28 45.9C29.1 55.1 29.8 57.8 30.8 58.9C31.8 60 33.5 60 34.6 58.8C35.3 58.1 36.3 57.8 39.8 57.6L44.3 57.5 44.2 60.7L44 64 34.9 64.8C29.8 65.3 21.9 65.8 17.1 66.2C7.4 66.8 6.4 67.1 8 69.3C9.1 71.2 12.7 73.4 15.1 73.8C16.4 74 18.1 73.8 20.4 73.1C24.3 71.9 33.7 70.3 39.9 69.8L44.2 69.5 44.2 80.2C44.2 91.6 44.7 95.4 46.3 96.3C47.7 97.1 49.4 95 50.1 91.7C50.8 88.5 51.5 81.5 51.9 74.6L52.2 69.2 54.3 68.9C55.4 68.6 63.9 68.5 73.3 68.4C91.2 68.1 92.6 67.9 92.6 65.8C92.6 64.4 89.7 61.9 86.3 60.5C83.2 59.2 83.1 59.1 80.5 59.9C76.6 61.2 54.7 63.3 52.9 62.6C52.3 62.3 52.2 61.6 52.2 59.8C52.1 58.5 52.3 57.2 52.6 56.9C53 56.8 55 56.5 57.1 56.2C60.9 55.8 61.1 56 62.5 57.4C64.2 59.1 65.4 59.2 67.3 57.5C69 56.2 69.8 53.8 72.9 43.3C73.8 40.3 75 36.9 75.7 35.8C77.7 32.8 77.8 32.3 76.7 30.6C75.6 28.9 69.4 25.7 67.1 25.7C66.3 25.7 64.3 26.2 62.6 26.8C61.1 27.3 58.3 27.9 56.4 28.1L53 28.3 53 25.4L53 22.4 56.7 22C64.5 21.3 70.9 19.9 72.1 18.9C73.3 17.6 72.8 16.5 70.2 15.2C67.8 14.1 64.3 14 59 15.1C53.2 16.2 53.5 16.2 53.9 13.5C54 12.3 54.5 10.7 54.7 10.2C55.6 8.2 54.6 6.8 50.9 5.1C47.5 3.4 45.2 3.1 44.3 4.2M65.2 35.5C65 37.1 64.7 38.3 64.7 38.5C64.6 38.5 63.6 38.3 62.5 38.1C60.8 37.6 59.8 37.6 57 38.3C55.2 38.8 53.3 38.9 53 38.8C52.5 38.3 52.5 34.3 53.2 33.8C53.7 33.4 59.2 32.7 62.6 32.7L65.6 32.7 65.2 35.5M44.7 37.8C44.7 39.3 44.6 40.6 44.3 40.7C44.2 40.9 41.9 41 39.4 41L34.7 41.3 34.3 38.9C34 37.5 34 36.4 34.2 36.1C34.4 35.9 38.1 35.5 43.3 35.2C44.7 35.1 44.7 35.1 44.7 37.8M63.8 44.1C63.8 44.5 63.2 46.1 62.8 47.8L61.9 50.9 57.7 50.9C55.4 50.9 53.5 50.9 53.2 50.9C53 50.9 52.9 49.6 52.9 48.1L52.9 45.2 57.6 44.4C63.8 43.4 64.2 43.4 63.8 44.1M44.7 48.6C44.7 52.3 44.7 52.4 39.8 52.4L35.3 52.4 35.3 50.5C35.3 49.3 35.3 48.2 35 47.8C34.7 46.9 35 46.9 42.9 46.5L44.7 46.4 44.7 48.6"/></symbol>
+<symbol id="g-pao-b" viewBox="0 0 100 100"><path fill="currentColor" d="M55.4 10.1C55.3 10.4 54.8 11.8 54.7 13.3C54.2 16.6 52.7 21.6 50.5 25.9C48.7 29.4 42.9 38.4 39.6 42.8C37.8 44.9 38 46.5 39.7 46.5C41.3 46.5 46.7 42.3 50.6 38.1C54.1 34.3 54.1 34.3 55.8 34.9C57.2 35.4 58.2 35.2 61.5 34.5C63.8 33.9 68.3 33.2 71.4 33C78.8 32.6 78.5 32.2 77.8 42C77.2 50 76.6 52.8 75.3 55.3C74.4 57 73.6 57 70.8 55.5C68.8 54.5 67 54.5 67 55.8C67 56.1 68.2 58.9 69.8 61.8C72.3 67 72.6 67.2 74.3 67.3C77.9 67.6 83.2 61.9 84.2 56.4C84.6 54.8 85.2 49.7 85.6 45.2C86.2 39.7 86.8 36.5 87.4 34.9C87.9 33.8 88.4 32.4 88.4 32C88.4 31 84.5 27.7 82 26.6C80.2 25.9 79.5 25.8 78.5 26.2C76.5 26.9 57.9 29.8 57.3 29.4C57 29.3 57.2 28.7 57.7 28.1C58.3 27.5 59.6 25.5 60.6 23.6C61.8 21.8 63.3 19.5 64.1 18.6C64.9 17.6 65.4 16.5 65.4 15.9C65.4 14.6 63 12 60.4 10.7C57.6 9.4 56.3 9.1 55.4 10.1M33.9 27.9C31.6 28.8 21 31 17.1 31.6C14.6 31.9 13.4 32.7 14 34C14.3 35.1 16.8 36.4 18.5 36.4C19.2 36.4 20.3 36.7 20.8 37C21.7 37.4 21.7 37.5 21 40C18.8 47.1 12.3 57.1 6 62.8C2 66.4 1.2 67.6 2.7 68.2C4.7 68.9 12 65.4 15.8 61.9C17.5 60.3 17.5 60.3 18.2 67.3C18.8 73.3 19.7 75.2 21.9 75.4C22.7 75.6 23.5 75.2 24 74.4C24.6 73.6 25.6 73.3 31.2 72.7C38.9 71.8 40.3 71.1 38.3 68.9C37.7 68.2 37.8 67.5 39.3 63.1C40.2 60.2 41.6 57 42.3 55.7L43.9 53.5 42.2 52.1C41.3 51.3 39.3 50.3 37.7 49.9C34.9 49 34.8 49 32.5 50C30.1 51.3 25.8 52.6 24.2 52.6C23.6 52.6 23.9 51.8 25.8 48.6C29.4 42.5 29.8 41.9 31 40.4C32 39.1 32 39 31.3 37.5C30.1 35.5 30.1 35.4 31.6 35.4C33.8 35.4 44.2 32.4 44.7 31.7C45.5 30.6 45.2 29.8 43.6 28.7C41.6 27.4 37.1 26.9 33.9 27.9M58.9 42.9C56.4 44.1 55.6 44.2 50.6 44.2C45.2 44.1 45.1 44.2 44.8 45.4C44.7 46 44.8 47.3 45.1 48.3C45.5 49.3 45.7 54.5 45.5 63.7C45.4 77 45.4 77.3 46.7 79.9C49 85.2 54.8 88.7 63.3 90C74.4 91.9 91.3 88.8 95.9 84C98.4 81.4 98.6 80.4 97 76.7C96.2 75.2 95.2 72 94.9 69.6C94.3 65.4 93.9 64.3 92.4 64.4C90.9 64.4 90.4 65.3 89.7 69.6C88.7 75.4 88.1 76.7 86.1 78.5C83 81.3 79.7 81.8 69.1 81.8C60.1 81.8 59.6 81.8 57.2 80.5C55.7 79.9 54.1 78.6 53.5 77.6C52.1 75.6 51.5 70.4 52.1 66.7L52.5 64.1 58.8 63.5C63.5 63.2 65.1 62.8 65.9 62.2C66.6 61.4 66.6 61.2 65.9 60.3C65.1 59.6 65 59 65.4 58.4C65.7 57.9 66.5 56 67 54.1C67.6 52.3 68.8 50 69.5 49C72.3 45.5 72.1 45.2 67.3 42.9C63.5 41.2 62.5 41.2 58.9 42.9M59 53.9L58.2 58 55.4 58.4C54 58.7 52.7 58.7 52.5 58.6C52.1 58.2 53.4 50.5 53.8 49.9C54.1 49.6 55.4 49.2 57 48.9C60.2 48.1 60.4 48.1 59 53.9M32.5 56.8C32.5 57.4 32 59.9 31.6 62.4C30.7 67.3 30.6 67.3 26.5 67.3L24.3 67.3 24.2 62.2L24 57.1 25.8 56.8C26.8 56.7 28.5 56.4 29.7 56.3C30.7 56 31.9 55.8 32 55.7C32.3 55.7 32.5 56.1 32.5 56.8"/></symbol>
+<symbol id="g-zu" viewBox="0 0 100 100"><path fill="currentColor" d="M42.2 4.1C41.7 4.9 44.5 10.6 46.8 14.2L47.9 15.8 42.5 16.3C39.6 16.8 33.6 17.2 29.4 17.4C21.6 17.8 20.2 18.2 20.2 20C20.2 20.4 20.6 21.3 21.2 21.8C22.1 22.6 23.2 22.7 28.1 23C31.5 23 37.3 22.9 41.2 22.6C54.6 21.4 73.5 19.4 76 19C80.3 17.9 81 15.2 77.4 13.5C74.2 11.7 71.8 11.6 67.5 12.7C65.3 13.3 61.7 14 59.4 14.2L55.3 14.5 55.3 11.9C55.3 9.7 55.2 9.1 53.6 7.5C52.4 6.4 50.4 5.2 48.4 4.5C44.3 3.1 42.6 2.9 42.2 4.1M62 21.8C61.8 22 61.7 22.9 61.7 23.7C61.7 27 59.4 32.7 54.3 42.2C53.7 43.2 53.3 44.1 53.3 44.1C53.3 44.2 51.7 44 49.8 43.4C47.1 42.8 46.4 42.7 45.8 43.2C44.9 44 44.9 44 44 41.9C43.2 39.6 40.9 37.6 38 36.7L35.4 35.9 37.7 33.5C40.7 30.7 41.7 28.8 40.9 27.6C39.4 25.9 38.1 25 35.5 24.2C32.3 23.1 31.6 23.6 31.2 26.8C30.7 30.9 26.6 37.9 20.2 44.7C18 47.1 17.7 49 19.5 49.2C20.9 49.4 26.6 45.8 29.9 42.7L32.8 39.6 34.1 41.9C35.7 44.5 38.4 47.1 40.1 47.6C41.6 48 43.3 47.1 43.8 45.8C44.6 43.1 45.5 45.8 45.5 51.3L45.5 54.8 41.9 55.1C39.9 55.2 34.6 55.7 30.3 56.1C26 56.5 19.2 57.1 15.1 57.2C8.6 57.5 7.8 57.7 7.6 58.5C7.3 59.8 9.8 62.3 12.4 63.3C15 64.2 17.3 64 27.3 62.3C31.3 61.6 37.1 60.9 40 60.7L45.5 60.3 45.5 76.9C45.3 94.4 45.5 96 47.7 96.6C48.1 96.8 49 96.7 49.4 96.3C51.8 94.2 52.9 88.5 53.6 73C54 65.9 54.3 60 54.4 59.8C54.6 59.8 62.7 59.6 72.5 59.4C82.2 59.3 90.6 59 91.2 58.7C92.2 58.3 92.6 57 92.3 55.8C91.9 54.6 87.5 52.6 84.4 51.9C82.3 51.5 80.5 51.5 75.4 52.3C71.9 52.8 65.7 53.3 61.8 53.6C53.6 53.9 53.7 54.1 55.5 49.7C56 48.1 56.2 47.4 55.7 46.7C55.3 46 55.6 45.7 57.5 44.2C58.8 43.2 60.8 41.5 62 40.3L64.1 38 67 41.5C73.1 48.4 78 49.2 78.7 43.4C79.2 39.9 75.8 37.2 69.6 35.4C67.9 35 66.6 34.6 66.4 34.6C66.3 34.4 67.5 32.5 69 30.5C70.5 28.5 71.8 26.6 71.8 26.3C71.8 25.6 69 23.4 66.9 22.4C64.6 21.4 62.7 21.3 62 21.8"/></symbol>
 </svg>
-
-<div class="page" id="page">
-<svg id="wire" aria-hidden="true"><path class="ghost"/><path class="live"/><circle class="ring" r="6"/><circle class="tip" r="5"/></svg>
-
+<div class="stage pre" aria-hidden="true">
+<img class="bg" src="img/scene-bg.png" alt="" width="960" height="360">
+<img class="spr spr--elder" src="img/scene-elder.png" alt="" width="138" height="166">
+<div class="sf table" style="background-image:url(img/scene-table.png)"><span class="shade" style="--x:-2;--y:.6;--s:1.2"></span><span class="shade" style="--x:10;--y:.7;--s:1.3"></span><span class="slab-shadow"></span></div>
+<span class="sf apron" style="background-image:url(img/scene-table.png)"></span>
+<span class="sf slab-front" style="background-image:url(img/scene-board.png)"></span>
+<div class="sf slab" style="background-image:url(img/scene-board.png)">
+<svg class="lines" viewBox="-62 -62 924 1024"><rect class="frame" x="-22" y="-22" width="844" height="944"/><path class="hl" d="M0 0H800M0 100H800M0 200H800M0 300H800M0 400H800M0 500H800M0 600H800M0 700H800M0 800H800M0 900H800M0 0V900M100 0V400M100 500V900M200 0V400M200 500V900M300 0V400M300 500V900M400 0V400M400 500V900M500 0V400M500 500V900M600 0V400M600 500V900M700 0V400M700 500V900M800 0V900M300 0L500 200M500 0L300 200M300 700L500 900M500 700L300 900M91 173V191H73M91 227V209H73M109 173V191H127M109 227V209H127M691 173V191H673M691 227V209H673M709 173V191H727M709 227V209H727M91 673V691H73M91 727V709H73M109 673V691H127M109 727V709H127M691 673V691H673M691 727V709H673M709 673V691H727M709 727V709H727M9 273V291H27M9 327V309H27M191 273V291H173M191 327V309H173M209 273V291H227M209 327V309H227M391 273V291H373M391 327V309H373M409 273V291H427M409 327V309H427M591 273V291H573M591 327V309H573M609 273V291H627M609 327V309H627M791 273V291H773M791 327V309H773M9 573V591H27M9 627V609H27M191 573V591H173M191 627V609H173M209 573V591H227M209 627V609H227M391 573V591H373M391 627V609H373M409 573V591H427M409 627V609H427M591 573V591H573M591 627V609H573M609 573V591H627M609 627V609H627M791 573V591H773M791 627V609H773"/><path d="M0 0H800M0 100H800M0 200H800M0 300H800M0 400H800M0 500H800M0 600H800M0 700H800M0 800H800M0 900H800M0 0V900M100 0V400M100 500V900M200 0V400M200 500V900M300 0V400M300 500V900M400 0V400M400 500V900M500 0V400M500 500V900M600 0V400M600 500V900M700 0V400M700 500V900M800 0V900M300 0L500 200M500 0L300 200M300 700L500 900M500 700L300 900M91 173V191H73M91 227V209H73M109 173V191H127M109 227V209H127M691 173V191H673M691 227V209H673M709 173V191H727M709 227V209H727M91 673V691H73M91 727V709H73M109 673V691H127M109 727V709H127M691 673V691H673M691 727V709H673M709 673V691H727M709 727V709H727M9 273V291H27M9 327V309H27M191 273V291H173M191 327V309H173M209 273V291H227M209 327V309H227M391 273V291H373M391 327V309H373M409 273V291H427M409 327V309H427M591 273V291H573M591 327V309H573M609 273V291H627M609 327V309H627M791 273V291H773M791 327V309H773M9 573V591H27M9 627V609H27M191 573V591H173M191 627V609H173M209 573V591H227M209 627V609H227M391 573V591H373M391 627V609H373M409 573V591H427M409 627V609H427M591 573V591H573M591 627V609H573M609 573V591H627M609 627V609H627M791 573V591H773M791 627V609H773"/></svg>
+<p class="name"><span>Thai</span><span>Tran</span></p>
+<svg class="dots" viewBox="-62 -62 924 1024"></svg>
+</div>
+<span class="prop prop--fruit" style="--x:-2;--y:.6"><img src="img/scene-fruit.png" alt="" width="50" height="36"><img class="z" src="img/scene-fruit-z.png" alt="" width="50" height="39"></span>
+<span class="prop prop--tea" style="--x:10;--y:.7"><img src="img/scene-tea.png" alt="" width="54" height="38"><img class="z" src="img/scene-tea-z.png" alt="" width="56" height="40"></span>
+<span class="p" data-sq="a1" style="--x:8;--y:0"><span class="p-in"><svg class="p-face pc pc--red" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-ju" x="-30" y="-29" width="62" height="62"/><use href="#g-ju" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="b1" style="--x:7;--y:0"><span class="p-in"><svg class="p-face pc pc--red" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-ma" x="-30" y="-29" width="62" height="62"/><use href="#g-ma" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="c1" style="--x:6;--y:0"><span class="p-in"><svg class="p-face pc pc--red" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-xiang" x="-30" y="-29" width="62" height="62"/><use href="#g-xiang" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="d1" style="--x:5;--y:0"><span class="p-in"><svg class="p-face pc pc--red" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-shi" x="-30" y="-29" width="62" height="62"/><use href="#g-shi" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="e1" style="--x:4;--y:0"><span class="p-in"><svg class="p-face pc pc--red" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-shuai" x="-30" y="-29" width="62" height="62"/><use href="#g-shuai" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="f1" style="--x:3;--y:0"><span class="p-in"><svg class="p-face pc pc--red" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-shi" x="-30" y="-29" width="62" height="62"/><use href="#g-shi" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="g1" style="--x:2;--y:0"><span class="p-in"><svg class="p-face pc pc--red" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-xiang" x="-30" y="-29" width="62" height="62"/><use href="#g-xiang" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="h1" style="--x:1;--y:0"><span class="p-in"><svg class="p-face pc pc--red" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-ma" x="-30" y="-29" width="62" height="62"/><use href="#g-ma" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="i1" style="--x:0;--y:0"><span class="p-in"><svg class="p-face pc pc--red" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-ju" x="-30" y="-29" width="62" height="62"/><use href="#g-ju" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="b3" style="--x:7;--y:2"><span class="p-in"><svg class="p-face pc pc--red" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-pao" x="-30" y="-29" width="62" height="62"/><use href="#g-pao" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="h3" style="--x:1;--y:2"><span class="p-in"><svg class="p-face pc pc--red" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-pao" x="-30" y="-29" width="62" height="62"/><use href="#g-pao" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="a4" style="--x:8;--y:3"><span class="p-in"><svg class="p-face pc pc--red" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-bing" x="-30" y="-29" width="62" height="62"/><use href="#g-bing" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="c4" style="--x:6;--y:3"><span class="p-in"><svg class="p-face pc pc--red" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-bing" x="-30" y="-29" width="62" height="62"/><use href="#g-bing" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="e4" style="--x:4;--y:3"><span class="p-in"><svg class="p-face pc pc--red" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-bing" x="-30" y="-29" width="62" height="62"/><use href="#g-bing" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="g4" style="--x:2;--y:3"><span class="p-in"><svg class="p-face pc pc--red" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-bing" x="-30" y="-29" width="62" height="62"/><use href="#g-bing" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="i4" style="--x:0;--y:3"><span class="p-in"><svg class="p-face pc pc--red" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-bing" x="-30" y="-29" width="62" height="62"/><use href="#g-bing" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="a7" style="--x:8;--y:6"><span class="p-in"><svg class="p-face pc" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-zu" x="-30" y="-29" width="62" height="62"/><use href="#g-zu" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="c7" style="--x:6;--y:6"><span class="p-in"><svg class="p-face pc" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-zu" x="-30" y="-29" width="62" height="62"/><use href="#g-zu" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="e7" style="--x:4;--y:6"><span class="p-in"><svg class="p-face pc" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-zu" x="-30" y="-29" width="62" height="62"/><use href="#g-zu" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="g7" style="--x:2;--y:6"><span class="p-in"><svg class="p-face pc" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-zu" x="-30" y="-29" width="62" height="62"/><use href="#g-zu" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="i7" style="--x:0;--y:6"><span class="p-in"><svg class="p-face pc" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-zu" x="-30" y="-29" width="62" height="62"/><use href="#g-zu" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="b8" style="--x:7;--y:7"><span class="p-in"><svg class="p-face pc" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-pao-b" x="-30" y="-29" width="62" height="62"/><use href="#g-pao-b" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="h8" style="--x:1;--y:7"><span class="p-in"><svg class="p-face pc" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-pao-b" x="-30" y="-29" width="62" height="62"/><use href="#g-pao-b" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="a10" style="--x:8;--y:9"><span class="p-in"><svg class="p-face pc" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-ju-b" x="-30" y="-29" width="62" height="62"/><use href="#g-ju-b" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="b10" style="--x:7;--y:9"><span class="p-in"><svg class="p-face pc" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-ma-b" x="-30" y="-29" width="62" height="62"/><use href="#g-ma-b" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="c10" style="--x:6;--y:9"><span class="p-in"><svg class="p-face pc" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-xiang-b" x="-30" y="-29" width="62" height="62"/><use href="#g-xiang-b" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="d10" style="--x:5;--y:9"><span class="p-in"><svg class="p-face pc" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-shi-b" x="-30" y="-29" width="62" height="62"/><use href="#g-shi-b" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="e10" style="--x:4;--y:9"><span class="p-in"><svg class="p-face pc" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-jiang" x="-30" y="-29" width="62" height="62"/><use href="#g-jiang" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="f10" style="--x:3;--y:9"><span class="p-in"><svg class="p-face pc" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-shi-b" x="-30" y="-29" width="62" height="62"/><use href="#g-shi-b" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="g10" style="--x:2;--y:9"><span class="p-in"><svg class="p-face pc" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-xiang-b" x="-30" y="-29" width="62" height="62"/><use href="#g-xiang-b" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="h10" style="--x:1;--y:9"><span class="p-in"><svg class="p-face pc" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-ma-b" x="-30" y="-29" width="62" height="62"/><use href="#g-ma-b" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<span class="p" data-sq="i10" style="--x:0;--y:9"><span class="p-in"><svg class="p-face pc" viewBox="-50 -50 100 100"><circle class="pc-body" r="49"/><circle class="pc-ring" r="41"/><use class="pc-cut" href="#g-ju-b" x="-30" y="-29" width="62" height="62"/><use href="#g-ju-b" x="-31" y="-31" width="62" height="62"/></svg></span></span>
+<img class="spr spr--kid" src="img/scene-kid.png" alt="" width="232" height="167">
+</div>
+<div class="page">
 <header class="top">
-  <a class="logo" href="#">thai.</a>
+  <a class="mark" href="#">Thai Tran</a>
   <nav aria-label="Sections">
-    <a class="scrib" href="#work">work<svg viewBox="0 0 100 12" preserveAspectRatio="none"><path pathLength="1" d="M2 8c20-5 44-6 96-2"/></svg></a>
-    <a class="scrib" href="#parser">tinkering<svg viewBox="0 0 100 12" preserveAspectRatio="none"><path pathLength="1" d="M2 8c20-5 44-6 96-2"/></svg></a>
-    <a class="scrib" href="#life">life<svg viewBox="0 0 100 12" preserveAspectRatio="none"><path pathLength="1" d="M2 8c20-5 44-6 96-2"/></svg></a>
-    <a class="scrib" href="#hi">say hi<svg viewBox="0 0 100 12" preserveAspectRatio="none"><path pathLength="1" d="M2 8c20-5 44-6 96-2"/></svg></a>
+    <a href="#work">Work</a>
+    <a href="#writing">Writing</a>
+    <a href="#club">Club</a>
+    <a href="#contact">Contact</a>
   </nav>
 </header>
-
+<main id="main" tabindex="-1">
 <section class="hero" aria-labelledby="name">
-  <div>
-    <span class="pin" data-pin></span>
-    <p class="hey">hi, I'm</p>
-    <h1 id="name">Thai Tran</h1>
-    <p class="claim">I build things with AI, then <span class="mark">show other people how</span>.</p>
-    <p class="lede">Computer engineering at McGill, class of 2028. This past summer I shipped <b>50+ agent tools</b> at a Montréal startup, and the rest of the year I run <b>Claude Builder Club McGill</b>. I say yes to the weird thing and something good falls out of it.</p>
-    <p class="follow"><svg viewBox="0 0 46 40" aria-hidden="true" class="doodle"><path d="M40 4C30 6 14 10 12 22c-1 6 2 10 4 14M16 36l-6-7M16 36l5-8"/></svg>follow the wire</p>
-  </div>
-  <div class="laptop" aria-label="A doodled laptop typing things I've done">
-    <div class="screen">
-      <div class="dots"><i></i><i></i><i></i></div>
-      <ol id="term"></ol>
-    </div>
-    <svg class="base" viewBox="0 0 120 10" preserveAspectRatio="none" aria-hidden="true"><path d="M9 1h102l8 7c0 1-1 1.6-2 1.6H3C2 9.6 1 9 1 8z"/></svg>
-    <p class="note">things it typed this year ↑</p>
+  <h1 id="name" class="vh">Thai Tran</h1>
+</section>
+
+<section class="intro" aria-label="Introduction">
+  <p class="claim">That’s me with my back to you, and my grandfather across the table.</p>
+  <p class="lede">Every afternoon in Vietnam, he played me at Chinese chess. I never learned to read the characters on the pieces, so I learned each one by the&nbsp;way&nbsp;it&nbsp;moves.</p>
+  <p class="lede">Now I study computer engineering at McGill, and I build the same way. Claude Code helps me write most of my code, but I know what every piece&nbsp;does.</p>
+  <p class="note">Keep scrolling and I’ll tell you the rest between moves.</p>
+</section>
+
+<section class="beat" data-beat="1" aria-hidden="true"></section>
+
+<section id="origin" aria-labelledby="origin-h">
+  <h2 id="origin-h">Origin</h2>
+  <div class="prose">
+    <p>When my grandparents moved to my uncle’s, my dad took my grandfather’s seat. Nobody ever coached me, and in 9th grade I won my school’s inter-campus tournament anyway, the only 9th grader in it, against 12th graders.</p>
+    <p>The moves you’re watching aren’t mine, though. They’re real opening theory, the Central Cannon against the Screen Horses.</p>
   </div>
 </section>
+
+<section class="beat" data-beat="2" aria-hidden="true"></section>
+
+<section id="rules" aria-labelledby="rules-h">
+  <h2 id="rules-h">Rules</h2>
+  <p>Learn the pieces like I did.<span hidden> Pick one and watch it move.</span></p>
+  <ul class="kinds">
+    <li data-t="K"><h3><svg class="disc pc pc--red" viewBox="-50 -50 100 106" aria-hidden="true"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-shuai" x="-29" y="-29" width="58" height="58"/></svg>General</h3><p>Moves one point up, down, left or right and never leaves the palace.</p><p>Red’s character means marshal. Black’s means general.</p></li>
+    <li data-t="A"><h3><svg class="disc pc pc--red" viewBox="-50 -50 100 106" aria-hidden="true"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-shi" x="-29" y="-29" width="58" height="58"/></svg>Advisor</h3><p>Moves one point along the palace diagonals and never leaves the palace.</p><p>Red’s character means an official. Black’s means a scholar.</p></li>
+    <li data-t="E"><h3><svg class="disc pc pc--red" viewBox="-50 -50 100 106" aria-hidden="true"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-xiang" x="-29" y="-29" width="58" height="58"/></svg>Elephant</h3><p>Moves exactly two points diagonally, can’t cross the river, and is blocked by a piece in between.</p><p>Red’s character means minister and Black’s means elephant, and in Chinese the two words sound the same.</p></li>
+    <li data-t="H"><h3><svg class="disc pc pc--red" viewBox="-50 -50 100 106" aria-hidden="true"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-ma" x="-29" y="-29" width="58" height="58"/></svg>Horse</h3><p>Moves one point straight, then one diagonally outward, and is blocked by a piece on the point it steps through.</p><p>Both characters mean horse.</p></li>
+    <li data-t="R"><h3><svg class="disc pc pc--red" viewBox="-50 -50 100 106" aria-hidden="true"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-ju" x="-29" y="-29" width="58" height="58"/></svg>Chariot</h3><p>Moves any distance in a straight line, with nothing in the way.</p><p>Both characters mean chariot.</p></li>
+    <li data-t="C"><h3><svg class="disc pc pc--red" viewBox="-50 -50 100 106" aria-hidden="true"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-pao" x="-29" y="-29" width="58" height="58"/></svg>Cannon</h3><p>Moves like a chariot, and captures only by jumping exactly one piece.</p><p>Red’s character is written with fire. Black’s is written with stone.</p></li>
+    <li data-t="P"><h3><svg class="disc pc pc--red" viewBox="-50 -50 100 106" aria-hidden="true"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-bing" x="-29" y="-29" width="58" height="58"/></svg>Soldier</h3><p>Moves one point forward, and after crossing the river it can also step sideways, never back.</p><p>Red’s character means soldier. Black’s means foot soldier.</p></li>
+  </ul>
+  <div class="win">
+    <h3>How to win</h3>
+    <p>You win by checkmate. Attack the general so that nothing can save it, no escape, no block and no capture, and the game is over. A player with no legal move at all also loses, and the two generals may never face each other down an open line.</p>
+    <svg class="mini mate" viewBox="-70 -70 540 340" role="img" aria-label="Checkmate. A red chariot slides onto the black general’s rank and gives check. The other red chariot covers the point in front of the general, so all three of its steps are attacked." style="background-image:url(img/scene-board.png)"><path class="m-line" d="M0 0H400M0 100H400M0 200H400M0 0V200M100 0V200M200 0V200M300 0V200M400 0V200M100 0L300 200M300 0L100 200"/><path class="m-trail" d="M0 200V0"/><path class="m-x" d="M86 -14l28 28m0-28l-28 28"/><path class="m-x" d="M286 -14l28 28m0-28l-28 28"/><path class="m-x" d="M186 86l28 28m0-28l-28 28"/><circle class="m-take" cx="200" cy="0" r="48"/><g class="pc" style="transform:translate(200px,0px)"><circle class="disc-wall" cy="6" r="40"/><circle class="pc-body" r="40"/><circle class="pc-ring" r="33"/><use href="#g-jiang" x="-26" y="-26" width="52" height="52"/></g><g class="pc pc--red" style="transform:translate(400px,100px)"><circle class="disc-wall" cy="6" r="40"/><circle class="pc-body" r="40"/><circle class="pc-ring" r="33"/><use href="#g-ju" x="-26" y="-26" width="52" height="52"/></g><g class="pc pc--red m-piece" style="transform:translate(0px,0px)"><circle class="disc-wall" cy="6" r="40"/><circle class="pc-body" r="40"/><circle class="pc-ring" r="33"/><use href="#g-ju" x="-26" y="-26" width="52" height="52"/></g></svg>
+  </div>
+</section>
+
+<section class="beat" data-beat="3" aria-hidden="true"></section>
 
 <section id="work" aria-labelledby="work-h">
-  <span class="pin" data-pin></span>
-  <h2 id="work-h" data-r>Things I'm building</h2>
-  <p class="sub" data-r>Most of them started as a sidequest. A few turned into something people use every day.</p>
-
-  <div class="cards">
-    <article class="card wide hb" data-r>
-      <div class="frame">
-        <div class="scr"><img src="img/plan-your-degree.jpg" alt="Plan Your Degree, a McGill degree planner, open in a browser" width="1600" height="875" loading="lazy"></div>
-        <svg class="base" viewBox="0 0 120 10" preserveAspectRatio="none" aria-hidden="true"><path d="M9 1h102l8 7c0 1-1 1.6-2 1.6H3C2 9.6 1 9 1 8z"/></svg>
-      </div>
-      <div>
-        <h3>Plan Your Degree</h3>
-        <p class="role">building it since February</p>
-        <p>A degree planner for McGill students. It reads the whole course catalogue so you don't have to, and 870 students used it in the first three days, 81% of them on a phone.</p>
-        <div class="stats">
-          <div><b>944</b><span>programs</span></div>
-          <div><b>9,000+</b><span>courses</span></div>
-          <div><b>100+</b><span>PRs merged on green</span></div>
-        </div>
-        <a class="go scrib" href="https://plan-your-degree.vercel.app" target="_blank" rel="noopener">try it →<svg viewBox="0 0 100 12" preserveAspectRatio="none"><path pathLength="1" d="M2 8c20-5 44-6 96-2"/></svg></a>
-      </div>
-    </article>
-
-    <article class="card hb" data-r>
-      <svg class="doodle" viewBox="0 0 120 90" aria-hidden="true" filter="url(#boil)">
-        <path class="d" pathLength="1" style="--i:0" d="M10 34h100v46H10z"/>
-        <path class="d" pathLength="1" style="--i:1" d="M42 34v-12c0-5 3-8 8-8h20c5 0 8 3 8 8v12"/>
-        <path class="d b" pathLength="1" style="--i:2" d="M10 52h100M54 46h12v12H54z"/>
-        <text x="104" y="75" font-size="17" text-anchor="end">50+</text>
-      </svg>
-      <h3>Planned</h3>
-      <p class="role">AI builder intern · Apr to Aug 2026</p>
-      <p>Series A startup in Montréal. I shipped a package of 50+ agent tools the engineers built on, plus the skills and docs that let non-technical operators run workflows in Claude without writing code.</p>
-    </article>
-
-    <article class="card hb" data-r>
-      <svg class="doodle" viewBox="0 0 120 90" aria-hidden="true" filter="url(#boil)">
-        <path class="d" pathLength="1" style="--i:0" d="M14 74c4-16 14-24 26-24s22 8 26 24"/>
-        <path class="d" pathLength="1" style="--i:1" d="M40 44a12 12 0 1 0 0-24a12 12 0 1 0 0 24"/>
-        <path class="d b" pathLength="1" style="--i:2" d="M62 74c3-12 11-18 21-18s18 6 21 18M83 50a10 10 0 1 0 0-20a10 10 0 1 0 0 20"/>
-      </svg>
-      <h3>Claude Builder Club McGill</h3>
-      <p class="role">Anthropic campus ambassador · since Jan 2026</p>
-      <p>I started the club and got it to 300+ members in three months, then ran Montréal's first Claude hackathon, 280+ apps from 150+ builders. Professors also brought me into their engineering and management classes to teach workshops.</p>
-      <div class="heads" id="heads" aria-hidden="true"></div>
-    </article>
-
-    <article class="card wide hb" data-r>
-      <figure class="taped">
-        <div class="badge"><span><b>2nd</b>of 652</span></div>
-        <img src="img/cal-hacks.jpg" alt="The Silent Voice team at Cal Hacks 13" width="1600" height="1200" loading="lazy">
-        <figcaption>Cal Hacks 13, Berkeley</figcaption>
-      </figure>
-      <div>
-        <h3>Silent Voice</h3>
-        <p class="role">team of 4 · 36 hours</p>
-        <p>You mouth words without making a sound and get heard in your own voice, even on a phone call. We built it for people who lost their voice box to a laryngectomy. 2nd overall out of 652 projects, and 1st in Cartesia's voice AI challenge.</p>
-        <a class="go scrib" href="cal-hacks-13/">read the whole story →<svg viewBox="0 0 100 12" preserveAspectRatio="none"><path pathLength="1" d="M2 8c20-5 44-6 96-2"/></svg></a>
-      </div>
-    </article>
-
-    <article class="card wide hb" data-r>
-      <div>
-        <h3>Style It Yourself</h3>
-        <p class="role">McHacks Best Beginner Hack · open source</p>
-        <p>Color matching for the clothes you already own, plus AI try-on. I led product, design, and full stack, and wrote the HSL color harmony engine. It's free and open source on purpose, because not everything needs a subscription.</p>
-        <a class="go scrib" href="https://styleityourself.ca" target="_blank" rel="noopener">styleityourself.ca →<svg viewBox="0 0 100 12" preserveAspectRatio="none"><path pathLength="1" d="M2 8c20-5 44-6 96-2"/></svg></a>
-      </div>
-      <div class="siy">
-        <div class="wheelbox">
-          <div class="wheel" id="wheel" role="slider" tabindex="0" aria-label="Shirt hue" aria-valuemin="0" aria-valuemax="359" aria-valuenow="220">
-            <svg viewBox="0 0 100 100" aria-hidden="true"><polygon id="tri"/><circle r="5.5" id="k0"/><circle r="4.5" id="k1"/><circle r="4.5" id="k2"/></svg>
-          </div>
-          <svg class="outfit" viewBox="0 0 120 170" aria-hidden="true">
-            <path id="shirt" d="M40 8l-24 12-12 22 16 8 6-10v52h68V40l6 10 16-8-12-22-24-12c-2 8-10 12-20 12S42 16 40 8z"/>
-            <path id="pants" d="M28 96h64l4 54H70l-10-36-10 36H24z"/>
-            <path id="shoes" d="M22 152h28c2 0 3 2 3 4v6H14c0-6 3-10 8-10zM70 152h28c5 0 8 4 8 10H67v-6c0-2 1-4 3-4z"/>
-          </svg>
-        </div>
-        <p class="hint">Drag around the wheel. Three hues, 120° apart, worked out in HSL.</p>
-      </div>
-    </article>
+  <h2 id="work-h">Silent Voice</h2>
+  <p class="meta">My most recent hackathon. Cal Hacks 13.0, San&nbsp;Francisco, October 2026.</p>
+  <figure class="fig sv-team">
+    <div class="fig-frame" style="--ar:620/450"><img src="img/sv-team-1240.webp" srcset="img/sv-team-620.webp 620w, img/sv-team-1240.webp 1240w" sizes="(min-width:1100px) min(694px, 56vw - 66px), (min-width:640px) min(654px, 100vw - 90px), calc(100vw - 66px)" width="1240" height="900" loading="lazy" decoding="async" alt="Six people standing together on the hackathon floor, smiling, three of them holding blue prize boxes."></div>
+    <figcaption>Frank Guo, Austin Wang, Evan Liu and me, with two people from Cartesia.</figcaption>
+  </figure>
+  <ul class="facts">
+    <li><b class="num">2nd</b><span>overall, out of 650+ projects</span></li>
+    <li><b class="num">1st</b><span>in Cartesia’s voice AI challenge</span></li>
+    <li><b class="num">36 h</b><span>to build it</span></li>
+  </ul>
+  <div class="sv-body">
+    <div class="sv-text">
+      <p>Four of us from McGill built a way to talk without making a sound, for people who lost their voice box to a laryngectomy, usually after throat cancer. You mouth the words, and the person on the other end of the call hears them in your own voice. In our demo, Austin called a judge standing in front of our table and only mouthed his side.</p>
+      <p>I was the only computer engineering major on the team, so the pads on his face were mine, four pairs reading the muscles underneath, and it turns out all those circuits classes were good for something. I also took the Claude side, which reads the conversation to tell look-alike words apart, and played PM for everything else, from shaping the vision to getting the pitch right.</p>
+    </div>
+    <figure class="fig">
+      <div class="fig-frame"><img src="img/sv-pads-728.webp" srcset="img/sv-pads-480.webp 480w, img/sv-pads-728.webp 728w, img/sv-pads-1152.webp 1152w" sizes="(min-width:1225px) min(212px, 18.67vw - 42px), (min-width:1100px) calc(37.33vw - 55px), (min-width:710px) min(198px, 33.33vw - 50px), (min-width:640px) calc(66.67vw - 71px), (min-width:546px) calc(66.67vw - 52px), calc(100vw - 68px)" width="728" height="672" loading="lazy" decoding="async" alt="Thai connecting wires to the electrode pads on a teammate’s cheek and jaw."></div>
+      <figcaption>Me putting the pads on Austin.</figcaption>
+    </figure>
   </div>
+  <p class="links"><a href="cal-hacks-13/">Read the writeup</a><a href="https://devpost.com/software/silent-voice-s1f74p">Devpost</a><a href="https://github.com/thaimtl/Silent-Voice">Code</a><a href="https://www.ctvnews.ca/montreal/article/mcgill-students-project-aims-to-give-cancer-patients-their-voice-back/">CTV News story</a><a href="https://www.linkedin.com/feed/update/urn:li:activity:7520974388268040192/">LinkedIn post</a></p>
 </section>
 
-<section id="parser" aria-labelledby="parser-h">
-  <span class="pin" data-pin></span>
-  <h2 id="parser-h" data-r>Teaching a computer to read prerequisites</h2>
-  <p class="sub" data-r>McGill writes prerequisites as English sentences. Plan Your Degree turns about 70% of the 4,600 sentences in the catalogue into trees like the one below.</p>
-  <div class="parser hb" data-r>
-    <p class="sent" id="sent" aria-live="polite"></p>
-    <svg class="tree" id="tree" viewBox="0 0 640 250" role="img" aria-label="Parsed prerequisite tree"></svg>
-    <div class="prow">
-      <p>Example sentences in the catalogue's style.</p>
-      <button class="btn" id="next" type="button">parse another one</button>
+<section class="beat" data-beat="4" aria-hidden="true"></section>
+
+<section id="pyd" aria-labelledby="pyd-h">
+  <h2 id="pyd-h">Plan Your Degree</h2>
+  <p class="meta">Open source. Shipped fall 2026.</p>
+  <div class="cols figs">
+    <figure class="fig">
+      <div class="fig-frame" style="--ar:1176/672"><img src="img/pyd-planner-1176.webp" srcset="img/pyd-planner-588.webp 588w, img/pyd-planner-1176.webp 1176w, img/pyd-planner-1764.webp 1764w" sizes="(min-width:1100px) min(418px, 34.6vw - 52px), (min-width:640px) min(392px, 61.76vw - 67px), calc(100vw - 68px)" width="1176" height="672" loading="lazy" decoding="async" alt="The Plan Your Degree planner showing program credits earned, in progress, and planned."></div>
+      <figcaption>The whole degree in one tab.</figcaption>
+    </figure>
+    <figure class="fig">
+      <div class="fig-frame" style="--ar:728/672"><img src="img/pyd-next-728.webp" srcset="img/pyd-next-480.webp 480w, img/pyd-next-728.webp 728w" sizes="(min-width:1100px) min(258px, 21.4vw - 33px), (min-width:640px) min(242px, 38.24vw - 42px), calc(100vw - 68px)" width="728" height="672" loading="lazy" decoding="async" alt="Plan Your Degree sorting required courses into what a student can take next term, what is planned, and what already counts."></div>
+      <figcaption>Your required courses, sorted.</figcaption>
+    </figure>
+  </div>
+  <ul class="facts">
+    <li><b class="num" data-count>1,000+</b><span>users in its first 5 days</span></li>
+    <li><b class="num" data-count>944</b><span>programs</span></li>
+    <li><b class="num" data-count>143</b><span>pull requests merged in 29 days</span></li>
+  </ul>
+  <p>My own problem at McGill was smaller, but it kept coming back. The suggested curriculum for my program was so outdated that I stopped following it after first year, so every semester I had the catalogue, the registration system, and my own notes open across a dozen tabs to answer the same questions. What can I take next term? Do I have enough credits to graduate on time? What do I need before I can take that class everyone raves about?</p>
+  <p>So I built Plan Your Degree to answer them for me, then realized it was too useful to keep to myself and made it free for every McGill student. Drop in your unofficial transcript and it shows what you can take next and lays out every term until you graduate, with a warning for a missing prerequisite, a term a course isn’t offered, or a credit overload.</p>
+  <p>Under it, a crawler reads all 9,088 course pages and every program page in the catalogue and turns their plain-English requirements into trees the planner can check. Where only an advisor can judge a rule, it says so and lets you track it yourself. There’s no account and no backend, so your transcript never leaves your browser.</p>
+  <p class="links"><a href="https://plan-your-degree.vercel.app">Try it</a><a href="https://github.com/CBC-Mcgill/McGill-Plan-Your-Degree">Code</a></p>
+</section>
+
+<section class="beat" data-beat="5" aria-hidden="true"></section>
+
+<section id="planned" aria-labelledby="planned-h">
+  <h2 id="planned-h">Planned</h2>
+  <p class="meta">AI builder intern, April to August 2026.</p>
+  <p>A few friends and I spent the summer interning at Planned, a Montréal event planning startup I’d never heard of. It turned out to be super cracked, and I loved it there.</p>
+  <p>I worked under the AI product manager and shipped 50+ agent tools the engineers built on, plus the skills and docs that let non-technical operators run workflows in Claude without writing code.</p>
+  <p>The engineers, the product people, and the operations people all came from unusual backgrounds, none of them from big corporate tech, and every one of them was smart, fast, and AI native.</p>
+  <p>Working with them raised my bar for what good work looks like, and showed me I don’t need a big-title company to do meaningful, interesting work.</p>
+</section>
+
+<section class="beat" data-beat="6" aria-hidden="true"></section>
+<section id="writing" aria-labelledby="writing-h">
+  <div class="wr-head">
+    <h2 id="writing-h">Writing</h2>
+    <p>Some of it needed more room than a card.</p>
+    <div class="steps" hidden>
+      <button class="btn btn--quiet" type="button" aria-label="Previous post" aria-controls="posts"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path d="M11.5 5.5 7 10l4.5 4.5"/></svg></button>
+      <button class="btn btn--quiet" type="button" aria-label="Next post" aria-controls="posts"><svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true"><path d="M8.5 5.5 13 10l-4.5 4.5"/></svg></button>
     </div>
   </div>
+  <ul class="posts" id="posts">
+    <li>
+      <a href="cal-hacks-13/">
+        <span class="fig-frame"><img src="img/wr-calhacks-560.webp" srcset="img/wr-calhacks-560.webp 560w, img/wr-calhacks-1120.webp 1120w" sizes="(min-width:1100px) min(442px, 35.84vw - 44px), (min-width:640px) min(417px, 64vw - 59px), calc(82vw - 56px)" width="560" height="373" alt="A hangar-sized hackathon floor under a skylit steel roof, full of folding tables, laptops, and people." loading="lazy" decoding="async"></span>
+        <h3>Silent Voice, the long version</h3>
+      </a>
+      <p class="meta">How it works, what broke, and how I ended up in the ER mid-hackathon.</p>
+      <p class="note">On this site, 10 min read.</p>
+    </li>
+    <li>
+      <a href="https://www.linkedin.com/feed/update/urn:li:activity:7515610987396259840/">
+        <span class="fig-frame"><img src="img/wr-pyd-560.webp" srcset="img/wr-pyd-560.webp 560w, img/wr-pyd-1120.webp 1120w" sizes="(min-width:1100px) min(442px, 35.84vw - 44px), (min-width:640px) min(417px, 64vw - 59px), calc(82vw - 56px)" width="560" height="373" alt="The Plan Your Degree home page, with the headline Plan your whole McGill degree in one tab above a preview of the planner." loading="lazy" decoding="async"></span>
+        <h3>McGill’s degree planning system is broken, so I built my own</h3>
+      </a>
+      <p class="meta">The launch post, with an open invite to try it, break it, and tell me what’s wrong.</p>
+      <p class="note">LinkedIn, October 2026.</p>
+    </li>
+    <li>
+      <a href="https://www.linkedin.com/feed/update/urn:li:activity:7449159224070336512/">
+        <span class="fig-frame"><img src="img/wr-clubs-560.webp" srcset="img/wr-clubs-560.webp 560w, img/wr-clubs-1120.webp 1120w" sizes="(min-width:1100px) min(442px, 35.84vw - 44px), (min-width:640px) min(417px, 64vw - 59px), calc(82vw - 56px)" width="560" height="373" alt="A speaker at a lectern in a lecture hall, three more people standing at the front, and a partners slide on the two screens above them, seen from behind the audience." loading="lazy" decoding="async"></span>
+        <h3>If you’re at uni and you’re not in any clubs, you are missing out</h3>
+      </a>
+      <p class="meta">How joining two clubs led me to start a third.</p>
+      <p class="note">LinkedIn, April 2026.</p>
+    </li>
+  </ul>
 </section>
 
-<section id="life" aria-labelledby="life-h">
-  <span class="pin" data-pin></span>
-  <h2 id="life-h" data-r>Away from the keyboard</h2>
-  <div class="life">
-    <article class="card hb" data-r>
-      <div class="art">
-        <button class="piece" id="piece" type="button" aria-label="Flip the Chinese chess piece" aria-pressed="false"><span class="flip"><span class="face front"><span>帥</span></span><span class="face back">no idea what this says</span></span></button>
-      </div>
-      <h3>Chinese chess</h3>
-      <p>I played my grandfather every afternoon, then my dad, who's exceptional. In 9th grade I won my school's tournament as the only 9th grader in it. I still can't read the characters on the pieces.</p>
-    </article>
-    <article class="card hb" data-r>
-      <div class="art">
-        <svg class="doodle" viewBox="0 0 190 140" aria-hidden="true" filter="url(#boil)">
-          <path class="d" pathLength="1" style="--i:0" d="M20 98c-2-12 6-20 18-22l34-8c8-2 14-8 18-16l6-14c2-4 6-5 10-3l20 9c4 2 5 5 4 9l-3 10c12 8 28 12 44 14 8 1 12 8 12 14v7z"/>
-          <path class="d" pathLength="1" style="--i:1" d="M14 105h164c0 6-4 10-10 10H22c-5 0-8-4-8-10z"/>
-          <path class="d b" pathLength="1" style="--i:2" d="M98 52l14 6M92 62l14 6M86 72l14 6"/>
-          <path class="d b" pathLength="1" style="--i:3" d="M24 128c40 8 100 8 150-6"/>
-        </svg>
-      </div>
-      <h3>Three years of shoes</h3>
-      <p>I sold shoes at New Balance and Sports Experts from 2021 to 2024. I learned French on the job and picked up more foot biomechanics than I ever expected to.</p>
-    </article>
-    <article class="card hb" data-r>
-      <div class="art">
-        <svg class="doodle" viewBox="0 0 190 140" aria-hidden="true" filter="url(#boil)">
-          <path class="d" pathLength="1" style="--i:0" d="M150 106c-6-6-4-16 2-20s6-12 0-16 2-14 10-12"/>
-          <path class="d" pathLength="1" style="--i:1" d="M30 46c4-6 14-8 20-2s2 14 8 16"/>
-          <path class="d b" pathLength="1" style="--i:2" d="M154 98C120 30 70 20 42 44"/>
-          <text x="150" y="128" font-size="15" text-anchor="middle">Vietnam</text>
-          <text x="38" y="28" font-size="15" text-anchor="middle">Montréal</text>
-        </svg>
-      </div>
-      <h3>Vietnam to Montréal</h3>
-      <p>I grew up in Vietnam and I live in Montréal now. Someday I want to build an AI operating system for the clothing industry, with my own label running on it. I'd rather be great at one thing than okay at ten.</p>
-    </article>
+<section class="beat" data-beat="7" aria-hidden="true"></section>
+<section id="club" aria-labelledby="club-h">
+  <h2 id="club-h">Club</h2>
+  <figure class="fig">
+    <div class="fig-frame">
+      <picture>
+        <source media="(max-width:639px)" srcset="img/club-room-m-640.webp 640w, img/club-room-m-1280.webp 1280w" sizes="calc(100vw - 68px)" width="640" height="427">
+        <img src="img/club-room-980.webp" srcset="img/club-room-980.webp 980w, img/club-room-1960.webp 1960w" sizes="(min-width:1100px) min(56vw - 68px, 692px), min(100vw - 92px, 652px)" width="980" height="420" alt="A tiered lecture hall full of students facing the camera, smiling, several with thumbs up." loading="lazy" decoding="async">
+      </picture>
+    </div>
+    <figcaption>The first Claude hackathon at McGill, April 4, 2026. Photo by Aldrich Castro.</figcaption>
+  </figure>
+  <ul class="facts">
+    <li><b class="num">150+</b><span>hackers</span></li>
+  </ul>
+  <div class="prose">
+    <p>I was hunting for sponsors when I found Anthropic’s campus builder program. I applied, and in January 2026 I started the Claude Builder Club at McGill.</p>
+    <p>We get members free Claude Pro and teach them to use it properly, safely, and responsibly. I have non-technical friends who didn’t know what Git was a month earlier and now ship their own websites in an hour. Professors have also invited me into their engineering and management classes to run workshops.</p>
   </div>
-
-  <div class="todo hb" data-r>
-    <h3>Current sidequests</h3>
-    <ul>
-      <li class="done"><svg viewBox="0 0 28 28" aria-hidden="true"><rect class="sq" x="2" y="2" width="24" height="24" rx="4"/><path class="tick" style="--i:0" pathLength="1" d="M7 15l5 5 10-13"/></svg><span>Get into Cal Hacks<small>went, came back with 2nd place</small></span></li>
-      <li class="done"><svg viewBox="0 0 28 28" aria-hidden="true"><rect class="sq" x="2" y="2" width="24" height="24" rx="4"/><path class="tick" style="--i:1" pathLength="1" d="M7 15l5 5 10-13"/></svg><span>Scout for Northside Ventures<small>after pitching VCs myself</small></span></li>
-      <li><svg viewBox="0 0 28 28" aria-hidden="true"><rect class="sq" x="2" y="2" width="24" height="24" rx="4"/></svg><span>Redesign the McGill Ventures website<small>lead dev, in progress</small></span></li>
-      <li><svg viewBox="0 0 28 28" aria-hidden="true"><rect class="sq" x="2" y="2" width="24" height="24" rx="4"/></svg><span>TreeHacks 2027<small>applied, waiting to hear back</small></span></li>
-    </ul>
-  </div>
+  <p class="links"><a href="https://www.claudebuildersmcgill.ca">Club website</a></p>
 </section>
 
-<section id="hi" class="hi" aria-labelledby="hi-h">
-  <div class="bulbwrap"><span class="pin bulb" data-pin></span></div>
-  <h2 id="hi-h" data-r>Say hi</h2>
-  <p class="sub" data-r>Try my stuff, break it, tell me what's wrong. Or just tell me what you're building.</p>
-  <a class="mail scrib" href="mailto:minh.thai.tran@mail.mcgill.ca" data-r>minh.thai.tran@<wbr>mail.mcgill.ca<svg viewBox="0 0 100 12" preserveAspectRatio="none"><path pathLength="1" d="M2 8c20-5 44-6 96-2"/></svg></a>
-  <div class="links" data-r>
-    <a class="scrib" href="https://github.com/thaimtl" target="_blank" rel="noopener">GitHub<svg viewBox="0 0 100 12" preserveAspectRatio="none"><path pathLength="1" d="M2 8c20-5 44-6 96-2"/></svg></a>
-    <a class="scrib" href="https://www.linkedin.com/in/thai-tran-minh" target="_blank" rel="noopener">LinkedIn<svg viewBox="0 0 100 12" preserveAspectRatio="none"><path pathLength="1" d="M2 8c20-5 44-6 96-2"/></svg></a>
-    <a class="scrib" href="https://devpost.com/thaimtl" target="_blank" rel="noopener">Devpost<svg viewBox="0 0 100 12" preserveAspectRatio="none"><path pathLength="1" d="M2 8c20-5 44-6 96-2"/></svg></a>
-  </div>
-  <footer>
-    <span>Drawn in Montréal, 2026.</span>
-    <span>Thai Tran</span>
-  </footer>
+<section class="beat" data-beat="end" aria-hidden="true"></section>
+
+<section id="contact" aria-labelledby="contact-h">
+  <h2 id="contact-h">Contact</h2>
+  <p class="hook">I genuinely think I can move the needle much faster at a startup than in big tech. I haven’t tried big tech yet though, so if you’re a recruiter and you think you can change my mind, feel free to reach out :)</p>
+  <p><a class="btn" href="mailto:minh.thai.tran@mail.mcgill.ca">minh.thai.tran@<wbr>mail.mcgill.ca</a></p>
+  <p class="links"><a href="https://github.com/thaimtl">GitHub</a><a href="https://www.linkedin.com/in/thai-tran-minh">LinkedIn</a><a href="https://devpost.com/thaimtl">Devpost</a></p>
 </section>
+</main>
+<footer class="foot">
+  <p class="sig">Thai Tran, Montréal, 2026.</p>
+  <p><span>Chess glyphs from Wikimedia&nbsp;Commons, public domain.</span> <span>Pixel art rendered in code.</span></p>
+</footer>
 </div>
-
-<script>
-const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const $ = s => document.querySelector(s);
-
-// reveal on scroll
-const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: .18 });
-document.querySelectorAll('[data-r],.doodle').forEach(el => io.observe(el));
-
-// hand-drawn jitter
-if (!reduce) { const n = $('#boilNoise'); let s = 0; setInterval(() => n.setAttribute('seed', s = (s + 1) % 4), 140); }
-
-// club crowd
-$('#heads').innerHTML = Array.from({ length: 60 }, (_, i) => `<i style="--i:${i}"></i>`).join('');
-
-// the wire
-const page = $('#page'), wire = $('#wire'), ghost = wire.querySelector('.ghost'), live = wire.querySelector('.live');
-const tip = wire.querySelector('.tip'), ring = wire.querySelector('.ring');
-const pins = [...document.querySelectorAll('[data-pin]')];
-let len = 0, pinYs = [];
-function build() {
-  const pr = page.getBoundingClientRect();
-  const pts = pins.map(p => { const r = p.getBoundingClientRect(); return [r.left - pr.left + r.width / 2, r.top - pr.top + r.height / 2]; });
-  pinYs = pts.map(p => p[1]);
-  wire.setAttribute('viewBox', `0 0 ${pr.width} ${pr.height}`);
-  let d = `M${pts[0][0]} ${pts[0][1]}`;
-  for (let i = 1; i < pts.length; i++) {
-    const [x0, y0] = pts[i - 1], [x1, y1] = pts[i], dy = y1 - y0, a = Math.min(30, dy * .06) * (i % 2 ? 1 : -1);
-    d += `C${x0 + a} ${y0 + dy * .35} ${x1 - a} ${y0 + dy * .65} ${x1} ${y1}`;
-  }
-  ghost.setAttribute('d', d); live.setAttribute('d', d);
-  len = live.getTotalLength();
-  live.style.strokeDasharray = len;
-  draw();
-}
-function draw() {
-  const target = scrollY + innerHeight * .62 - (page.getBoundingClientRect().top + scrollY);
-  const done = target >= pinYs[pinYs.length - 1];
-  let lo = 0, hi = len;
-  if (done) lo = len;
-  else for (let k = 0; k < 18; k++) { const m = (lo + hi) / 2; live.getPointAtLength(m).y < target ? lo = m : hi = m; }
-  live.style.strokeDashoffset = len - lo;
-  const p = live.getPointAtLength(lo);
-  for (const c of [tip, ring]) { c.setAttribute('cx', p.x); c.setAttribute('cy', p.y); }
-  ring.style.display = done ? 'none' : '';
-  pins.forEach((el, i) => el.classList.toggle('on', pinYs[i] <= target + 1));
-}
-let raf = 0;
-addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(() => { raf = 0; draw(); }); }, { passive: true });
-new ResizeObserver(build).observe(page);
-document.fonts.ready.then(build);
-
-// typing laptop
-const lines = ['parse 4,600 prereq sentences', 'ship 50+ agent tools', 'host a Claude hackathon', 'merge only on green'];
-const term = $('#term');
-async function type() {
-  const wait = ms => new Promise(r => setTimeout(r, ms));
-  for (;;) {
-    term.innerHTML = '';
-    for (const t of lines) {
-      const li = document.createElement('li'), span = document.createElement('span'), caret = document.createElement('i');
-      caret.className = 'caret'; li.append(span, caret); term.append(li);
-      for (const ch of t) { span.textContent += ch; await wait(reduce ? 0 : 38 + Math.random() * 50); }
-      await wait(reduce ? 0 : 380); caret.remove(); li.classList.add('done');
-    }
-    if (reduce) return;
-    await wait(3200);
-  }
-}
-type();
-
-// color wheel
-const wheel = $('#wheel'), tri = $('#tri'), knobs = [0, 1, 2].map(i => $('#k' + i));
-function setHue(h) {
-  h = (Math.round(h) % 360 + 360) % 360;
-  const hs = [h, h + 120, h + 240];
-  const pts = hs.map(x => { const a = (x - 90) * Math.PI / 180; return [50 + 41 * Math.cos(a), 50 + 41 * Math.sin(a)]; });
-  tri.setAttribute('points', pts.map(p => p.join(',')).join(' '));
-  knobs.forEach((k, i) => { k.setAttribute('cx', pts[i][0]); k.setAttribute('cy', pts[i][1]); });
-  $('#shirt').style.fill = `hsl(${hs[0]} 70% 60%)`;
-  $('#pants').style.fill = `hsl(${hs[1] % 360} 40% 38%)`;
-  $('#shoes').style.fill = `hsl(${hs[2] % 360} 75% 55%)`;
-  wheel.setAttribute('aria-valuenow', h);
-  wheel.dataset.h = h;
-}
-function fromPointer(e) {
-  const r = wheel.getBoundingClientRect();
-  setHue(Math.atan2(e.clientX - r.left - r.width / 2, -(e.clientY - r.top - r.height / 2)) * 180 / Math.PI);
-}
-wheel.addEventListener('pointerdown', e => { wheel.setPointerCapture(e.pointerId); fromPointer(e); });
-wheel.addEventListener('pointermove', e => { if (wheel.hasPointerCapture(e.pointerId)) fromPointer(e); });
-wheel.addEventListener('keydown', e => {
-  const step = { ArrowRight: 10, ArrowUp: 10, ArrowLeft: -10, ArrowDown: -10 }[e.key];
-  if (step) { e.preventDefault(); setHue(+wheel.dataset.h + step); }
-});
-setHue(220);
-
-// prerequisite parser
-const examples = [
-  { s: [['Prerequisite: '], ['COMP 250', 'c'], [' '], ['and', 'o'], [' '], ['MATH 240', 'c'], ['.']], t: { op: 'AND', kids: ['COMP 250', 'MATH 240'] } },
-  { s: [['Prerequisite: '], ['ECSE 202', 'c'], [' '], ['or', 'o'], [' '], ['COMP 202', 'c'], [', '], ['and', 'o'], [' '], ['MATH 141', 'c'], ['.']], t: { op: 'AND', kids: [{ op: 'OR', kids: ['ECSE 202', 'COMP 202'] }, 'MATH 141'] } },
-  { s: [['Prerequisite: '], ['MATH 222', 'c'], [', '], ['or', 'o'], [' permission of the instructor.']], t: { op: 'OR', kids: ['MATH 222', "instructor's OK"] } },
-  { s: [['Prerequisite: a reasonable background in programming.']], t: null }
-];
-const sent = $('#sent'), tree = $('#tree'), NS = 'http://www.w3.org/2000/svg';
-let ex = 0, run = 0;
-const circle = '<svg viewBox="0 0 100 40" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M60 4C30 2 4 8 4 20s24 18 50 17 44-6 42-18S70 1 40 5"/></svg>';
-const depth = n => typeof n === "string" ? 0 : 1 + Math.max(...n.kids.map(depth));
-function place(n, d, acc) {
-  if (typeof n === 'string') return { label: n, x: acc.i++ + .5, d };
-  const kids = n.kids.map(k => place(k, d + 1, acc));
-  return { label: n.op, op: 1, d, kids, x: kids.reduce((s, k) => s + k.x, 0) / kids.length };
-}
-function drawTree(t) {
-  tree.classList.remove('in');
-  tree.innerHTML = '';
-  if (!t) {
-    tree.setAttribute("viewBox", "0 0 640 200");
-    tree.innerHTML = '<text class="shrug nd" style="--i:0" x="320" y="110">no course codes here, so there\'s no tree to build ¯\\_(ツ)_/¯</text>';
-  } else {
-    const acc = { i: 0 }, root = place(t, 0, acc), W = Math.max(440, Math.min(640, tree.getBoundingClientRect().width)), xs = W / acc.i, Y = d => 34 + d * 96;
-    tree.setAttribute("viewBox", `0 0 ${W} ${Y(depth(t)) + 24}`);
-    const out = { ln: '', nd: '' };
-    let i = 0;
-    (function walk(n) {
-      const x = n.x * xs, y = Y(n.d), w = n.label.length * 10.5 + 30, k = i++;
-      out.nd += `<g class="nd${n.op ? ' op' : ''}" style="--i:${k}"><rect x="${x - w / 2}" y="${y - 19}" width="${w}" height="38" rx="7"/><text x="${x}" y="${y}">${n.label}</text></g>`;
-      (n.kids || []).forEach(c => { out.ln += `<path class="ln" style="--i:${k + 1}" pathLength="1" d="M${x} ${y + 19}C${x} ${y + 50} ${c.x * xs} ${Y(c.d) - 50} ${c.x * xs} ${Y(c.d) - 19}"/>`; walk(c); });
-    })(root);
-    tree.innerHTML = `<g filter="url(#boil)">${out.ln}</g>${out.nd}`;
-  }
-  tree.getBoundingClientRect();
-  tree.classList.add('in');
-}
-async function parse() {
-  const id = ++run, e = examples[ex], wait = ms => new Promise(r => setTimeout(r, reduce ? 0 : ms));
-  sent.innerHTML = e.s.map(([txt, k]) => k ? `<span class="tok ${k}">${txt}${k === 'c' ? circle : ''}</span>` : txt).join('');
-  tree.classList.remove('in');
-  tree.innerHTML = '';
-  for (const t of sent.querySelectorAll('.tok')) { await wait(320); if (id !== run) return; t.classList.add('on'); }
-  await wait(400); if (id !== run) return;
-  drawTree(e.t);
-}
-$('#next').addEventListener('click', () => { ex = (ex + 1) % examples.length; parse(); });
-new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { parse(); o.disconnect(); } }, { threshold: .4 }).observe($('.parser'));
-
-// chess piece
-const piece = $('#piece');
-piece.addEventListener('click', () => { const on = piece.classList.toggle('turned'); piece.setAttribute('aria-pressed', on); });
-</script>
+<script src="site.js"></script>
 </body>
 </html>
