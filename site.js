@@ -10,6 +10,17 @@
   };
   window.site = { reduce, onIn };
 
+  // a stone drops into its socket just before the socket reaches the screen, and is simply set if the socket is already on screen
+  if (!reduce) {
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return;
+      const y = e.target.parentNode.getBoundingClientRect().bottom;
+      e.target.parentNode.classList.add('in', ...(y > innerHeight || y < 0 ? ['drop'] : []));
+      io.unobserve(e.target);
+    }), { rootMargin: '64px 0px' });
+    document.querySelectorAll('.seal').forEach(s => io.observe(s));
+  }
+
   if (!reduce) for (const el of document.querySelectorAll('[data-count]')) {
     const text = el.textContent, m = text.match(/\d[\d,]*/);
     if (!m) continue;

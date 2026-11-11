@@ -1,5 +1,6 @@
 // Replays the stage game with the rules engine in site.js. Usage: node tools/check-game.mjs [site.js]
 import { readFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
 
 const path = process.argv[2] || 'site.js', src = readFileSync(path, 'utf8');
 const block = (a, b) => { const m = new RegExp(`/\\*${a}\\*/([\\s\\S]*?)/\\*${b}\\*/`).exec(src); if (!m) throw new Error(`${path} has no /*${a}*/ ... /*${b}*/ block`); return m[1]; };
@@ -43,6 +44,18 @@ try {
     }
   }
   console.log(`${path}: all ${n} moves are legal`);
+
+  // each card's seal must be the piece Red moves in the beat directly above it
+  const html = readFileSync(join(dirname(path), 'index.html'), 'utf8'), seals = new Map(), glyph = { K: 'shuai', A: 'shi', E: 'xiang', H: 'ma', R: 'ju', C: 'pao', P: 'bing' };
+  for (const [, beat, seal] of html.matchAll(/<section class="beat" data-beat="(\w+)"[^>]*>(.*?)<\/section>\s*<section\b/gs)) seals.set(beat, seal);
+  const pos = start();
+  for (const [beat, red, black] of JSON.parse(block('game', 'end'))) {
+    const [from, to] = red.split('-'), t = pos.get(from).t, seal = seals.get(beat) ?? '';
+    const [, got] = /<svg class="seal[^"]*" data-t="(\w)"/.exec(seal) ?? [];
+    if (got !== t || !seal.includes(`href="#g-${glyph[t]}"`)) throw new Error(`${beat}: the seal on the card below should be data-t="${t}" with #g-${glyph[t]}, for Red's ${red}`);
+    for (const [a, b] of [[from, to], ...(black ? [black.split('-')] : [])]) { pos.set(b, pos.get(a)); pos.delete(a); }
+  }
+  console.log(`index.html: all ${seals.size} seals match the piece Red moves above them`);
 } catch (e) {
   console.error(e.message);
   process.exit(1);

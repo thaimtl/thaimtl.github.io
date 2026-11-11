@@ -5,13 +5,17 @@
   --ink:#17191c;--muted:#474b53;
   --bronze:#7c5a24;--red:#c8281f;
   --stone:#ffffff;--stone-side:#d6d1c9;--graphite:#1b1c1f;
-  --glass:rgba(255,255,255,.72);--glass-line:rgba(255,255,255,.75);--hair:rgba(23,25,28,.14);
+  --glass:rgba(255,255,255,.72);--frost:blur(32px) saturate(.3);--hair:rgba(23,25,28,.14);
+  --rim:rgba(255,255,255,.45);--lip:inset 0 1px #fff,inset 0 -1px rgba(36,84,66,.2),inset 0 16px 16px -16px #fff;
+  --lift:0 1px rgba(36,84,66,.12),0 20px 32px -16px rgba(18,40,30,.34),0 48px 72px -36px rgba(18,40,30,.3);
   --display:'Cormorant Garamond',Georgia,serif;--text:'Hanken Grotesk',system-ui,sans-serif;
   --u:28px;
+  /* seal: stone radius, gap to socket, centre x (stone's left edge 24px inside the text edge), centre y, ring radius */
+  --sr:20px;--sg:4px;--sx:77px;--sc:calc(var(--sr) - 4px);--rr:640px;
 }
-@media (max-width:639px){:root{--u:20px}}
-@media (prefers-reduced-transparency:reduce){:root{--glass:rgba(255,255,255,.95)}}
-@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){:root{--glass:rgba(255,255,255,.95)}}
+@media (max-width:639px){:root{--u:20px;--sr:16px;--sx:61px;--rr:400px}}
+@media (prefers-reduced-transparency:reduce){:root{--glass:#f4f7f9;--frost:none}}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){:root{--glass:#f4f7f9}}
 
 *,*::before,*::after{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
@@ -26,7 +30,18 @@ body{background:var(--ground);font:400 17px/28px var(--text);color:var(--ink);-w
 .page,main,.hero,.beat{pointer-events:none}
 .hero{height:72vh;height:72svh}
 .beat{height:85vh;height:85svh}
-:where(header.top,footer.foot,main>section:not(.hero,.beat),.beat-note){pointer-events:auto;padding:32px;background:var(--glass);-webkit-backdrop-filter:blur(32px) saturate(.3);backdrop-filter:blur(32px) saturate(.3);border:1px solid var(--glass-line);border-radius:16px;box-shadow:0 1px 0 rgba(255,255,255,.7) inset,0 20px 48px rgba(23,25,28,.16)}
+:where(header.top,footer.foot,main>section:not(.hero,.beat),.beat-note){pointer-events:auto;padding:32px;background:var(--glass);-webkit-backdrop-filter:var(--frost);backdrop-filter:var(--frost);border:1px solid var(--rim);border-radius:16px;box-shadow:var(--lip),var(--lift)}
+/* a card after a beat carries that beat's piece in a socket cut through its top edge, so its glass moves to ::before to be masked */
+.beat{position:relative}
+.beat+section{position:relative;z-index:0;overflow:hidden;overflow:clip;padding-top:calc(2*var(--sr) + 16px);border-color:#0000;background:none;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:var(--lift);scroll-margin-top:24px}
+.beat+section::before{
+  --h:calc(var(--sr) + var(--sg));--c1:var(--sx) var(--sc);--c2:var(--sx) calc(var(--sc) + var(--sr)*10/92);
+  content:"";position:absolute;inset:-1px;z-index:-1;border:1px solid var(--rim);border-radius:inherit;pointer-events:none;
+  background:radial-gradient(circle at var(--c1),#2454422e calc(var(--h) + 1px),#fffe calc(var(--h) + 2px),#fff0 calc(var(--h) + 3px)),radial-gradient(circle at var(--c2),#2454422e calc(var(--h) + .5px),#fffe calc(var(--h) + 1.5px),#fff0 calc(var(--h) + 2.5px)),var(--glass);background-origin:border-box;
+  -webkit-backdrop-filter:var(--frost);backdrop-filter:var(--frost);box-shadow:var(--lip);
+  mask:radial-gradient(circle at var(--c1),#0000 var(--h),#000 calc(var(--h) + 1px)),radial-gradient(circle at var(--c2),#0000 calc(var(--h) - .5px),#000 calc(var(--h) + .5px));mask-composite:intersect
+}
+.seal{position:absolute;z-index:1;left:calc(var(--sx) - var(--sr));top:calc(100% + var(--sc) - var(--sr));width:calc(2*var(--sr));aspect-ratio:92/97;overflow:visible}
 :where(main>section:not(.hero,.beat))+:where(main>section:not(.hero,.beat)),main+footer.foot{margin-top:16px}
 :where(main>section:not(.hero,.beat))>*+*{margin-top:var(--u)}
 :where(main>section:not(.hero,.beat)) :is(h2,h3)+*{margin-top:16px}
@@ -63,9 +78,9 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
 .links{display:flex;flex-wrap:wrap;column-gap:var(--u);font-size:15px;line-height:24px;font-weight:500}
 .links a{position:relative;display:inline-flex;align-items:center;min-height:44px}
 .links a::before{content:"";position:absolute;inset:0 min(0px,(100% - 44px)/2)}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:11px 22px;border:1px solid transparent;border-radius:10px;background:var(--red);color:#fff;font:600 16px/24px var(--text);text-align:center;text-decoration:none;cursor:pointer}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:11px 22px;border:1px solid transparent;border-radius:10px;background:linear-gradient(rgba(255,255,255,.16),rgba(255,255,255,0) 50%) var(--red);color:#fff;font:600 16px/24px var(--text);text-align:center;text-decoration:none;cursor:pointer;box-shadow:inset 0 1px rgba(255,255,255,.35),inset 0 -1px rgba(100,12,8,.25),0 8px 16px -8px rgba(142,26,20,.5)}
 .btn:focus-visible{color:#fff}
-.btn--quiet{background:var(--glass);border-color:var(--hair);color:var(--ink)}
+.btn--quiet{background:var(--glass);border-color:var(--hair);color:var(--ink);box-shadow:none}
 .btn--quiet:focus-visible{color:var(--ink)}
 
 .pc{color:var(--graphite)}
@@ -78,7 +93,7 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
   a{transition:color .15s,text-decoration-color .15s}
   a:hover{color:var(--red);text-decoration-color:var(--red)}
   .btn{transition:background-color .15s,border-color .15s}
-  .btn:hover{color:#fff;background:color-mix(in oklab,var(--red),#000 16%)}
+  .btn:hover{color:#fff;background-color:color-mix(in oklab,var(--red),#000 16%)}
   .btn--quiet:hover{color:var(--ink);background:var(--stone);border-color:var(--bronze)}
 }
 
@@ -100,6 +115,13 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
   .facts{grid-auto-flow:row;grid-template-columns:88px minmax(0,1fr)}
   .facts li{grid-column:1/-1;grid-template-columns:subgrid;grid-template-rows:none;align-items:center}
 }
+@media (prefers-reduced-motion:no-preference){
+  html.js .beat:not(.in,:has(+:target)) .seal{opacity:0;transform:translateY(-24px) scale(1.1)}
+  .drop .seal{transition:transform .5s cubic-bezier(.2,.6,.35,1),opacity .2s}
+  /* as the stone lands, one ring of light spreads from it across its own card */
+  .drop+section::after{content:"";position:absolute;z-index:-1;left:calc(var(--sx) - var(--rr));top:calc(var(--sc) - var(--rr));width:calc(2*var(--rr));aspect-ratio:1;border-radius:50%;background:radial-gradient(closest-side,#fff0 80%,rgba(255,255,255,.6) 92%,#fff0);opacity:0;pointer-events:none;animation:ring 1.2s .35s cubic-bezier(.2,.6,.35,1)}
+}
+@keyframes ring{from{transform:scale(.04);opacity:0}15%{opacity:1}to{transform:scale(1);opacity:0}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 
 @property --b{syntax:'<length>';inherits:true;initial-value:0px}
@@ -214,10 +236,12 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
 .stage .beat-note p{margin-top:4px;font-size:15px;line-height:24px;color:var(--muted)}
 .stage .beat-note--bare p{margin:0;color:var(--ink)}
 .stage .beat-note .disc{width:34px;height:34px}
+/* under 1100px the note docks above the card whose seal already shows this piece */
+@media (max-width:1099px){.stage.zoom .beat-note h3 .disc{display:none}}
 .stage .mini{display:block;width:100%;height:auto;aspect-ratio:1;border-radius:8px}
 
 :is(.stage,#rules) .disc{flex:none;overflow:visible}
-:is(.stage,#rules) .disc-wall{fill:var(--stone-side)}
+:is(.stage,#rules,.seal) .disc-wall{fill:var(--stone-side)}
 :is(.stage,#rules) .mini{background-size:128px;image-rendering:pixelated;box-shadow:inset 0 0 0 1px var(--hair)}
 :is(.stage,#rules) .mini .m-line{fill:none;stroke:var(--wood-dark);stroke-width:4}
 :is(.stage,#rules) .mini .m-dot{fill:var(--red);opacity:.8}
@@ -347,6 +371,8 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
 @media (max-width:639px){#club .fig-frame{--ar:3/2}}
 
 #contact .hook{max-width:24em;margin:12px 0 var(--u);font:500 26px/34px var(--display);text-wrap:balance}
+/* flex would make each side of the <wbr> its own item, with a gap between */
+#contact .btn{display:inline-block}
 #contact .links{margin:12px 0 -10px}
 .foot{padding-block:18px;font-size:14px;line-height:20px;color:var(--muted)}
 .foot .sig{color:var(--ink);font-weight:500}
