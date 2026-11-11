@@ -6,9 +6,9 @@ import elder from './elder.mjs';
 import kid from './kid.mjs';
 import { props } from './props.mjs';
 import { table, board } from './wood.mjs';
-import { bg } from './garden.mjs';
+import { bg, lawn } from './garden.mjs';
 
-const sprites = [bg, elder, kid, ...props, table, board];
+const sprites = [bg, lawn, elder, kid, ...props, table, board];
 const img = new URL('../../img/', import.meta.url);
 const only = process.argv.slice(2);
 const jsonPath = new URL('scene.json', img);

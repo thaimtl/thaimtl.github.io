@@ -173,7 +173,6 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
 .stage .dots{overflow:visible}
 .stage .dots path{fill:none;stroke:var(--red);stroke-width:7;stroke-linecap:round;stroke-dasharray:0 20;opacity:.7}
 .stage .dots circle{fill:var(--red);opacity:.75;transform-box:fill-box;transform-origin:center}
-.stage .dots .take{fill:none;stroke:var(--red);stroke-width:7}
 
 /* Pieces and props are flat elements put where the camera projects their table point (x, y, z), q is the perspective scale there, --m fits the element to the table. */
 .stage :is(.p,.prop){
@@ -220,8 +219,10 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
   .stage .p{transition:--x .6s cubic-bezier(.45,0,.4,1),--y .6s cubic-bezier(.45,0,.4,1)}
   .stage.jump .p{transition:none}
   html.js .stage.pre .p{visibility:hidden}
-  .stage.setup .p-in{animation:stage-land .45s cubic-bezier(.2,.6,.35,1) both;animation-delay:calc(var(--y)*80ms)}
-  .stage.setup .p::before{animation:stage-fade .45s both;animation-delay:calc(var(--y)*80ms)}
+  /* --y does not inherit, so the row's delay is handed to the stone's parts as --d */
+  .stage .p{--d:calc(var(--y)*80ms)}
+  .stage.setup .p-in{animation:stage-land .45s cubic-bezier(.2,.6,.35,1) var(--d) both}
+  .stage.setup .p::before{animation:stage-fade .45s var(--d) both}
   .stage .dots circle{animation:stage-pulse 2.4s ease-in-out infinite}
 }
 @keyframes stage-land{from{visibility:hidden;transform:translateY(calc(-2.5*var(--lz)))}}
@@ -252,7 +253,7 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
 @media (min-width:1100px){
   .stage{--zw:var(--zone,calc(100vw - min(760px,56vw) - clamp(24px,3vw,56px)));--hb:100svh;--kv:118;--hd:80px}
   .stage .beat-note{left:24px;right:auto;bottom:24px;width:calc(var(--zw) - 48px);grid-template-columns:136px minmax(0,1fr);gap:24px;padding:16px 24px 16px 16px}
-  .stage .beat-note.beat-note--bare{display:grid;top:24px;bottom:auto;width:auto;grid-template-columns:auto;padding:10px 20px}
+  .stage .beat-note.beat-note--bare{display:grid;top:84px;bottom:auto;width:auto;grid-template-columns:auto;padding:10px 20px}
   .stage .beat-note.beat-note--bare p{font-size:15px;line-height:24px}
   .stage .beat-note p{font-size:17px;line-height:28px}
 }
@@ -284,6 +285,54 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
   #rules :is(.show,.win) h3{margin-top:-8px}
 }
 @media (hover:none){.stage .beat-note.beat-note--bare{display:none}}
+
+/* play mode: the camera looks straight down, the story's note steps aside and a bar of controls takes its place */
+.stage{-webkit-tap-highlight-color:transparent}
+.hero{position:relative}
+.play-start{position:absolute;left:0;top:12px;pointer-events:auto}
+.play-start[hidden],html.playing .play-start{display:none}
+/* hidden, not removed: the story's camera measures the note the moment play ends */
+html.playing .stage .beat-note{visibility:hidden}
+.stage .p.gone{visibility:hidden}
+/* rings on the stones themselves: the last move, a piece that can be taken, the piece in hand */
+.stage .p.last .p-in{box-shadow:0 0 0 calc(.06*var(--b)) rgba(23,25,28,.72)}
+.stage .p.prey .p-in{box-shadow:0 0 0 calc(.03*var(--b)) var(--red),0 0 0 calc(.065*var(--b)) #fff,0 0 0 calc(.1*var(--b)) var(--red)}
+.stage .p.sel .p-in{box-shadow:0 0 0 calc(.07*var(--b)) var(--red)}
+.stage .dots :is(.was,.cur){fill:none;stroke:var(--ink);stroke-width:7;opacity:1}
+.stage .dots .was{opacity:.72}
+.stage .dots .cur{stroke-dasharray:16 12}
+.stage.play .dots circle{animation:none}
+/* seen from above there is no horizon: the backdrop fades out and a lawn fades in over the plain green */
+.stage::before{content:"";position:absolute;inset:0;background:0 0/calc(240*var(--a)) repeat;image-rendering:pixelated;opacity:0}
+.stage.play::before{background-image:url(img/scene-lawn.png);opacity:1}
+.stage.play .bg,.stage.bare :is(.prop,.shade){opacity:0}
+/* the status always has its own row with room for two lines, so the bar keeps one height and the board is framed once */
+.play-bar{position:fixed;z-index:2;left:max(24px,50vw - 360px);right:max(24px,50vw - 360px);bottom:24px;display:grid;gap:12px;padding:16px 24px 24px}
+.play-bar[hidden]{display:none}
+.play-status strong{display:block;font:600 26px/30px var(--display);letter-spacing:-.005em}
+.play-status p{min-height:48px;font-size:15px;line-height:24px;color:var(--muted)}
+.play-tools{display:flex;flex-wrap:wrap;gap:8px}
+.play-tools .btn{min-height:44px;padding:9px 16px;font-size:15px}
+.play-tools .btn:disabled{opacity:.45;cursor:default}
+@media (prefers-reduced-motion:no-preference){
+  .stage .p.gone{transition:visibility 0s .5s}
+  .stage :is(.prop,.shade){transition:opacity .3s}
+  /* the lawn and the backdrop take turns: one is gone before the other shows */
+  .stage::before{transition:opacity .2s}
+  .stage.play::before{transition:opacity .4s .5s}
+  .stage:not(.play) .bg{transition-delay:0s,.2s}
+}
+@media (max-width:767px){.play-start{display:none}}
+@media (max-width:1099px){
+  html.playing{overflow:hidden}
+  html.playing :is(.page,.skip){visibility:hidden}
+}
+@media (min-width:1100px){
+  .play-start{position:fixed;left:24px;top:24px}
+  .play-bar{left:24px;right:auto;width:calc(var(--zone) - 48px)}
+}
+/* a narrow bar sets the four buttons two by two */
+@media (min-width:1100px) and (max-width:1365px){.play-tools{display:grid;grid-template-columns:1fr 1fr}}
 
 header.top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;column-gap:var(--u);padding-block:16px}
 header.top a{position:relative;display:flex;align-items:center;min-height:44px;white-space:nowrap}

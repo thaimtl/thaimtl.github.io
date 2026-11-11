@@ -119,3 +119,16 @@ function draw() {
 }
 
 export const bg = { name: 'bg', draw };
+
+// A lawn tile for the top-down play view: the same tufts on flat grass, wrapping at every edge.
+function tile() {
+  const T = 240, img = Array.from({ length: T * T }, () => shade(3)), r = rng(23);
+  const thick = (x, y) => 0.5 + 0.25 * Math.sin(2 * Math.PI * (x + 2 * y) / T) + 0.25 * Math.sin(2 * Math.PI * (3 * x - y) / T + 1);
+  for (let n = 0; n < 600; n++) {
+    const x = Math.floor(r() * T), y = Math.floor(r() * T), a = shade(1 + Math.floor(r() * 2));
+    if (r() > thick(x, y) - 0.25) continue;
+    TUFTS[1].forEach((row, j) => [...row].forEach((ch, i) => { if (ch !== '.') img[((y + j) % T) * T + (x + i) % T] = ch === 'a' ? a : shade(4); }));
+  }
+  return { w: T, h: T, rgba: toRGBA(img, RAMPS) };
+}
+export const lawn = { name: 'lawn', draw: tile };
