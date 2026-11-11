@@ -334,33 +334,30 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
   :is(#work,#pyd) .facts span{text-wrap:balance}
 }
 
-#writing{--wr-pad:32px}
-#writing .wr-head{display:grid;grid-template-columns:minmax(0,1fr) auto;column-gap:var(--u);align-items:end}
-#writing .wr-head p{grid-column:1;margin-top:16px}
-#writing .steps{display:flex;gap:8px;grid-column:2;grid-row:1/3}
-#writing .steps[hidden]{display:none}
-#writing .steps .btn{width:44px;min-height:44px;padding:0}
-#writing .steps svg{fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-#writing .steps [aria-disabled=true]{opacity:.4;pointer-events:none}
-#writing .posts{display:grid;grid-auto-flow:column;grid-template-rows:repeat(3,auto);grid-auto-columns:64%;column-gap:var(--u);margin:calc(var(--u) - 6px) calc(-1*var(--wr-pad)) -6px;padding:6px var(--wr-pad);overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:var(--wr-pad);scrollbar-width:none}
-#writing .posts::-webkit-scrollbar{display:none}
-#writing .posts li{display:grid;grid-row:span 3;grid-template-rows:subgrid;scroll-snap-align:start}
-#writing .posts a{display:block;align-self:start;border-radius:10px;text-decoration:none}
-#writing .fig-frame{display:block;--ar:3/2}
+/* every post shows at once: one row each, picture beside the words from 480px up. The link is the whole row. */
+#writing .posts{display:grid;gap:var(--u)}
+#writing .posts li{display:grid;grid-template:auto auto 1fr/minmax(0,1fr)}
+#writing .posts a{grid-area:1/1/-1/-1;display:grid;grid-template:subgrid/subgrid;border-radius:10px;text-decoration:none}
+#writing .fig-frame{display:block;width:100%;--ar:3/2}
 #writing h3{margin-top:16px;font-size:26px;line-height:30px}
-#writing .meta{margin-top:8px}
-#writing .note{margin-top:8px}
+/* placed by hand, over the link's own area, or the grid would push them into a column of their own */
+#writing :is(.meta,.note){grid-area:3/1;margin-top:8px;pointer-events:none}
+#writing .meta{grid-row:2}
 #writing .posts a:focus-visible h3{color:var(--red)}
 @media (hover:hover){
   #writing h3{transition:color .15s}
   #writing .posts a:hover h3{color:var(--red)}
 }
-@media (max-width:639px){
-  #writing{--wr-pad:20px}
-  #writing .wr-head{align-items:center}
-  #writing .wr-head p{grid-column:1/-1}
-  #writing .steps{grid-row:1}
-  #writing .posts{grid-auto-columns:82%}
+@media (max-width:479px){
+  #writing .posts li{grid-template-rows:auto auto auto 1fr}
+  #writing .meta{grid-row:3}
+  #writing .note{grid-row:4}
+}
+@media (min-width:480px){
+  #writing .posts li{grid-template-columns:38% minmax(0,1fr);column-gap:24px}
+  #writing .fig-frame{grid-row:1/-1}
+  #writing :is(h3,.meta,.note){grid-column:2}
+  #writing h3{margin-top:-4px}
 }
 
 #club h2+.fig{margin-top:var(--u)}
