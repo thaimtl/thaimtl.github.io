@@ -175,10 +175,10 @@
     const xy = s => { const [f, r] = sq(s); return [8 - f, r - 1]; };
     const board = pos => new Map([...pos].map(([s, id]) => [s, START.get(id)]));
     // a position maps square -> piece id (its starting square). half[i] is after Red's move of row i, full[i] after Black's reply.
-    const half = [], full = [], mover = [], replier = [];
+    const half = [], full = [], mover = [];
     let pos = OPEN;
     const play = mv => { const [a, b] = mv.split('-'), id = pos.get(a); pos = new Map(pos); pos.delete(a); pos.set(b, id); return id; };
-    for (const [, red, black] of GAME) { mover.push(play(red)); half.push(pos); replier.push(black && play(black)); full.push(pos); }
+    for (const [, red, black] of GAME) { mover.push(play(red)); half.push(pos); if (black) play(black); full.push(pos); }
     const beats = [...document.querySelectorAll('main .beat[data-beat]')].map(b => [b, GAME.findIndex(g => g[0] === b.dataset.beat)]).filter(([, i]) => i >= 0);
 
     const show = (next, hop) => {
@@ -219,7 +219,7 @@
       if (note.hidden) anims.forEach(a => a.pause());
     };
     // a small hint in the corner of the match zone, only at 1100px and wider
-    const invite = () => say(null, null, null, `${matchMedia('(hover: none)').matches ? 'Tap' : 'Hover'} a piece to see where it can go.`);
+    const invite = () => say(null, null, null, 'Hover a piece to see where it can go.');
 
     // beat shots: both moves and every dot as large as fits above the note, with the whole board in the frame
     const T = Math.PI / 4, K = 22, BOARD = [[-.62, -.62, .56], [8.62, -.62, .56], [-.62, 9.62, 0], [8.62, 9.62, 0]];
@@ -279,7 +279,7 @@
       if (note.hidden !== !open) { note.hidden = !open; anims.forEach(a => (open ? a.play() : a.pause())); }
     };
 
-    // in the opening shot the board answers the pointer: hover or tap a piece for its moves, click it to jump to its beat
+    // in the opening shot hovering a piece shows its moves, clicks and taps on the board do nothing
     let tipped = null;
     const open = t => !t.closest('a,button,input,select,textarea,label,header,footer,main>section:not(.hero,.beat)');
     const hit = (x, y) => {
@@ -290,27 +290,15 @@
       }
       return null;
     };
-    const beatOf = id => beats.find(([, i]) => mover[i] === id || replier[i] === id)?.[0];
     const tip = id => {
       if (id === tipped) return;
       tipped = id;
-      document.documentElement.style.cursor = id && beatOf(id) && !matchMedia('(hover: none)').matches ? 'pointer' : '';
       if (!id) { mark(); return invite(); }
       const p = START.get(id);
       mark(OPEN, id);
       say(p.t, p.side, NAME[p.t]);
     };
     addEventListener('pointermove', e => { if (e.pointerType !== 'touch') tip((open(e.target) && hit(e.clientX, e.clientY)) || null); });
-    let down = null;
-    addEventListener('pointerdown', e => { down = e.isPrimary && e.button === 0 ? [e.clientX, e.clientY] : null; });
-    addEventListener('pointerup', e => {
-      if (!down || Math.hypot(e.clientX - down[0], e.clientY - down[1]) > 10) return;
-      const id = (open(e.target) && hit(e.clientX, e.clientY)) || null;
-      if (e.pointerType === 'touch' && id !== tipped) return tip(id);
-      tip(null);
-      beatOf(id)?.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
-    });
-
     let raf = 0;
     const frame = () => {
       raf = 0;

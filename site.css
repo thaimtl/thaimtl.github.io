@@ -259,6 +259,7 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
   /* the serif's cap height starts flush with the top of the board beside it */
   #rules :is(.show,.win) h3{margin-top:-8px}
 }
+@media (hover:none){.stage .beat-note.beat-note--bare{display:none}}
 
 header.top{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;column-gap:var(--u);padding-block:16px}
 header.top a{position:relative;display:flex;align-items:center;min-height:44px;white-space:nowrap}
