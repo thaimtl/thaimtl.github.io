@@ -135,10 +135,10 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
 @property --x{syntax:'<number>';inherits:false;initial-value:0}
 @property --y{syntax:'<number>';inherits:false;initial-value:0}
 
-/* --b is one board cell, --a one art pixel (1/22 cell, whole from 44px up). The opening is laid out from the bottom: the boy's crown, the board, the table's far edge, the grandfather. */
+/* --b is one board cell, --a one art pixel (1/22 cell, whole from 44px up). The opening is laid out from the bottom: a strip of table on the viewer's side (--kv art pixels), the board, the table's far edge, the grandfather. */
 .stage{
-  --zw:100vw;--hb:72svh;--kv:20;--hd:var(--head,112px);
-  --fit:min(calc((var(--hb) - var(--hd))/(var(--kv)/22 + 12.27)),calc(var(--zw)*.075));
+  --zw:100vw;--hb:72svh;--kv:42;--hd:var(--head,112px);
+  --fit:min(calc((var(--hb) - var(--hd))/(var(--kv)/22 + 12.27)),calc(var(--zw)*.07));
   --b:max(round(down,var(--fit),22px),min(round(down,var(--fit),1px),43px));
   --a:calc(var(--b)/22);
   --cx:round(calc(var(--zw)/2),1px);
@@ -152,7 +152,6 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
 .stage img{position:absolute;max-width:none;image-rendering:pixelated}
 .stage .bg{width:calc(960*var(--a));left:clamp(calc(100vw - 960*var(--a)),calc(var(--cx) - 480*var(--a)),0px);top:min(0px,round(calc(var(--edge) - 196*var(--a)),1px))}
 .stage .spr--elder{width:calc(138*var(--a));left:calc(var(--cx) - 69*var(--a));top:round(calc(var(--edge) - 114*var(--a)),1px)}
-.stage .spr--kid{z-index:2;width:calc(232*var(--a));left:calc(var(--cx) - 116*var(--a));top:calc(var(--cy) + 4.05*var(--b))}
 
 /* Each flat part of the table is its own element under the same camera, so no browser has to sort 3D layers. Units are board cells, the board's far left point is 0 0. */
 .stage .sf{position:absolute;left:0;top:0;transform-origin:0 0;transform:var(--cam) translate3d(calc(var(--x)*var(--b)),calc(var(--y)*var(--b)),calc(var(--z,0)*var(--b))) var(--r,);image-rendering:pixelated}
@@ -183,11 +182,11 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
   transform:translate(calc(var(--tx) + var(--k)*var(--b)*var(--X)*var(--q)),calc(var(--ty) + var(--k)*var(--b)*var(--v)*var(--q))) var(--m)
 }
 .stage .prop{--z:0;--m:scale(calc(var(--k)*var(--q)));transform-origin:0 0}
-.stage .prop--fruit img{width:calc(2.697*var(--b));left:calc(-1.348*var(--b));top:calc(-1.241*var(--b))}
-.stage .prop--fruit .z{width:calc(2.558*var(--b));left:calc(-1.279*var(--b));top:calc(-1.228*var(--b))}
-.stage .prop--tea img{width:calc(2.901*var(--b));left:calc(-1.451*var(--b));top:calc(-1.558*var(--b))}
-.stage .prop--tea .z{width:calc(2.856*var(--b));left:calc(-1.428*var(--b));top:calc(-1.479*var(--b))}
-.stage .prop .z{opacity:0}
+/* --w is a drawing's width in cells and --t how far its table point sits below its top, both from img/scene.json */
+.stage .prop img{width:calc(var(--w)*var(--b));left:calc(var(--w)*var(--b)/-2);top:calc(var(--t)*var(--b)*-1)}
+.stage .prop .z{--w:var(--wz);--t:var(--tz);opacity:0}
+/* the viewer's own plate and cup sit in front of the board, where the note and the play bar go once the camera pushes in */
+.stage.zoom :is(.prop--near,.shade--near){opacity:0}
 .stage.zoom .prop .z{opacity:1}
 .stage.zoom .prop img:not(.z){opacity:0}
 
@@ -206,14 +205,13 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
 @keyframes stage-hop-a{50%{transform:translateY(calc(-.7*var(--lz)))}}
 @keyframes stage-hop-b{50%{transform:translateY(calc(-.7*var(--lz)))}}
 
-/* beat shots: the camera pushes in, the boy drops out of frame, the far side drifts up, the props swap to their closer drawing */
+/* beat shots: the camera pushes in, the far side drifts up, the props swap to their closer drawing */
 .stage.zoom .spr--elder{transform:translateY(-30vh);opacity:0}
 .stage.zoom .bg{transform:translateY(-15vh)}
-.stage.zoom .spr--kid{transform:translateY(70vh)}
 
 @media (prefers-reduced-motion:no-preference){
   .stage{transition:--tx 1s var(--ease),--ty 1s var(--ease),--k 1s var(--ease),--K 1s var(--ease),--T 1s var(--ease),--fx 1s var(--ease),--fy 1s var(--ease);--ease:cubic-bezier(.3,.1,.2,1)}
-  .stage :is(.spr--elder,.bg,.spr--kid){transition:transform 1s var(--ease),opacity .6s}
+  .stage :is(.spr--elder,.bg){transition:transform 1s var(--ease),opacity .6s}
   .stage .prop .z{transition:opacity 1s var(--ease)}
   .stage.zoom .prop img:not(.z){transition:opacity 0s 1s}
   .stage .p{transition:--x .6s cubic-bezier(.45,0,.4,1),--y .6s cubic-bezier(.45,0,.4,1)}

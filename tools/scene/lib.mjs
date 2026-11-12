@@ -8,7 +8,7 @@ export const deg = Math.PI / 180;
 
 // One light for every sprite: from the upper left, a little toward the camera.
 export const LIGHT = (() => { const l = len(-0.55, 0.72, 0.42); return [-0.55 / l, 0.72 / l, 0.42 / l]; })();
-export const PITCH = 30 * deg;
+const PITCH = 30 * deg;
 
 // Signed distance primitives. Points are already in the shape's local frame.
 export const sphere = (x, y, z, r) => len(x, y, z) - r;
@@ -131,8 +131,9 @@ export function paint(px, w, h, ramps, { bands = [0.36, 0.6, 0.84], dither = {},
 
 const DETAILS = ['eye'];
 
-// Pixel-art clean-up: fill notches, cut spurs, merge lone pixels, then outline silhouettes and depth breaks.
-export function finish(img, w, h, { depthBreak = 4, relative = false, outlineMats, openBottom = false } = {}) {
+// Pixel-art clean-up: fill notches, cut spurs, merge lone pixels, then outline silhouettes and depth breaks,
+// and where a material in `edgeMats` meets another material.
+export function finish(img, w, h, { depthBreak = 4, relative = false, outlineMats, edgeMats = [], openBottom = false } = {}) {
   const at = (i, j) => (i < 0 || j < 0 || i >= w ? null : j >= h ? (openBottom ? img[(h - 1) * w + i] : null) : img[j * w + i]);
   const N4 = [[1, 0], [-1, 0], [0, 1], [0, -1]];
   for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
@@ -170,7 +171,8 @@ export function finish(img, w, h, { depthBreak = 4, relative = false, outlineMat
   for (let j = 0; j < h; j++) for (let i = 0; i < w; i++) {
     const p = at(i, j);
     if (!p || (outlineMats && !outlineMats.includes(p.mat))) continue;
-    if (N4.some(([a, b]) => { const q = at(i + a, j + b); return !q || q.t - p.t > depthBreak * (relative ? p.t : 1); })) edge.push(p);
+    const mine = edgeMats.includes(p.mat);
+    if (N4.some(([a, b]) => { const q = at(i + a, j + b); return !q || q.t - p.t > depthBreak * (relative ? p.t : 1) || (mine && q.mat !== p.mat && q.mat !== 'pith'); })) edge.push(p);
   }
   for (const p of edge) p.c = 0;
   return img;
