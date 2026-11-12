@@ -235,7 +235,6 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
 .stage .beat-note[hidden]{display:grid;opacity:0}
 .stage .beat-note h3{display:flex;align-items:center;gap:10px}
 .stage .beat-note p{margin-top:4px;font-size:15px;line-height:24px;color:var(--muted)}
-.stage .beat-note--bare p{margin:0;color:var(--ink)}
 .stage .beat-note .disc{width:34px;height:34px}
 /* under 1100px the note docks above the card whose seal already shows this piece */
 @media (max-width:1099px){.stage.zoom .beat-note h3 .disc{display:none}}
@@ -253,8 +252,6 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
 @media (min-width:1100px){
   .stage{--zw:var(--zone,calc(100vw - min(760px,56vw) - clamp(24px,3vw,56px)));--hb:100svh;--kv:118;--hd:80px}
   .stage .beat-note{left:24px;right:auto;bottom:24px;width:calc(var(--zw) - 48px);grid-template-columns:136px minmax(0,1fr);gap:24px;padding:16px 24px 16px 16px}
-  .stage .beat-note.beat-note--bare{display:grid;top:84px;bottom:auto;width:auto;grid-template-columns:auto;padding:10px 20px}
-  .stage .beat-note.beat-note--bare p{font-size:15px;line-height:24px}
   .stage .beat-note p{font-size:17px;line-height:28px}
 }
 
@@ -284,7 +281,6 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
   /* the serif's cap height starts flush with the top of the board beside it */
   #rules :is(.show,.win) h3{margin-top:-8px}
 }
-@media (hover:none){.stage .beat-note.beat-note--bare{display:none}}
 
 /* play mode: the camera looks straight down, the story's note steps aside and a bar of controls takes its place */
 .stage{-webkit-tap-highlight-color:transparent}
@@ -346,6 +342,7 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
 .intro .claim+.lede{margin-top:24px}
 .intro .lede+.lede{margin-top:12px}
 .intro .lede+.note{margin-top:16px}
+@media (hover:none){.intro .note .hover{display:none}}
 
 @media (max-width:639px){
   .intro .claim{font-size:26px;line-height:34px}
