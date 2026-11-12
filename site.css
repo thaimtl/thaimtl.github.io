@@ -312,6 +312,9 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
 #work .sv-body .fig-frame{aspect-ratio:2/1}
 #work .sv-body img{object-position:35% 45%}
 :is(#work .sv-text,#pyd,#planned) p:not(.meta,.links)+p{margin-top:16px}
+#planned ul{max-width:62ch;margin:12px 0 0;padding-left:20px;list-style:disc}
+#planned li+li{margin-top:8px}
+#planned ul+p{margin-top:16px}
 :is(#work,#pyd) .links{margin-top:8px}
 /* the press block is one link: where it ran, then its headline */
 #work .press{display:grid;gap:6px;padding:16px 20px;border:1px solid var(--hair);border-radius:10px;background:rgba(255,255,255,.5);text-decoration:none}
