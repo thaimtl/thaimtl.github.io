@@ -393,7 +393,7 @@
     document.querySelector('.intro .note')?.insertAdjacentHTML('beforeend', '<span class="hover"> Hover a piece to see where it can go.</span>');
     // the props on the table each show a card: the clementines one for the plates, the tea one for the cups and the pot. The copy sits in the hero's [data-tip] blocks.
     const props = [...stage.querySelectorAll('.prop')], kind = p => (/fruit/.test(p.querySelector('img').getAttribute('src')) ? 'fruit' : 'tea');
-    const blocks = document.querySelectorAll('header.top,main>section:not(.hero,.beat),footer.foot'), card = document.createElement('div'), halo = document.createElement('div'), elder = stage.querySelector('.spr--elder'), slab = stage.querySelector('.slab');
+    const blocks = document.querySelectorAll('header.top,main>section:not(.hero,.beat),footer.foot,.cue'), card = document.createElement('div'), halo = document.createElement('div'), elder = stage.querySelector('.spr--elder'), slab = stage.querySelector('.slab');
     card.className = 'prop-tip';
     halo.className = 'prop-ring';
     card.setAttribute('aria-hidden', 'true');
