@@ -474,7 +474,7 @@
     bar.addEventListener('click', e => { const act = e.target.closest('button')?.dataset.do; if (act) ({ undo, begin, swap, leave })[act](); });
     // on the stage itself, not the window: Safari on a touch screen only turns a tap into a click for an element that listens for one
     stage.addEventListener('click', e => {
-      if (!game) return;
+      if (!game) return void point(propAt(e.clientX, e.clientY));
       game.keys = false;
       choose(pick(e.clientX, e.clientY));
     });
@@ -518,7 +518,77 @@
       mark(OPEN, id);
       say(p.t, p.side, NAME[p.t]);
     };
-    addEventListener('pointermove', e => { if (game) hover(e); else if (e.pointerType !== 'touch') tip((open(e.target) && hit(e.clientX, e.clientY)) || null); });
+    // the props on the table each show a card: the clementines one for the plates, the tea one for the cups and the pot. The copy sits in the hero's [data-tip] blocks.
+    const props = [...stage.querySelectorAll('.prop')], kind = p => (/fruit/.test(p.querySelector('img').getAttribute('src')) ? 'fruit' : 'tea');
+    const blocks = document.querySelectorAll('header.top,main>section:not(.hero,.beat),footer.foot'), card = document.createElement('div'), halo = document.createElement('div'), elder = stage.querySelector('.spr--elder'), slab = stage.querySelector('.slab');
+    card.className = 'prop-tip';
+    halo.className = 'prop-ring';
+    card.setAttribute('aria-hidden', 'true');
+    halo.hidden = true;
+    stage.after(card, halo);
+    const sprite = p => p.querySelector(stage.matches('.zoom') ? '.z' : 'img:not(.z)').getBoundingClientRect();
+    const seen = p => {
+      if (game || root.matches('.playing') || stage.matches('.bare') || (stage.matches('.zoom') && p.matches('.prop--near'))) return false;
+      const r = sprite(p);
+      return r.right > 0 && r.left < innerWidth && r.bottom > 0 && r.top < innerHeight;
+    };
+    const propAt = (x, y) => props.findLast(p => { const r = sprite(p); return x >= r.left && x <= r.right && y >= r.top && y <= r.bottom && seen(p); }) || null;
+    // on: the props that may carry the card, first seen wins, and whether the keyboard asked (then a ring marks the prop). keyed: what a focused button asks for.
+    let on = null, keyed = null, loop = 0, until = 0;
+    const follow = now => {
+      loop = 0;
+      const p = on?.list.find(seen);
+      if (on && !p && !on.keys) on = null;
+      card.classList.toggle('on', !!p);
+      halo.hidden = !(p && on.keys);
+      if (p) {
+        const k = kind(p);
+        if (card.dataset.k !== k) {
+          card.dataset.k = k;
+          card.replaceChildren(...document.querySelector(`[data-tip=${k}]`).cloneNode(true).childNodes);
+          card.querySelector('[id]')?.removeAttribute('id');
+        }
+        // above the prop, below it or beside it, each pulled into the screen. The spot that covers the least wins: his face counts most, then the page's cards and the Play button, then the prop itself, then the board.
+        const r = sprite(p), w = card.offsetWidth, h = card.offsetHeight, m = 12, g = on.keys ? 16 : 10, zone = wide ? page.getBoundingClientRect().left : 0;
+        const right = zone - 2 * m >= w ? zone : innerWidth, e = elder.getBoundingClientRect();
+        const face = !stage.matches('.zoom') && { left: e.left + e.width * .36, right: e.left + e.width * .64, top: e.top, bottom: e.top + e.height * .4 };
+        const over = [[face, 1e6], ...[...blocks, opener, ...(note.hidden ? [] : [note])].map(c => [c.getBoundingClientRect(), 1e3]), [r, 30], [slab.getBoundingClientRect(), 1]];
+        const cost = ([x, y]) => over.reduce((s, [c, k]) => s + (c ? k * Math.max(0, Math.min(x + w, c.right) - Math.max(x, c.left)) * Math.max(0, Math.min(y + h, c.bottom) - Math.max(y, c.top)) : 0), 0);
+        const cx = (r.left + r.right - w) / 2, spots = [[cx, r.top - g - h], [cx, r.bottom + g], [r.right + g, r.top], [r.left - g - w, r.top]];
+        const [sx, sy] = spots.map(([x, y]) => [Math.max(m, Math.min(x, right - m - w)), Math.max(m, Math.min(y, innerHeight - m - h))]).sort((s, t) => cost(s) - cost(t))[0];
+        card.style.transform = `translate(${Math.round(sx)}px,${Math.round(sy)}px)`;
+        if (on.keys) halo.style.cssText = `left:${r.left}px;top:${r.top}px;width:${r.width}px;height:${r.height}px`;
+      }
+      if (on && now < until) loop = requestAnimationFrame(follow);
+    };
+    // the card is placed again for a moment after anything that can move a prop, because the camera glides
+    const place = () => { until = performance.now() + 1500; loop ||= requestAnimationFrame(follow); };
+    const point = (p, keys = false) => { on = p && { list: [].concat(p), keys }; place(); };
+    // a scroll beat or a resize moves the props: a mouse card goes, a keyboard card follows
+    const moved = () => { if (on) on.keys ? place() : point(null); };
+    opener.after(...[...document.querySelectorAll('[data-tip]')].map(src => {
+      const b = document.createElement('button'), k = src.dataset.tip;
+      // the viewer's own plate or cup first, then his
+      const list = props.filter(p => kind(p) === k).sort((a, c) => c.matches('.prop--near') - a.matches('.prop--near'));
+      b.type = 'button';
+      b.className = 'vh tip-key';
+      b.textContent = src.querySelector('strong').textContent;
+      b.setAttribute('aria-describedby', src.querySelector('p').id);
+      b.addEventListener('focus', () => { keyed = list; tip(null); point(list, true); });
+      b.addEventListener('blur', () => { keyed = null; point(null); });
+      b.addEventListener('keydown', e => { if (e.key === 'Escape') { keyed = null; point(null); } });
+      return b;
+    }));
+    addEventListener('pointermove', e => {
+      if (game) return hover(e);
+      if (e.pointerType === 'touch') return;
+      const o = open(e.target), pr = (o && propAt(e.clientX, e.clientY)) || null;
+      // pointing at a prop is not pointing at a piece. The pointer takes the card when it enters a prop and hands it back to a focused button when it leaves.
+      if (pr !== (on?.keys ? null : on?.list[0] ?? null)) pr ? point(pr) : point(keyed, !!keyed);
+      tip((o && !on && hit(e.clientX, e.clientY)) || null);
+    });
+    // a tap or click on a prop shows its card, a press anywhere else hides it
+    addEventListener('pointerdown', e => { if (!(open(e.target) && propAt(e.clientX, e.clientY))) point(null); });
     let raf = 0;
     const frame = () => {
       raf = 0;
@@ -526,7 +596,7 @@
       let k = -1;
       // the opening shot holds until the reader has scrolled, however tall the window is
       if (scrollY > innerHeight * .3) beats.forEach(([b], j) => { if (b.getBoundingClientRect().top < innerHeight / 2) k = j; });
-      if (k !== cur) { tip(null); go(k); }
+      if (k !== cur) { tip(null); moved(); go(k); }
       dock();
     };
     const measure = () => {
@@ -541,7 +611,7 @@
     measure();
     frame();
     addEventListener('scroll', () => { raf ||= requestAnimationFrame(frame); }, { passive: true });
-    addEventListener('resize', () => { measure(); if (game) return innerWidth < 768 ? leave() : lay(true); frame(); shot(); });
+    addEventListener('resize', () => { measure(); if (game) return innerWidth < 768 ? leave() : lay(true); moved(); frame(); shot(); });
   }
 
   const list = document.querySelector('#rules .kinds');
