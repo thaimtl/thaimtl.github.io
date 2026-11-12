@@ -11,9 +11,12 @@
   --display:'Cormorant Garamond',Georgia,serif;--text:'Hanken Grotesk',system-ui,sans-serif;
   --u:28px;
   /* seal: stone radius, gap to socket, centre x (stone's left edge 24px inside the text edge), centre y, ring radius */
-  --sr:20px;--sg:4px;--sx:77px;--sc:calc(var(--sr) - 4px);--rr:640px;
+  --sr:28px;--sg:4px;--sx:85px;--sc:calc(var(--sr) - 4px);--rr:640px;
+  /* the header card's bottom plus 8px, measured again by stage.js */
+  --head:100px;
 }
-@media (max-width:639px){:root{--u:20px;--sr:16px;--sx:61px;--rr:400px}}
+@media (max-width:519px){:root{--head:126px}}
+@media (max-width:639px){:root{--u:20px;--sr:22px;--sx:67px;--rr:400px}}
 @media (prefers-reduced-transparency:reduce){:root{--glass:#f4f7f9;--frost:none}}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){:root{--glass:#f4f7f9}}
 
@@ -28,9 +31,11 @@ body{background:var(--ground);font:400 17px/28px var(--text);color:var(--ink);-w
 
 .page{position:relative;z-index:1;width:min(100% - 24px,720px);margin-inline:auto;padding:12px 0}
 .page,main,.hero,.beat{pointer-events:none}
-.hero{height:72vh;height:72svh}
+.hero{height:calc(100vh - var(--head) + 9px);height:calc(100svh - var(--head) + 9px)}
 .beat{height:85vh;height:85svh}
-:where(header.top,footer.foot,main>section:not(.hero,.beat),.beat-note,.prop-tip){pointer-events:auto;padding:32px;background:var(--glass);-webkit-backdrop-filter:var(--frost);backdrop-filter:var(--frost);border:1px solid var(--rim);border-radius:16px;box-shadow:var(--lip),var(--lift)}
+/* a stop right beside the last one is a short step, not a long glide */
+.beat[data-near]{height:55vh;height:55svh}
+:where(header.top,footer.foot,main>section:not(.hero,.beat),.play-bar,.prop-tip){pointer-events:auto;padding:32px;background:var(--glass);-webkit-backdrop-filter:var(--frost);backdrop-filter:var(--frost);border:1px solid var(--rim);border-radius:16px;box-shadow:var(--lip),var(--lift)}
 /* a card after a beat carries that beat's piece in a socket cut through its top edge, so its glass moves to ::before to be masked */
 .beat{position:relative}
 .beat+section{position:relative;z-index:0;overflow:hidden;overflow:clip;padding-top:calc(2*var(--sr) + 16px);border-color:#0000;background:none;-webkit-backdrop-filter:none;backdrop-filter:none;box-shadow:var(--lift);scroll-margin-top:24px}
@@ -41,8 +46,10 @@ body{background:var(--ground);font:400 17px/28px var(--text);color:var(--ink);-w
   -webkit-backdrop-filter:var(--frost);backdrop-filter:var(--frost);box-shadow:var(--lip);
   mask:radial-gradient(circle at var(--c1),#0000 var(--h),#000 calc(var(--h) + 1px)),radial-gradient(circle at var(--c2),#0000 calc(var(--h) - .5px),#000 calc(var(--h) + .5px));mask-composite:intersect
 }
+.seal .disc-wall{fill:var(--stone-side)}
 .seal{position:absolute;z-index:1;left:calc(var(--sx) - var(--sr));top:calc(100% + var(--sc) - var(--sr));width:calc(2*var(--sr));aspect-ratio:92/97;overflow:visible}
-:where(main>section:not(.hero,.beat))+:where(main>section:not(.hero,.beat)),main+footer.foot{margin-top:16px}
+:where(main>section:not(.hero,.beat))+:where(main>section:not(.hero,.beat)),main+footer.foot{margin-top:0;border-top-color:var(--hair);border-radius:0 0 16px 16px}
+#contact{border-radius:16px 16px 0 0}
 :where(main>section:not(.hero,.beat))>*+*{margin-top:var(--u)}
 :where(main>section:not(.hero,.beat)) :is(h2,h3)+*{margin-top:16px}
 :where(main>section:not(.hero,.beat)) :is(h2,h3)+.meta{margin-top:8px}
@@ -54,7 +61,7 @@ h1,h2,h3{font-family:var(--display);font-variant-numeric:lining-nums;text-wrap:b
 h2{font-size:56px;line-height:58px;font-weight:500;letter-spacing:-.015em}
 h3{font-size:32px;line-height:36px;font-weight:600;letter-spacing:-.005em}
 p{text-wrap:pretty}
-a{color:var(--ink);text-decoration:underline 1px var(--bronze);text-underline-offset:4px}
+a{border-radius:4px;color:var(--ink);text-decoration:underline 1px var(--bronze);text-underline-offset:4px}
 a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
 :focus-visible{outline:2px solid var(--bronze);outline-offset:3px}
 
@@ -98,18 +105,12 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
 }
 
 @media (min-width:480px){.cols{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media (min-width:1100px){
-  .page{width:min(760px,56vw);margin-left:auto;margin-right:clamp(24px,3vw,56px);padding:24px 0 28px}
-  .hero{height:0}
-  .beat{height:70vh;height:70svh}
-  header.top+main{margin-top:16px}
-}
 @media (max-width:639px){
   h2{font-size:40px;line-height:42px}
   h3{font-size:26px;line-height:30px}
   .num{font-size:34px;line-height:36px}
   .facts span{font-size:14px;line-height:20px}
-  :where(header.top,footer.foot,main>section:not(.hero,.beat),.beat-note){padding:20px}
+  :where(header.top,footer.foot,main>section:not(.hero,.beat)){padding:20px}
 }
 @media (max-width:399px){
   .facts{grid-auto-flow:row;grid-template-columns:88px minmax(0,1fr)}
@@ -135,16 +136,16 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
 @property --x{syntax:'<number>';inherits:false;initial-value:0}
 @property --y{syntax:'<number>';inherits:false;initial-value:0}
 
-/* --b is one board cell, --a one art pixel (1/22 cell, whole from 44px up). The opening is laid out from the bottom: a strip of table on the viewer's side (--kv art pixels), the board, the table's far edge, the grandfather. */
+/* --b is one board cell, --a one art pixel (1/22 cell, whole from 44px up). The opening is centered between the header (--hd) and room for the scroll prompt (--hb): the grandfather, the board, and a strip of table on the viewer's side (--kv art pixels) that holds the viewer's plate and cup. */
 .stage{
-  --zw:100vw;--hb:72svh;--kv:42;--hd:var(--head,112px);
-  --fit:min(calc((var(--hb) - var(--hd))/(var(--kv)/22 + 12.27)),calc(var(--zw)*.07));
+  --hb:calc(100svh - 56px);--kv:88;--hd:var(--head);
+  --fit:min(calc((var(--hb) - var(--hd))/(var(--kv)/22 + 12.27)),7vw);
   --b:max(round(down,var(--fit),22px),min(round(down,var(--fit),1px),43px));
   --a:calc(var(--b)/22);
-  --cx:round(calc(var(--zw)/2),1px);
-  --cy:round(calc(var(--hb) - var(--kv)*var(--a) - 4.05*var(--b)),1px);
+  --cx:round(50vw,1px);
+  --cy:round(calc((var(--hd) + var(--hb) - var(--kv)*var(--a))/2 + 2.085*var(--b)),1px);
   --edge:calc(var(--cy) - 3.04*var(--b));
-  /* the camera: the focus point (fx, fy) on the table lands on (tx, ty), seen from K cells away, tilted T. stage.js moves it for the beats. */
+  /* the camera: the focus point (fx, fy) on the table lands on (tx, ty), seen from K cells away, tilted T. stage.js moves it to each piece stop. */
   --tx:var(--cx);--ty:var(--cy);--st:sin(var(--T));--ct:cos(var(--T));
   --cam:translate(var(--tx),var(--ty)) perspective(calc(var(--K)*var(--k)*var(--b))) rotateX(var(--T)) scale3d(var(--k),var(--k),var(--k)) translate(calc(var(--fx)*var(--b)*-1),calc(var(--fy)*var(--b)*-1));
   position:fixed;inset:0;z-index:0;overflow:hidden;background:#6c9a50
@@ -171,7 +172,7 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
 .stage .name span{flex:1;padding-left:.32em;text-align:center}
 .stage .dots{overflow:visible}
 .stage .dots path{fill:none;stroke:var(--red);stroke-width:7;stroke-linecap:round;stroke-dasharray:0 20;opacity:.7}
-.stage .dots circle{fill:var(--red);opacity:.75;transform-box:fill-box;transform-origin:center}
+.stage .dots circle{fill:var(--red);opacity:.75}
 
 /* Pieces and props are flat elements put where the camera projects their table point (x, y, z), q is the perspective scale there, --m fits the element to the table. */
 .stage :is(.p,.prop){
@@ -185,8 +186,8 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
 /* --w is a drawing's width in cells and --t how far its table point sits below its top, both from img/scene.json */
 .stage .prop img{width:calc(var(--w)*var(--b));left:calc(var(--w)*var(--b)/-2);top:calc(var(--t)*var(--b)*-1)}
 .stage .prop .z{--w:var(--wz);--t:var(--tz);opacity:0}
-/* the viewer's own plate and cup sit in front of the board, where the note and the play bar go once the camera pushes in */
-.stage.zoom :is(.prop--near,.shade--near){opacity:0}
+/* the viewer's own plate and cup sit in front of the board, where the play bar goes */
+.stage.play :is(.prop--near,.shade--near){opacity:0}
 .stage.zoom .prop .z{opacity:1}
 .stage.zoom .prop img:not(.z){opacity:0}
 
@@ -205,7 +206,7 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
 @keyframes stage-hop-a{50%{transform:translateY(calc(-.7*var(--lz)))}}
 @keyframes stage-hop-b{50%{transform:translateY(calc(-.7*var(--lz)))}}
 
-/* beat shots: the camera pushes in, the far side drifts up, the props swap to their closer drawing */
+/* piece stops: the camera pushes in, the far side drifts up, the props swap to their closer drawing */
 .stage.zoom .spr--elder{transform:translateY(-30vh);opacity:0}
 .stage.zoom .bg{transform:translateY(-15vh)}
 
@@ -221,72 +222,17 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
   .stage .p{--d:calc(var(--y)*80ms)}
   .stage.setup .p-in{animation:stage-land .45s cubic-bezier(.2,.6,.35,1) var(--d) both}
   .stage.setup .p::before{animation:stage-fade .45s var(--d) both}
-  .stage .dots circle{animation:stage-pulse 2.4s ease-in-out infinite}
 }
 @keyframes stage-land{from{visibility:hidden;transform:translateY(calc(-2.5*var(--lz)))}}
 @keyframes stage-fade{from{opacity:0}}
-@keyframes stage-pulse{50%{opacity:.35;transform:scale(.72)}}
 
-/* the note: a caption bar along the bottom of the match zone, docked to the screen bottom under 1100px */
-.stage .beat-note{position:fixed;z-index:2;left:max(12px,50vw - 360px);right:max(12px,50vw - 360px);bottom:12px;display:grid;grid-template-columns:96px minmax(0,1fr);align-items:center;gap:16px;padding:12px;pointer-events:none;transition:opacity .3s}
-.stage .beat-note--bare{display:none}
-.stage .beat-note[hidden]{display:grid;opacity:0}
-.stage .beat-note h3{display:flex;align-items:center;gap:10px}
-.stage .beat-note p{margin-top:4px;font-size:15px;line-height:24px;color:var(--muted)}
-.stage .beat-note .disc{width:34px;height:34px}
-/* under 1100px the note docks above the card whose seal already shows this piece */
-@media (max-width:1099px){.stage.zoom .beat-note h3 .disc{display:none}}
-.stage .mini{display:block;width:100%;height:auto;aspect-ratio:1;border-radius:8px}
-
-:is(.stage,#rules) .disc{flex:none;overflow:visible}
-:is(.stage,#rules,.seal) .disc-wall{fill:var(--stone-side)}
-:is(.stage,#rules) .mini{background-size:128px;image-rendering:pixelated;box-shadow:inset 0 0 0 1px var(--hair)}
-:is(.stage,#rules) .mini .m-line{fill:none;stroke:var(--wood-dark);stroke-width:4}
-:is(.stage,#rules) .mini .m-dot{fill:var(--red);opacity:.8}
-:is(.stage,#rules) .mini .m-take{fill:none;stroke:var(--red);stroke-width:6}
-:is(.stage,#rules) .mini .m-trail{fill:none;stroke:var(--red);stroke-width:7;stroke-linecap:round;stroke-dasharray:0 18;opacity:.5}
-:is(.stage,#rules) .mini .m-x{fill:none;stroke:var(--wood-dark);stroke-width:6;stroke-linecap:round}
-
-@media (min-width:1100px){
-  .stage{--zw:var(--zone,calc(100vw - min(760px,56vw) - clamp(24px,3vw,56px)));--hb:100svh;--kv:118;--hd:80px}
-  .stage .beat-note{left:24px;right:auto;bottom:24px;width:calc(var(--zw) - 48px);grid-template-columns:136px minmax(0,1fr);gap:24px;padding:16px 24px 16px 16px}
-  .stage .beat-note p{font-size:17px;line-height:28px}
-}
-
-#rules .kinds>li+li{margin-top:var(--u)}
-#rules .kinds h3{display:flex;align-items:center;gap:12px}
-#rules .kinds .disc{width:40px;height:40px}
-#rules .kinds p{margin-top:8px}
-#rules .pick{display:flex;flex-wrap:wrap;gap:2px}
-#rules .pick button{display:grid;place-items:center;width:44px;height:44px;padding:0;border:0;border-radius:50%;background:none;cursor:pointer}
-#rules .pick .disc{width:40px;height:40px}
-#rules .pick [aria-pressed=true] .pc-body{stroke:var(--red);stroke-width:3px}
-#rules .pick button:focus-visible{outline-offset:1px}
-#rules .show{display:grid;gap:var(--u);align-items:start}
-#rules .show .mini{width:240px;max-width:100%;height:auto;aspect-ratio:1;border-radius:10px}
-#rules .show .kinds .disc{display:none}
-#rules .show .kinds p:first-of-type,#rules .win h3+p{margin-top:12px}
-#rules .win{padding-top:var(--u);border-top:1px solid var(--hair)}
-#rules .win .mini{width:240px;max-width:100%;height:auto;aspect-ratio:27/17;margin-top:var(--u);border-radius:10px}
-@media (min-width:640px){
-  #rules .pick{gap:8px}
-  #rules .pick button{width:48px;height:48px}
-  #rules .pick .disc{width:44px;height:44px}
-  #rules :is(.show,.win){grid-template-columns:240px minmax(0,1fr)}
-  #rules .win{display:grid;column-gap:var(--u);align-items:start}
-  #rules .win>*{grid-column:2}
-  #rules .win .mini{grid-area:1/1/3;margin:0}
-  /* the serif's cap height starts flush with the top of the board beside it */
-  #rules :is(.show,.win) h3{margin-top:-8px}
-}
-
-/* play mode: the camera looks straight down, the story's note steps aside and a bar of controls takes its place */
+/* play mode: the camera looks straight down, the page steps aside and a bar of controls takes its place */
 .stage{-webkit-tap-highlight-color:transparent}
 .hero{position:relative}
-.play-start{position:absolute;left:0;top:12px;pointer-events:auto}
+/* the teal of his shirt, so red stays for the ring and the links */
+.play-start{--c:#3b5f66;position:absolute;left:0;top:12px;pointer-events:auto;background-color:var(--c);box-shadow:inset 0 1px rgba(255,255,255,.35),inset 0 -1px rgba(16,36,40,.3),0 8px 16px -8px rgba(24,48,54,.55)}
+@media (hover:hover){.play-start:hover{background-color:color-mix(in oklab,var(--c),#000 16%)}}
 .play-start[hidden],html.playing .play-start{display:none}
-/* hidden, not removed: the story's camera measures the note the moment play ends */
-html.playing .stage .beat-note{visibility:hidden}
 .stage .p.gone{visibility:hidden}
 /* rings on the stones themselves: the last move, a piece that can be taken, the piece in hand */
 .stage .p.last .p-in{box-shadow:0 0 0 calc(.06*var(--b)) rgba(23,25,28,.72)}
@@ -295,7 +241,6 @@ html.playing .stage .beat-note{visibility:hidden}
 .stage .dots :is(.was,.cur){fill:none;stroke:var(--ink);stroke-width:7;opacity:1}
 .stage .dots .was{opacity:.72}
 .stage .dots .cur{stroke-dasharray:16 12}
-.stage.play .dots circle{animation:none}
 /* seen from above there is no horizon: the backdrop fades out and a lawn fades in over the plain green */
 .stage::before{content:"";position:absolute;inset:0;background:0 0/calc(240*var(--a)) repeat;image-rendering:pixelated;opacity:0}
 .stage.play::before{background-image:url(img/scene-lawn.png);opacity:1}
@@ -317,18 +262,10 @@ html.playing .stage .beat-note{visibility:hidden}
   .stage:not(.play) .bg{transition-delay:0s,.2s}
 }
 @media (max-width:767px){.play-start{display:none}}
-@media (max-width:1099px){
-  html.playing{overflow:hidden}
-  html.playing :is(.page,.skip){visibility:hidden}
-}
-@media (min-width:1100px){
-  .play-start{position:fixed;left:24px;top:24px}
-  .play-bar{left:24px;right:auto;width:calc(var(--zone) - 48px)}
-}
-/* a narrow bar sets the four buttons two by two */
-@media (min-width:1100px) and (max-width:1365px){.play-tools{display:grid;grid-template-columns:1fr 1fr}}
+html.playing{overflow:hidden}
+html.playing :is(.page,.skip){visibility:hidden}
 
-/* a prop's card: the note's glass, set above the prop by stage.js, and a ring around the prop when the keyboard asks */
+/* a prop's card: the cards' glass, set above the prop by stage.js, and a ring around the prop when the keyboard asks */
 .prop-tip{position:fixed;z-index:2;left:0;top:0;width:max-content;max-width:min(260px,100vw - 24px);padding:12px 16px 16px;pointer-events:none;opacity:0;transition:opacity .2s}
 .prop-tip.on{opacity:1}
 .prop-tip p{margin-top:4px;font-size:15px;line-height:24px;color:var(--muted)}
@@ -344,11 +281,17 @@ header.top .mark{font:600 22px/1 var(--display);letter-spacing:-.005em}
 header.top nav{display:flex;margin-right:-10px}
 header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight:500}
 
+/* the scroll prompt at the foot of the first screen: white on a soft shadow and a faint dark glow, so it reads on the wood and on the grass */
+.cue{position:absolute;left:0;right:0;bottom:4px;width:max-content;max-width:none;margin-inline:auto;padding:12px 32px;background:radial-gradient(closest-side,rgba(15,22,12,.3),rgba(15,22,12,0));font-size:14px;line-height:20px;font-weight:600;text-align:center;color:#fff;text-shadow:0 0 1px rgba(15,22,12,.9),0 0 3px rgba(15,22,12,.8),0 0 10px rgba(15,22,12,.4)}
+.cue::after{content:"";display:block;width:7px;height:7px;margin:3px auto 0;border:solid;border-width:0 2px 2px 0;transform:rotate(45deg);filter:drop-shadow(0 0 2px rgba(15,22,12,.9))}
+@media (prefers-reduced-motion:no-preference){.cue::after{animation:cue 2.4s ease-in-out infinite}}
+@keyframes cue{50%{translate:0 3px}}
+@media (hover:none){.intro .note .hover{display:none}}
+
 .intro .claim{font:500 34px/42px var(--display);letter-spacing:-.01em;text-wrap:balance}
 .intro .claim+.lede{margin-top:24px}
 .intro .lede+.lede{margin-top:12px}
 .intro .lede+.note{margin-top:16px}
-@media (hover:none){.intro .note .hover{display:none}}
 
 @media (max-width:639px){
   .intro .claim{font-size:26px;line-height:34px}

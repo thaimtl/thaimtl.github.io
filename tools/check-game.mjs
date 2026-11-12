@@ -1,4 +1,4 @@
-// Replays the stage game with the rules engine in site.js. Usage: node tools/check-game.mjs [site.js]
+// Checks the rules engine in site.js and the piece each card stands for. Usage: node tools/check-game.mjs [site.js]
 import { readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 
@@ -28,34 +28,23 @@ try {
   if (moves(start(), 'b1').join() !== 'a3,c3') throw new Error('self-test: the horse on b1 should reach a3 and c3');
   console.log(`self-test: ${illegal.length} illegal and ${fine.length + 1} legal cases pass`);
 
-  const b = start();
-  let turn = 'r', n = 0;
-  for (const [beat, ...mvs] of JSON.parse(block('game', 'end'))) {
-    for (const mv of mvs.slice(0, 2)) {
-      if (!mv) continue;
-      const [from, to] = mv.split('-'), p = b.get(from);
-      if (!p || p.side !== turn || !legal(b, from, to)) throw new Error(`${beat}: ${turn === 'r' ? 'Red' : 'Black'} ${mv} is illegal`);
-      const taken = b.get(to);
-      b.delete(from);
-      b.set(to, p);
-      console.log(`${beat.padEnd(4)} ${turn === 'r' ? 'Red  ' : 'Black'} ${p.t}${mv}${taken ? ` takes ${taken.t}` : ''}`);
-      turn = turn === 'r' ? 'b' : 'r';
-      n++;
-    }
+  // every spacer names one of the visitor's Black pieces where it starts, its card's seal wears that piece's Black character, and each kind stands for one card
+  const html = readFileSync(join(dirname(path), 'index.html'), 'utf8'), board = start(), used = new Set();
+  const black = { K: 'jiang', A: 'shi-b', E: 'xiang-b', H: 'ma-b', R: 'ju-b', C: 'pao-b', P: 'zu' };
+  const beats = [...html.matchAll(/<section class="beat"([^>]*)>(.*?)<\/section>\s*<section\b[^>]*id="([^"]+)"/gs)];
+  if (beats.length !== html.match(/<section class="beat"/g).length) throw new Error('a spacer is not followed by a card with an id');
+  for (const [, attrs, seal, card] of beats) {
+    const t = /data-piece="(\w)"/.exec(attrs)?.[1], sq = /data-sq="(\w+)"/.exec(attrs)?.[1], p = board.get(sq);
+    if (!t || !sq) throw new Error(`#${card}: its spacer needs data-piece and data-sq`);
+    if (p?.side !== 'b' || p.t !== t) throw new Error(`#${card}: ${sq} holds ${p ? p.side + p.t : 'nothing'} in the opening, not Black's ${t}`);
+    if (used.has(t)) throw new Error(`#${card}: ${t} already stands for another card`);
+    used.add(t);
+    const glyph = /<use href="#g-([\w-]+)"/.exec(seal)?.[1], face = new RegExp(`<span class="p" data-sq="${sq}"[^>]*>.*?<use href="#g-([\\w-]+)"`).exec(html)?.[1];
+    if (/pc--red/.test(seal) || glyph !== black[t] || face !== glyph) throw new Error(`#${card}: the seal shows #g-${glyph}, the stone on ${sq} #g-${face}, Black's ${t} is #g-${black[t]}`);
+    console.log(`#${card.padEnd(8)} ${t} ${sq.padEnd(3)} #g-${glyph}`);
   }
-  console.log(`${path}: all ${n} moves are legal`);
-
-  // each card's seal must be the piece Red moves in the beat directly above it
-  const html = readFileSync(join(dirname(path), 'index.html'), 'utf8'), seals = new Map(), glyph = { K: 'shuai', A: 'shi', E: 'xiang', H: 'ma', R: 'ju', C: 'pao', P: 'bing' };
-  for (const [, beat, seal] of html.matchAll(/<section class="beat" data-beat="(\w+)"[^>]*>(.*?)<\/section>\s*<section\b/gs)) seals.set(beat, seal);
-  const pos = start();
-  for (const [beat, red, black] of JSON.parse(block('game', 'end'))) {
-    const [from, to] = red.split('-'), t = pos.get(from).t, seal = seals.get(beat) ?? '';
-    const [, got] = /<svg class="seal[^"]*" data-t="(\w)"/.exec(seal) ?? [];
-    if (got !== t || !seal.includes(`href="#g-${glyph[t]}"`)) throw new Error(`${beat}: the seal on the card below should be data-t="${t}" with #g-${glyph[t]}, for Red's ${red}`);
-    for (const [a, b] of [[from, to], ...(black ? [black.split('-')] : [])]) { pos.set(b, pos.get(a)); pos.delete(a); }
-  }
-  console.log(`index.html: all ${seals.size} seals match the piece Red moves above them`);
+  if (used.size !== 7) throw new Error(`${used.size} of the 7 kinds stand for a card`);
+  console.log(`index.html: ${beats.length} cards, one Black piece of each kind, seals match the stones`);
 } catch (e) {
   console.error(e.message);
   process.exit(1);
