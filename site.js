@@ -188,7 +188,8 @@
     // a position maps square -> piece id (its starting square). half[i] is after Red's move of row i, full[i] after Black's reply.
     const half = [], full = [], mover = [];
     let pos = OPEN;
-    const play = mv => { const [a, b] = mv.split('-'), id = pos.get(a); pos = new Map(pos); pos.delete(a); pos.set(b, id); return id; };
+    const step = (p, mv) => { const [a, b] = mv.split('-'), n = new Map(p); n.set(b, n.get(a)); n.delete(a); return n; };
+    const play = mv => { const id = pos.get(mv.split('-')[0]); pos = step(pos, mv); return id; };
     for (const [, red, black] of GAME) { mover.push(play(red)); half.push(pos); if (black) play(black); full.push(pos); }
     const beats = [...document.querySelectorAll('main .beat[data-beat]')].map(b => [b, GAME.findIndex(g => g[0] === b.dataset.beat)]).filter(([, i]) => i >= 0);
 
@@ -198,7 +199,8 @@
       for (const [id, el] of els) {
         const s = where.get(id);
         el.style.zIndex = '';
-        if (s === (el.dataset.at || id)) continue;
+        el.classList.toggle('gone', !s);
+        if (!s || s === (el.dataset.at || id)) continue;
         // a piece in flight passes over the others
         el.style.zIndex = 1;
         el.dataset.at = s;
@@ -209,13 +211,30 @@
       }
     };
     // dots on every legal point of the piece on s, each with a dotted trail along the way it moves
-    const mark = (p, s) => {
-      if (!s) return void (dots.innerHTML = '');
+    const trail = (p, s) => {
       const b = board(p), [x0, y0] = xy(s), horse = b.get(s).t === 'H';
-      dots.innerHTML = moves(b, s).map(to => {
+      return moves(b, s).map(to => {
         const [x, y] = xy(to), via = !horse ? '' : Math.abs(x - x0) === 2 ? `L${(x + x0) * 50} ${y0 * 100}` : `L${x0 * 100} ${(y + y0) * 50}`;
-        return `<path d="M${x0 * 100} ${y0 * 100}${via}L${x * 100} ${y * 100}"/>` + (b.has(to) ? `<circle class="take" cx="${x * 100}" cy="${y * 100}" r="47"/>` : `<circle cx="${x * 100}" cy="${y * 100}" r="13"/>`);
+        return `<path d="M${x0 * 100} ${y0 * 100}${via}L${x * 100} ${y * 100}"/>` + (b.has(to) ? '' : `<circle cx="${x * 100}" cy="${y * 100}" r="13"/>`);
       }).join('');
+    };
+    // a piece that the one on s can take wears a ring on its own stone
+    const prey = (p, s) => {
+      const b = s && board(p), hit = new Set(s ? moves(b, s).filter(to => b.has(to)).map(to => p.get(to)) : []);
+      for (const [id, el] of els) el.classList.toggle('prey', hit.has(id));
+    };
+    const mark = (p, s) => { dots.innerHTML = s ? trail(p, s) : ''; prey(p, s); };
+    // every stone drops onto the board again, as on page load
+    let landed = 0;
+    const drop = () => {
+      if (reduce) return;
+      clearTimeout(landed);
+      // a stone that has hopped would keep its hop animation and sit the landing out
+      for (const el of els.values()) delete el.dataset.hop;
+      stage.classList.remove('setup');
+      stage.offsetWidth;
+      stage.classList.add('setup');
+      landed = setTimeout(() => stage.classList.remove('setup'), 1400);
     };
 
     const note = document.createElement('div');
@@ -234,7 +253,21 @@
 
     // beat shots: both moves and every dot as large as fits above the note, with the whole board in the frame
     const T = Math.PI / 4, K = 22, BOARD = [[-.62, -.62, .56], [8.62, -.62, .56], [-.62, 9.62, 0], [8.62, 9.62, 0]];
-    const project = (f, x, y, z) => { const q = K / (K - (y - f[1]) * Math.sin(T) - z * Math.cos(T)); return [(x - f[0]) * q, ((y - f[1]) * Math.cos(T) - z * Math.sin(T)) * q]; };
+    const project = (f, x, y, z, t = T, k = K) => { const q = k / (k - (y - f[1]) * Math.sin(t) - z * Math.cos(t)); return [(x - f[0]) * q, ((y - f[1]) * Math.cos(t) - z * Math.sin(t)) * q]; };
+    // fits the whole board into the frame fr and points the camera there. Returns the pixels per cell and where the focus lands.
+    const aim = (f, fr, fit, t = T, k = K) => {
+      const s = box(BOARD.map(p => project(f, ...p, t, k))), st = stage.style;
+      const c = Math.min(...[0, 1].flatMap(j => [fit, s].filter(Boolean).map(r => span(fr[j]) / span(r[j]))));
+      const [tx, ty] = [0, 1].map(j => (fr[j][0] + fr[j][1] - c * (s[j][0] + s[j][1])) / 2);
+      st.setProperty('--tx', tx + 'px');
+      st.setProperty('--ty', ty + 'px');
+      st.setProperty('--fx', f[0]);
+      st.setProperty('--fy', f[1]);
+      st.setProperty('--T', t + 'rad');
+      st.setProperty('--K', k);
+      st.setProperty('--k', c / b0);
+      return { f, c, tx, ty };
+    };
     const box = ps => [0, 1].map(j => [Math.min(...ps.map(p => p[j])), Math.max(...ps.map(p => p[j]))]);
     const span = ([a, b]) => b - a;
     let cur = -2, wide, b0;
@@ -247,17 +280,7 @@
       // at 1100px up the board fills the match zone, seen from half a cell right of center so the clementines stay on screen
       if (wide) f[0] = 4.5;
       const g = box(pts.flatMap(([x, y]) => [[-.6, -.6], [.6, -.6], [-.6, .6], [.6, .6]].map(([u, v]) => project(f, x + u, y + v, .56))));
-      const s = box(BOARD.map(p => project(f, ...p)));
-      const fr = wide ? [[24, page.getBoundingClientRect().left - 24], [24, innerHeight - note.offsetHeight - 48]] : [[12, innerWidth - 12], [innerHeight * .15, innerHeight - note.offsetHeight - 24]];
-      const c = Math.min(...[0, 1].flatMap(j => [g, s].map(r => span(fr[j]) / span(r[j]))));
-      const [tx, ty] = [0, 1].map(j => (fr[j][0] + fr[j][1] - c * (s[j][0] + s[j][1])) / 2);
-      st.setProperty('--tx', tx + 'px');
-      st.setProperty('--ty', ty + 'px');
-      st.setProperty('--fx', f[0]);
-      st.setProperty('--fy', f[1]);
-      st.setProperty('--T', '45deg');
-      st.setProperty('--K', K);
-      st.setProperty('--k', c / b0);
+      aim(f, wide ? [[24, page.getBoundingClientRect().left - 24], [24, innerHeight - note.offsetHeight - 48]] : [[12, innerWidth - 12], [innerHeight * .15, innerHeight - note.offsetHeight - 24]], g);
     };
 
     let timers = [];
@@ -266,6 +289,7 @@
       timers = [];
       const step = !reduce && cur > -2 && k === cur + 1, i = k < 0 ? -1 : beats[k][1];
       cur = k;
+      opener.hidden = k >= 0;
       stage.classList.toggle('zoom', k >= 0);
       if (i < 0) { show(OPEN); mark(); invite(); return shot(); }
       const [beat, red, black, text] = GAME[i], to = red.split('-')[1], t = START.get(mover[i]).t;
@@ -290,6 +314,189 @@
       if (note.hidden !== !open) { note.hidden = !open; anims.forEach(a => (open ? a.play() : a.pause())); }
     };
 
+    // Play mode, 768px and wider: the visitor takes Black against bot.js in a top-down shot that holds still. The story's note, hover and scroll stand down until they leave.
+    const opener = document.createElement('button'), bar = document.createElement('div');
+    opener.type = 'button';
+    opener.className = 'btn play-start';
+    opener.textContent = 'Play my grandfather';
+    hero?.append(opener);
+    bar.className = 'beat-note play-bar';
+    bar.hidden = true;
+    bar.innerHTML = '<div class="vh" tabindex="0" role="application" aria-label="Board. Arrow keys move, Enter picks up or places a piece, Escape puts it back."></div><div class="play-status" aria-live="polite"></div><p class="vh" aria-live="polite"></p>'
+      + '<div class="play-tools"><button type="button" class="btn btn--quiet" data-do="undo">Undo</button><button type="button" class="btn btn--quiet" data-do="begin">Restart</button><button type="button" class="btn btn--quiet" data-do="swap"></button><button type="button" class="btn btn--quiet" data-do="leave">Back to the story</button></div>';
+    stage.after(bar);
+    const [pad, status, heard] = bar.children, tools = bar.lastChild.children;
+    const PT = Math.PI / 9, PK = 30, root = document.documentElement, low = t => NAME[t].toLowerCase();
+    let game = null, bot = null, asked = 0, level = 'gentle', cam, barH = 0, back = 0;
+    // frames the board between the screen edges (or the page, at 1100px up) and the bar. snap skips the camera's glide, so clicks never land on a board still in motion.
+    const lay = snap => {
+      if (snap) stage.style.transition = 'none';
+      const right = wide ? page.getBoundingClientRect().left : innerWidth;
+      barH = bar.offsetHeight;
+      cam = aim([4, 4.5], [[24, right - 24], [24, bar.getBoundingClientRect().top - 24]], null, PT, PK);
+      // the plate and the tea set stay only where both fit whole beside the board
+      stage.classList.toggle('bare', wide || cam.tx + cam.c * project(cam.f, 11.5, .7, 0, PT, PK)[0] > innerWidth);
+      if (snap) { stage.offsetWidth; stage.style.transition = ''; }
+    };
+    new ResizeObserver(() => game && bar.offsetHeight !== barH && lay(true)).observe(bar);
+    // the square whose point is nearest the pointer, within half a cell
+    const pick = (px, py) => {
+      let best = null, d = cam.c / 2;
+      for (let i = 0; i < 90; i++) {
+        const x = i % 9, y = (i - x) / 9, [u, v] = project(cam.f, x, y, .3, PT, PK), e = Math.hypot(px - cam.tx - cam.c * u, py - cam.ty - cam.c * v);
+        if (e < d) { d = e; best = at(8 - x, y + 1); }
+      }
+      return best;
+    };
+    const tell = (title, text) => { game.title = title; status.innerHTML = `<strong>${title}</strong><p>${text}</p>`; };
+    const said = (b, [from, to], mine) => {
+      const p = low(b.get(from).t), q = b.get(to), where = `<span class="vh"> from ${from} to ${to}</span>`;
+      return q ? `${mine ? 'Your' : 'His'} ${p} took ${mine ? 'his' : 'your'} ${low(q.t)}${where}.` : `${mine ? 'You moved your' : 'He moved his'} ${p}${where}.`;
+    };
+    const ring = (s, cls, r) => { const [x, y] = xy(s); return `<circle class="${cls}" cx="${x * 100}" cy="${y * 100}" r="${r}"/>`; };
+    // marks for the last move, the piece in hand and what it can do, and the keyboard's cursor
+    const paint = () => {
+      const g = game;
+      dots.innerHTML = (g.last ? ring(g.last[0], 'was', 22) : '') + (g.sel ? trail(g.pos, g.sel) : '') + (g.keys && document.activeElement === pad ? ring(g.cur, 'cur', 58) : '');
+      prey(g.pos, g.sel);
+      const where = new Map([...g.pos].map(([s, id]) => [id, s]));
+      for (const [id, el] of els) { const s = where.get(id); el.classList.toggle('sel', !!s && s === g.sel); el.classList.toggle('last', !!s && s === g.last?.[1]); }
+      tools[0].disabled = g.moves.length < 2;
+    };
+    const label = () => { tools[2].textContent = level === 'gentle' ? 'Make it harder' : 'Make it easier'; };
+    const fail = () => { bot = null; if (game) tell('The game didn’t load', 'Check your connection, then press Restart.'); };
+    const answer = ({ data: d }) => {
+      const g = game;
+      if (!g || d.id !== asked) return;
+      if (d.error) return fail();
+      // the reply waits for the camera or the visitor's own piece to settle
+      setTimeout(() => {
+        if (game !== g || d.id !== asked) return;
+        const hop = d.move?.split('-'), moved = hop && said(board(g.pos), hop);
+        if (hop) { g.moves.push(d.move); g.pos = step(g.pos, d.move); g.last = hop; show(g.pos, true); }
+        Object.assign(g, { busy: false, over: d.status !== 'play', check: d.check });
+        const end = { mate: 'Checkmate.', stuck: `${d.winner === 'b' ? 'He has' : 'You have'} no legal move left, and in xiangqi that loses.`, draw: g.moves.length >= 300 ? '150 moves each and no winner.' : 'The same position came up three times.' }[d.status];
+        tell(d.status === 'draw' ? 'Draw' : d.winner ? (d.winner === 'b' ? 'You win' : 'He wins') : d.check ? 'You’re in check' : 'Your move', [end ? moved : g.hint || moved, end].filter(Boolean).join(' '));
+        g.hint = '';
+        paint();
+      }, Math.max(0, g.due - performance.now()));
+    };
+    const ask = more => {
+      bot ||= Object.assign(new Worker('bot.js'), { onmessage: answer, onerror: fail });
+      bot.postMessage({ id: ++asked, moves: game.moves, level, ...more });
+    };
+    const begin = () => {
+      if (game?.moves.length) drop();
+      game = { moves: [], pos: OPEN, sel: null, last: null, busy: true, over: false, check: false, cur: 'e7', keys: false, due: performance.now() + 1100,
+        hint: `Yours are the pieces with black characters. ${matchMedia('(hover: none)').matches ? 'Tap' : 'Click'} one, then one of its dots.` };
+      tell('He’s thinking', 'My grandfather plays Red, and Red moves first.');
+      show(OPEN);
+      paint();
+      ask();
+    };
+    const move = (from, to) => {
+      const g = game;
+      tell('He’s thinking', said(board(g.pos), [from, to], true));
+      g.moves.push(from + '-' + to);
+      g.pos = step(g.pos, from + '-' + to);
+      Object.assign(g, { sel: null, last: [from, to], busy: true, due: performance.now() + 900 });
+      show(g.pos, true);
+      paint();
+      ask();
+    };
+    // a click or Enter on square s: take the piece in hand there, or pick up, swap or put down
+    const choose = s => {
+      const g = game, b = board(g.pos), p = s && b.get(s), had = g.sel;
+      if (g.busy || g.over) return void (heard.textContent = g.over ? 'The game is over' : 'Wait, he’s still thinking');
+      if (had && s && legal(b, had, s)) return move(had, s);
+      const mine = p?.side === 'b' && s !== had, n = mine ? moves(b, s).length : 0;
+      g.sel = n ? s : null;
+      heard.textContent = n ? `Picked up your ${low(p.t)} on ${s}, ${n} ${n > 1 ? 'moves' : 'move'}` : mine ? `Your ${low(p.t)} on ${s} has no legal move` : had ? 'Put down' : 'Nothing of yours here';
+      if (mine && !n) tell(g.title, `Your ${low(p.t)} has no legal move${g.check ? ' while you’re in check' : ''}.`);
+      paint();
+    };
+    const undo = () => {
+      const g = game, n = g.moves.length % 2 ? 2 : 1;
+      if (g.moves.length <= n) return;
+      g.moves.length -= n;
+      Object.assign(g, { pos: g.moves.reduce((p, mv) => step(p, mv), OPEN), sel: null, last: g.moves.at(-1).split('-'), busy: true, hint: 'Took back your last move.', due: 0 });
+      show(g.pos, true);
+      paint();
+      // a button that just switched itself off would drop the keyboard's focus
+      if (tools[0].disabled) pad.focus({ preventScroll: true });
+      ask({ probe: true });
+    };
+    const swap = () => {
+      level = level === 'gentle' ? 'tough' : 'gentle';
+      if (!game.over) tell(game.title, level === 'tough' ? 'He’ll play harder from his next move.' : 'He’ll go easier from his next move.');
+      label();
+    };
+    const enter = () => {
+      timers.forEach(clearTimeout);
+      tip(null);
+      back = scrollY;
+      level = 'gentle';
+      label();
+      root.classList.add('playing');
+      stage.classList.add('zoom', 'play');
+      bar.hidden = false;
+      if (!wide) scrollTo({ top: 0, behavior: 'instant' });
+      begin();
+      lay();
+      pad.focus({ preventScroll: true });
+    };
+    const leave = () => {
+      if (game.moves.length) drop();
+      game = null;
+      asked++;
+      root.style.cursor = '';
+      stage.classList.remove('play', 'bare');
+      bar.hidden = true;
+      for (const el of els.values()) el.classList.remove('sel', 'last', 'prey');
+      if (!wide) scrollTo({ top: back, behavior: 'instant' });
+      cur = -2;
+      frame();
+      // the page and the Play button come back once the camera has swung most of the way home
+      setTimeout(() => {
+        if (game) return;
+        root.classList.remove('playing');
+        // unless the visitor has already moved on with the keyboard
+        if (document.activeElement === document.body) (opener.getClientRects().length ? opener : document.getElementById('main')).focus({ preventScroll: true });
+      }, reduce ? 0 : 700);
+    };
+    const hover = e => {
+      const g = game, s = !g.busy && !g.over && open(e.target) && pick(e.clientX, e.clientY), b = s && board(g.pos);
+      root.style.cursor = s && (b.get(s)?.side === 'b' || (g.sel && legal(b, g.sel, s))) ? 'pointer' : '';
+    };
+    opener.addEventListener('click', enter);
+    bar.addEventListener('click', e => { const act = e.target.closest('button')?.dataset.do; if (act) ({ undo, begin, swap, leave })[act](); });
+    // on the stage itself, not the window: Safari on a touch screen only turns a tap into a click for an element that listens for one
+    stage.addEventListener('click', e => {
+      if (!game) return;
+      game.keys = false;
+      choose(pick(e.clientX, e.clientY));
+    });
+    pad.addEventListener('keydown', e => {
+      const g = game, d = { ArrowUp: [0, -1], ArrowDown: [0, 1], ArrowLeft: [-1, 0], ArrowRight: [1, 0] }[e.key];
+      if (!d && !['Enter', ' ', 'Escape'].includes(e.key)) return;
+      e.preventDefault();
+      g.keys = true;
+      if (d) {
+        const [x, y] = xy(g.cur), b = board(g.pos);
+        g.cur = at(8 - Math.min(8, Math.max(0, x + d[0])), Math.min(9, Math.max(0, y + d[1])) + 1);
+        const p = b.get(g.cur);
+        heard.textContent = `${g.cur}, ${p ? (p.side === 'b' ? 'your ' : 'his ') + low(p.t) : 'empty'}${g.sel && legal(b, g.sel, g.cur) ? ', you can move here' : ''}`;
+        paint();
+      } else if (e.key === 'Escape') {
+        if (g.sel) heard.textContent = 'Put down';
+        g.sel = null;
+        paint();
+      } else choose(g.cur);
+    });
+    pad.addEventListener('focus', () => { if (!game) return; game.keys ||= pad.matches(':focus-visible'); paint(); });
+    // only the cursor goes: Safari drops a click if what was pressed gets redrawn before the release, and the press is what takes focus away
+    pad.addEventListener('blur', () => dots.querySelector('.cur')?.remove());
+
     // in the opening shot hovering a piece shows its moves, clicks and taps on the board do nothing
     let tipped = null;
     const open = t => !t.closest('a,button,input,select,textarea,label,header,footer,main>section:not(.hero,.beat)');
@@ -309,10 +516,11 @@
       mark(OPEN, id);
       say(p.t, p.side, NAME[p.t]);
     };
-    addEventListener('pointermove', e => { if (e.pointerType !== 'touch') tip((open(e.target) && hit(e.clientX, e.clientY)) || null); });
+    addEventListener('pointermove', e => { if (game) hover(e); else if (e.pointerType !== 'touch') tip((open(e.target) && hit(e.clientX, e.clientY)) || null); });
     let raf = 0;
     const frame = () => {
       raf = 0;
+      if (game) return;
       let k = -1;
       // the opening shot holds until the reader has scrolled, however tall the window is
       if (scrollY > innerHeight * .3) beats.forEach(([b], j) => { if (b.getBoundingClientRect().top < innerHeight / 2) k = j; });
@@ -326,15 +534,12 @@
       wide = innerWidth >= 1100;
       b0 = parseFloat(getComputedStyle(stage).getPropertyValue('--b'));
     };
-    if (!reduce && scrollY < 1 && !location.hash) {
-      stage.classList.add('setup');
-      setTimeout(() => stage.classList.remove('setup'), 1400);
-    }
+    if (scrollY < 1 && !location.hash) drop();
     stage.classList.remove('pre');
     measure();
     frame();
     addEventListener('scroll', () => { raf ||= requestAnimationFrame(frame); }, { passive: true });
-    addEventListener('resize', () => { measure(); frame(); shot(); });
+    addEventListener('resize', () => { measure(); if (game) return innerWidth < 768 ? leave() : lay(true); frame(); shot(); });
   }
 
   const list = document.querySelector('#rules .kinds');
