@@ -3,12 +3,11 @@ import { readFileSync, writeFileSync, existsSync } from 'node:fs';
 import { trace, paint, finish, toRGBA, cropBox, crop, ortho, writePNG } from './lib.mjs';
 import { RAMPS } from './palette.mjs';
 import elder from './elder.mjs';
-import kid from './kid.mjs';
 import { props } from './props.mjs';
 import { table, board } from './wood.mjs';
 import { bg, lawn } from './garden.mjs';
 
-const sprites = [bg, lawn, elder, kid, ...props, table, board];
+const sprites = [bg, lawn, elder, ...props, table, board];
 const img = new URL('../../img/', import.meta.url);
 const only = process.argv.slice(2);
 const jsonPath = new URL('scene.json', img);
@@ -22,6 +21,7 @@ for (const s of sprites) {
   else {
     const [cw, ch, cx, cy] = s.canvas;
     const px = trace({ field: s.field, w: cw, h: ch, ray: s.ray || ortho(s.scale, s.look, cx, cy), ...s.trace });
+    if (s.q && px.some((p, k) => p && (k % cw === 0 || k % cw === cw - 1 || k < cw || k >= cw * (ch - 1)))) throw new Error(`${s.name} touches its canvas edge`);
     const full = paint(px, cw, ch, RAMPS, { tone: s.tone, ...s.paint });
     const b = cropBox(full, cw, ch, cx, s.crop);
     ({ w, h } = b);

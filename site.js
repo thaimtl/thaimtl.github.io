@@ -335,8 +335,9 @@
       const right = wide ? page.getBoundingClientRect().left : innerWidth;
       barH = bar.offsetHeight;
       cam = aim([4, 4.5], [[24, right - 24], [24, bar.getBoundingClientRect().top - 24]], null, PT, PK);
-      // the plate and the tea set stay only where both fit whole beside the board
-      stage.classList.toggle('bare', wide || cam.tx + cam.c * project(cam.f, 11.5, .7, 0, PT, PK)[0] > innerWidth);
+      // his plate, his cup and the pot stay only where they fit whole beside the board
+      const side = (x, y) => cam.tx + cam.c * project(cam.f, x, y, 0, PT, PK)[0];
+      stage.classList.toggle('bare', wide || side(11.1, 4.5) > innerWidth || side(-3.3, .9) < 0);
       if (snap) { stage.offsetWidth; stage.style.transition = ''; }
     };
     new ResizeObserver(() => game && bar.offsetHeight !== barH && lay(true)).observe(bar);
