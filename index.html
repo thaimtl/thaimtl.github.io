@@ -102,6 +102,7 @@
 <main id="main" tabindex="-1">
 <section class="hero" aria-labelledby="name">
   <h1 id="name" class="vh">Thai Tran</h1>
+  <p class="cue" aria-hidden="true">Scroll down for more</p>
   <!-- the cards for the props on the table: the title names the object and its button -->
   <div data-tip="fruit" hidden><strong>Clementines</strong><p id="tip-fruit">My favorite fruit. Take an orange, turn up the juice, shrink it to pocket size, and let the peel perfume the whole table. That’s a clementine.</p></div>
   <div data-tip="tea" hidden><strong>Green tea</strong><p id="tip-tea">My favorite tea. Green, oolong, and black are actually all the same plant, and the difference is mostly in how the leaves get treated after picking.</p></div>
@@ -111,47 +112,25 @@
   <p class="claim">That’s my grandfather across the table, and you’re in my seat.</p>
   <p class="lede">Every afternoon in Vietnam, he played me at Chinese chess. I never learned to read the characters on the pieces, so I learned each one by the&nbsp;way&nbsp;it&nbsp;moves.</p>
   <p class="lede">Now I study computer engineering at McGill, and I build the same way. Claude Code helps me write most of my code, but I know what every piece&nbsp;does.</p>
-  <p class="note">Keep scrolling and I’ll tell you the rest between moves.</p>
+  <p class="note">Keep scrolling and I’ll tell you the rest, one piece at a time.</p>
 </section>
 
-<section class="beat" data-beat="1" aria-hidden="true"><svg class="seal pc pc--red" data-t="C" viewBox="-46 -46 92 97"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-pao" x="-29" y="-29" width="58" height="58"/></svg></section>
+<section class="beat" data-piece="K" data-sq="e10" aria-hidden="true"><svg class="seal pc" viewBox="-46 -46 92 97"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-jiang" x="-29" y="-29" width="58" height="58"/></svg></section>
 
 <section id="origin" aria-labelledby="origin-h">
   <h2 id="origin-h">Origin</h2>
   <div class="prose">
     <p>When my grandparents moved to my uncle’s, my dad took my grandfather’s seat. Nobody ever coached me, and in 9th grade I won my school’s inter-campus tournament anyway, the only 9th grader in it, against 12th graders.</p>
-    <p>The moves you’re watching aren’t mine, though. They’re real opening theory, the Central Cannon against the Screen Horses.</p>
   </div>
 </section>
 
-<section class="beat" data-beat="2" aria-hidden="true"><svg class="seal pc pc--red" data-t="H" viewBox="-46 -46 92 97"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-ma" x="-29" y="-29" width="58" height="58"/></svg></section>
-
-<section id="rules" aria-labelledby="rules-h">
-  <h2 id="rules-h">Rules</h2>
-  <p>Learn the pieces like I did.<span hidden> Pick one and watch it move.</span></p>
-  <ul class="kinds">
-    <li data-t="K"><h3><svg class="disc pc pc--red" viewBox="-50 -50 100 106" aria-hidden="true"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-shuai" x="-29" y="-29" width="58" height="58"/></svg>General</h3><p>Moves one point up, down, left or right and never leaves the palace.</p><p>Red’s character means marshal. Black’s means general.</p></li>
-    <li data-t="A"><h3><svg class="disc pc pc--red" viewBox="-50 -50 100 106" aria-hidden="true"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-shi" x="-29" y="-29" width="58" height="58"/></svg>Advisor</h3><p>Moves one point along the palace diagonals and never leaves the palace.</p><p>Red’s character means an official. Black’s means a scholar.</p></li>
-    <li data-t="E"><h3><svg class="disc pc pc--red" viewBox="-50 -50 100 106" aria-hidden="true"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-xiang" x="-29" y="-29" width="58" height="58"/></svg>Elephant</h3><p>Moves exactly two points diagonally, can’t cross the river, and is blocked by a piece in between.</p><p>Red’s character means minister and Black’s means elephant, and in Chinese the two words sound the same.</p></li>
-    <li data-t="H"><h3><svg class="disc pc pc--red" viewBox="-50 -50 100 106" aria-hidden="true"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-ma" x="-29" y="-29" width="58" height="58"/></svg>Horse</h3><p>Moves one point straight, then one diagonally outward, and is blocked by a piece on the point it steps through.</p><p>Both characters mean horse.</p></li>
-    <li data-t="R"><h3><svg class="disc pc pc--red" viewBox="-50 -50 100 106" aria-hidden="true"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-ju" x="-29" y="-29" width="58" height="58"/></svg>Chariot</h3><p>Moves any distance in a straight line, with nothing in the way.</p><p>Both characters mean chariot.</p></li>
-    <li data-t="C"><h3><svg class="disc pc pc--red" viewBox="-50 -50 100 106" aria-hidden="true"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-pao" x="-29" y="-29" width="58" height="58"/></svg>Cannon</h3><p>Moves like a chariot, and captures only by jumping exactly one piece.</p><p>Red’s character is written with fire. Black’s is written with stone.</p></li>
-    <li data-t="P"><h3><svg class="disc pc pc--red" viewBox="-50 -50 100 106" aria-hidden="true"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-bing" x="-29" y="-29" width="58" height="58"/></svg>Soldier</h3><p>Moves one point forward, and after crossing the river it can also step sideways, never back.</p><p>Red’s character means soldier. Black’s means foot soldier.</p></li>
-  </ul>
-  <div class="win">
-    <h3>How to win</h3>
-    <p>You win by checkmate. Attack the general so that nothing can save it, no escape, no block and no capture, and the game is over. A player with no legal move at all also loses, and the two generals may never face each other down an open line.</p>
-    <svg class="mini mate" viewBox="-70 -70 540 340" role="img" aria-label="Checkmate. A red chariot slides onto the black general’s rank and gives check. The other red chariot covers the point in front of the general, so all three of its steps are attacked." style="background-image:url(img/scene-board.png)"><path class="m-line" d="M0 0H400M0 100H400M0 200H400M0 0V200M100 0V200M200 0V200M300 0V200M400 0V200M100 0L300 200M300 0L100 200"/><path class="m-trail" d="M0 200V0"/><path class="m-x" d="M86 -14l28 28m0-28l-28 28"/><path class="m-x" d="M286 -14l28 28m0-28l-28 28"/><path class="m-x" d="M186 86l28 28m0-28l-28 28"/><circle class="m-take" cx="200" cy="0" r="48"/><g class="pc" style="transform:translate(200px,0px)"><circle class="disc-wall" cy="6" r="40"/><circle class="pc-body" r="40"/><circle class="pc-ring" r="33"/><use href="#g-jiang" x="-26" y="-26" width="52" height="52"/></g><g class="pc pc--red" style="transform:translate(400px,100px)"><circle class="disc-wall" cy="6" r="40"/><circle class="pc-body" r="40"/><circle class="pc-ring" r="33"/><use href="#g-ju" x="-26" y="-26" width="52" height="52"/></g><g class="pc pc--red m-piece" style="transform:translate(0px,0px)"><circle class="disc-wall" cy="6" r="40"/><circle class="pc-body" r="40"/><circle class="pc-ring" r="33"/><use href="#g-ju" x="-26" y="-26" width="52" height="52"/></g></svg>
-  </div>
-</section>
-
-<section class="beat" data-beat="3" aria-hidden="true"><svg class="seal pc pc--red" data-t="R" viewBox="-46 -46 92 97"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-ju" x="-29" y="-29" width="58" height="58"/></svg></section>
+<section class="beat" data-piece="C" data-sq="b8" aria-hidden="true"><svg class="seal pc" viewBox="-46 -46 92 97"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-pao-b" x="-29" y="-29" width="58" height="58"/></svg></section>
 
 <section id="work" aria-labelledby="work-h">
   <h2 id="work-h">Silent Voice</h2>
   <p class="meta">My most recent hackathon. Cal Hacks 13.0, San&nbsp;Francisco, October 2026.</p>
   <figure class="fig sv-team">
-    <div class="fig-frame" style="--ar:620/450"><img src="img/sv-team-1240.webp" srcset="img/sv-team-620.webp 620w, img/sv-team-1240.webp 1240w" sizes="(min-width:1100px) min(694px, 56vw - 66px), (min-width:640px) min(654px, 100vw - 90px), calc(100vw - 66px)" width="1240" height="900" loading="lazy" decoding="async" alt="Six people standing together on the hackathon floor, smiling, three of them holding blue prize boxes."></div>
+    <div class="fig-frame" style="--ar:620/450"><img src="img/sv-team-1240.webp" srcset="img/sv-team-620.webp 620w, img/sv-team-1240.webp 1240w" sizes="(min-width:640px) min(654px, 100vw - 90px), calc(100vw - 66px)" width="1240" height="900" loading="lazy" decoding="async" alt="Six people standing together on the hackathon floor, smiling, three of them holding blue prize boxes."></div>
     <figcaption>Frank Guo, Austin Wang, Evan Liu and me, with two people from Cartesia.</figcaption>
   </figure>
   <ul class="facts">
@@ -165,25 +144,25 @@
       <p>I was the only computer engineering major on the team, so the pads on his face were mine, four pairs reading the muscles underneath, and it turns out all those circuits classes were good for something. I also took the Claude side, which reads the conversation to tell look-alike words apart, and played PM for everything else, from shaping the vision to getting the pitch right.</p>
     </div>
     <figure class="fig">
-      <div class="fig-frame"><img src="img/sv-pads-728.webp" srcset="img/sv-pads-480.webp 480w, img/sv-pads-728.webp 728w, img/sv-pads-1152.webp 1152w" sizes="(min-width:1225px) min(212px, 18.67vw - 42px), (min-width:1100px) calc(37.33vw - 55px), (min-width:710px) min(198px, 33.33vw - 50px), (min-width:640px) calc(66.67vw - 71px), (min-width:546px) calc(66.67vw - 52px), calc(100vw - 68px)" width="728" height="672" loading="lazy" decoding="async" alt="Thai connecting wires to the electrode pads on a teammate’s cheek and jaw."></div>
+      <div class="fig-frame"><img src="img/sv-pads-728.webp" srcset="img/sv-pads-480.webp 480w, img/sv-pads-728.webp 728w, img/sv-pads-1152.webp 1152w" sizes="(min-width:710px) min(198px, 33.33vw - 50px), (min-width:640px) calc(66.67vw - 71px), (min-width:546px) calc(66.67vw - 52px), calc(100vw - 68px)" width="728" height="672" loading="lazy" decoding="async" alt="Thai connecting wires to the electrode pads on a teammate’s cheek and jaw."></div>
       <figcaption>Me putting the pads on Austin.</figcaption>
     </figure>
   </div>
   <p class="links"><a href="cal-hacks-13/">Read the writeup</a><a href="https://devpost.com/software/silent-voice-s1f74p">Devpost</a><a href="https://github.com/thaimtl/Silent-Voice">Code</a><a href="https://www.ctvnews.ca/montreal/article/mcgill-students-project-aims-to-give-cancer-patients-their-voice-back/">CTV News story</a><a href="https://www.linkedin.com/feed/update/urn:li:activity:7520974388268040192/">LinkedIn post</a></p>
 </section>
 
-<section class="beat" data-beat="4" aria-hidden="true"><svg class="seal pc pc--red" data-t="R" viewBox="-46 -46 92 97"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-ju" x="-29" y="-29" width="58" height="58"/></svg></section>
+<section class="beat" data-piece="R" data-sq="a10" aria-hidden="true"><svg class="seal pc" viewBox="-46 -46 92 97"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-ju-b" x="-29" y="-29" width="58" height="58"/></svg></section>
 
 <section id="pyd" aria-labelledby="pyd-h">
   <h2 id="pyd-h">Plan Your Degree</h2>
   <p class="meta">Open source. Shipped fall 2026.</p>
   <div class="cols figs">
     <figure class="fig">
-      <div class="fig-frame" style="--ar:1176/672"><img src="img/pyd-planner-1176.webp" srcset="img/pyd-planner-588.webp 588w, img/pyd-planner-1176.webp 1176w, img/pyd-planner-1764.webp 1764w" sizes="(min-width:1100px) min(418px, 34.6vw - 52px), (min-width:640px) min(392px, 61.76vw - 67px), calc(100vw - 68px)" width="1176" height="672" loading="lazy" decoding="async" alt="The Plan Your Degree planner showing program credits earned, in progress, and planned."></div>
+      <div class="fig-frame" style="--ar:1176/672"><img src="img/pyd-planner-1176.webp" srcset="img/pyd-planner-588.webp 588w, img/pyd-planner-1176.webp 1176w, img/pyd-planner-1764.webp 1764w" sizes="(min-width:640px) min(392px, 61.76vw - 67px), calc(100vw - 68px)" width="1176" height="672" loading="lazy" decoding="async" alt="The Plan Your Degree planner showing program credits earned, in progress, and planned."></div>
       <figcaption>The whole degree in one tab.</figcaption>
     </figure>
     <figure class="fig">
-      <div class="fig-frame" style="--ar:728/672"><img src="img/pyd-next-728.webp" srcset="img/pyd-next-480.webp 480w, img/pyd-next-728.webp 728w" sizes="(min-width:1100px) min(258px, 21.4vw - 33px), (min-width:640px) min(242px, 38.24vw - 42px), calc(100vw - 68px)" width="728" height="672" loading="lazy" decoding="async" alt="Plan Your Degree sorting required courses into what a student can take next term, what is planned, and what already counts."></div>
+      <div class="fig-frame" style="--ar:728/672"><img src="img/pyd-next-728.webp" srcset="img/pyd-next-480.webp 480w, img/pyd-next-728.webp 728w" sizes="(min-width:640px) min(242px, 38.24vw - 42px), calc(100vw - 68px)" width="728" height="672" loading="lazy" decoding="async" alt="Plan Your Degree sorting required courses into what a student can take next term, what is planned, and what already counts."></div>
       <figcaption>Your required courses, sorted.</figcaption>
     </figure>
   </div>
@@ -197,7 +176,7 @@
   <p class="links"><a href="https://plan-your-degree.vercel.app">Try it</a><a href="https://github.com/CBC-Mcgill/McGill-Plan-Your-Degree">Code</a></p>
 </section>
 
-<section class="beat" data-beat="5" aria-hidden="true"><svg class="seal pc pc--red" data-t="P" viewBox="-46 -46 92 97"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-bing" x="-29" y="-29" width="58" height="58"/></svg></section>
+<section class="beat" data-piece="H" data-near data-sq="b10" aria-hidden="true"><svg class="seal pc" viewBox="-46 -46 92 97"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-ma-b" x="-29" y="-29" width="58" height="58"/></svg></section>
 
 <section id="planned" aria-labelledby="planned-h">
   <h2 id="planned-h">Planned</h2>
@@ -208,13 +187,13 @@
   <p>Working with them raised my bar for what good work looks like, and showed me I don’t need a big-title company to do meaningful, interesting work.</p>
 </section>
 
-<section class="beat" data-beat="6" aria-hidden="true"><svg class="seal pc pc--red" data-t="R" viewBox="-46 -46 92 97"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-ju" x="-29" y="-29" width="58" height="58"/></svg></section>
+<section class="beat" data-piece="E" data-near data-sq="c10" aria-hidden="true"><svg class="seal pc" viewBox="-46 -46 92 97"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-xiang-b" x="-29" y="-29" width="58" height="58"/></svg></section>
 <section id="writing" aria-labelledby="writing-h">
   <h2 id="writing-h">My thoughts</h2>
   <ul class="posts">
     <li>
       <a href="cal-hacks-13/">
-        <span class="fig-frame"><img src="img/wr-calhacks-560.webp" srcset="img/wr-calhacks-560.webp 560w, img/wr-calhacks-1120.webp 1120w" sizes="(min-width:1100px) min(264px, 21.3vw - 25px), (min-width:640px) min(249px, 38vw - 34px), (min-width:480px) calc(38vw - 25px), calc(100vw - 68px)" width="560" height="373" alt="A hangar-sized hackathon floor under a skylit steel roof, full of folding tables, laptops, and people." loading="lazy" decoding="async"></span>
+        <span class="fig-frame"><img src="img/wr-calhacks-560.webp" srcset="img/wr-calhacks-560.webp 560w, img/wr-calhacks-1120.webp 1120w" sizes="(min-width:640px) min(249px, 38vw - 34px), (min-width:480px) calc(38vw - 25px), calc(100vw - 68px)" width="560" height="373" alt="A hangar-sized hackathon floor under a skylit steel roof, full of folding tables, laptops, and people." loading="lazy" decoding="async"></span>
         <h3>Silent Voice, the long version</h3>
       </a>
       <p class="meta">How it works, what broke, and how I ended up in the ER mid-hackathon.</p>
@@ -222,7 +201,7 @@
     </li>
     <li>
       <a href="https://www.linkedin.com/feed/update/urn:li:activity:7516573430683725824/">
-        <span class="fig-frame"><img src="img/wr-bet-560.webp" srcset="img/wr-bet-560.webp 560w, img/wr-bet-1024.webp 1024w" sizes="(min-width:1100px) min(264px, 21.3vw - 25px), (min-width:640px) min(249px, 38vw - 34px), (min-width:480px) calc(38vw - 25px), calc(100vw - 68px)" width="560" height="373" alt="Two speakers at the front of a classroom beside a projected slide with a QR code, seen from behind the audience." loading="lazy" decoding="async"></span>
+        <span class="fig-frame"><img src="img/wr-bet-560.webp" srcset="img/wr-bet-560.webp 560w, img/wr-bet-1024.webp 1024w" sizes="(min-width:640px) min(249px, 38vw - 34px), (min-width:480px) calc(38vw - 25px), calc(100vw - 68px)" width="560" height="373" alt="Two speakers at the front of a classroom beside a projected slide with a QR code, seen from behind the audience." loading="lazy" decoding="async"></span>
         <h3>Betting on yourself gets a lot easier once you stop listening to people who never bet on anything</h3>
       </a>
       <p class="meta">What going all in on building with AI changed about the people around me.</p>
@@ -230,7 +209,7 @@
     </li>
     <li>
       <a href="https://www.linkedin.com/feed/update/urn:li:activity:7515610987396259840/">
-        <span class="fig-frame"><img src="img/wr-pyd-560.webp" srcset="img/wr-pyd-560.webp 560w, img/wr-pyd-1120.webp 1120w" sizes="(min-width:1100px) min(264px, 21.3vw - 25px), (min-width:640px) min(249px, 38vw - 34px), (min-width:480px) calc(38vw - 25px), calc(100vw - 68px)" width="560" height="373" alt="The Plan Your Degree home page, with the headline Plan your whole McGill degree in one tab above a preview of the planner." loading="lazy" decoding="async"></span>
+        <span class="fig-frame"><img src="img/wr-pyd-560.webp" srcset="img/wr-pyd-560.webp 560w, img/wr-pyd-1120.webp 1120w" sizes="(min-width:640px) min(249px, 38vw - 34px), (min-width:480px) calc(38vw - 25px), calc(100vw - 68px)" width="560" height="373" alt="The Plan Your Degree home page, with the headline Plan your whole McGill degree in one tab above a preview of the planner." loading="lazy" decoding="async"></span>
         <h3>McGill’s degree planning system is broken, so I built my own</h3>
       </a>
       <p class="meta">The launch post, with an open invite to try it, break it, and tell me what’s wrong.</p>
@@ -238,7 +217,7 @@
     </li>
     <li>
       <a href="https://www.linkedin.com/feed/update/urn:li:activity:7502134242114473984/">
-        <span class="fig-frame"><img src="img/wr-intern-560.webp" srcset="img/wr-intern-560.webp 560w, img/wr-intern-1120.webp 1120w" sizes="(min-width:1100px) min(264px, 21.3vw - 25px), (min-width:640px) min(249px, 38vw - 34px), (min-width:480px) calc(38vw - 25px), calc(100vw - 68px)" width="560" height="373" alt="Three people sitting side by side in front of a stone wall, under red light." loading="lazy" decoding="async"></span>
+        <span class="fig-frame"><img src="img/wr-intern-560.webp" srcset="img/wr-intern-560.webp 560w, img/wr-intern-1120.webp 1120w" sizes="(min-width:640px) min(249px, 38vw - 34px), (min-width:480px) calc(38vw - 25px), calc(100vw - 68px)" width="560" height="373" alt="Three people sitting side by side in front of a stone wall, under red light." loading="lazy" decoding="async"></span>
         <h3>I wasn’t hired as an engineer this summer</h3>
       </a>
       <p class="meta">Yet I still ended up shipping to prod every day. What I picked up as an AI Builder Intern at Planned, a few things the hard way.</p>
@@ -246,7 +225,7 @@
     </li>
     <li>
       <a href="https://www.linkedin.com/feed/update/urn:li:activity:7449159224070336512/">
-        <span class="fig-frame"><img src="img/wr-clubs-560.webp" srcset="img/wr-clubs-560.webp 560w, img/wr-clubs-1120.webp 1120w" sizes="(min-width:1100px) min(264px, 21.3vw - 25px), (min-width:640px) min(249px, 38vw - 34px), (min-width:480px) calc(38vw - 25px), calc(100vw - 68px)" width="560" height="373" alt="A speaker at a lectern in a lecture hall, three more people standing at the front, and a partners slide on the two screens above them, seen from behind the audience." loading="lazy" decoding="async"></span>
+        <span class="fig-frame"><img src="img/wr-clubs-560.webp" srcset="img/wr-clubs-560.webp 560w, img/wr-clubs-1120.webp 1120w" sizes="(min-width:640px) min(249px, 38vw - 34px), (min-width:480px) calc(38vw - 25px), calc(100vw - 68px)" width="560" height="373" alt="A speaker at a lectern in a lecture hall, three more people standing at the front, and a partners slide on the two screens above them, seen from behind the audience." loading="lazy" decoding="async"></span>
         <h3>If you’re at uni and you’re not in any clubs, you are missing out</h3>
       </a>
       <p class="meta">How joining two clubs led me to start a third.</p>
@@ -255,14 +234,14 @@
   </ul>
 </section>
 
-<section class="beat" data-beat="7" aria-hidden="true"><svg class="seal pc pc--red" data-t="H" viewBox="-46 -46 92 97"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-ma" x="-29" y="-29" width="58" height="58"/></svg></section>
+<section class="beat" data-piece="A" data-near data-sq="d10" aria-hidden="true"><svg class="seal pc" viewBox="-46 -46 92 97"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-shi-b" x="-29" y="-29" width="58" height="58"/></svg></section>
 <section id="club" aria-labelledby="club-h">
   <h2 id="club-h">Club</h2>
   <figure class="fig">
     <div class="fig-frame">
       <picture>
         <source media="(max-width:639px)" srcset="img/club-room-m-640.webp 640w, img/club-room-m-1280.webp 1280w" sizes="calc(100vw - 68px)" width="640" height="427">
-        <img src="img/club-room-980.webp" srcset="img/club-room-980.webp 980w, img/club-room-1960.webp 1960w" sizes="(min-width:1100px) min(56vw - 68px, 692px), min(100vw - 92px, 652px)" width="980" height="420" alt="A tiered lecture hall full of students facing the camera, smiling, several with thumbs up." loading="lazy" decoding="async">
+        <img src="img/club-room-980.webp" srcset="img/club-room-980.webp 980w, img/club-room-1960.webp 1960w" sizes="min(100vw - 92px, 652px)" width="980" height="420" alt="A tiered lecture hall full of students facing the camera, smiling, several with thumbs up." loading="lazy" decoding="async">
       </picture>
     </div>
     <figcaption>The first Claude hackathon at McGill, April 4, 2026. Photo by Aldrich Castro.</figcaption>
@@ -277,7 +256,7 @@
   <p class="links"><a href="https://www.claudebuildersmcgill.ca">Club website</a></p>
 </section>
 
-<section class="beat" data-beat="end" aria-hidden="true"><svg class="seal pc pc--red" data-t="H" viewBox="-46 -46 92 97"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-ma" x="-29" y="-29" width="58" height="58"/></svg></section>
+<section class="beat" data-piece="P" data-sq="e7" aria-hidden="true"><svg class="seal pc" viewBox="-46 -46 92 97"><circle class="disc-wall" cy="5" r="46"/><circle class="pc-body" r="46"/><circle class="pc-ring" r="38"/><use href="#g-zu" x="-29" y="-29" width="58" height="58"/></svg></section>
 
 <section id="contact" aria-labelledby="contact-h">
   <h2 id="contact-h">Contact</h2>

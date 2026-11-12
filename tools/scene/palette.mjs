@@ -7,7 +7,7 @@ const C = {
   teal0: '#3b5f66', teal1: '#6a9a9f', teal2: '#98c2c1', teal3: '#c7e2df', sky: '#e2f0ef',
   white0: '#5d6570', white1: '#9aa2ac', white2: '#c4cad1', white3: '#e5e8eb', white4: '#ffffff',
   black0: '#141217', black1: '#28242b', black2: '#3b3d48', grey1: '#6e6964', grey2: '#9b958d', grey3: '#c3beb4',
-  red: '#c8281f',
+  red: '#c8281f', tea1: '#a9c95a', tea2: '#c9df7c',
 };
 const r = (...names) => names.map(n => C[n]);
 
@@ -15,7 +15,7 @@ const r = (...names) => names.map(n => C[n]);
 export const RAMPS = {
   skin: r('dark', 'skin1', 'skin2', 'skin3', 'wood4'),
   eye: r('black0', 'black0', 'black1', 'black1', 'black1'),
-  tea: r('wood2', 'yellow1', 'yellow2', 'yellow2', 'wood4'),
+  tea: r('green3', 'green4', 'tea1', 'tea1', 'tea2'),
   white: r('white0', 'white1', 'white2', 'white3', 'white4'),
   shirt: r('teal0', 'teal1', 'teal2', 'teal3', 'teal3'),
   trousers: r('black0', 'black2', 'grey1', 'grey1', 'grey2'),
