@@ -244,12 +244,13 @@
       anims.forEach(a => a.cancel());
       anims = [];
       note.className = t ? 'beat-note' : 'beat-note beat-note--bare';
-      note.innerHTML = t ? `<div><h3>${disc(t, side)}${title}</h3>${text ? `<p>${text}</p>` : ''}</div>` : `<p>${text}</p>`;
+      note.innerHTML = t ? `<div><h3>${disc(t, side)}${title}</h3>${text ? `<p>${text}</p>` : ''}</div>` : '';
       if (t) { const m = mini(t, side, side === 'r'); note.prepend(m.el); anims = m.anims; }
       if (note.hidden) anims.forEach(a => a.pause());
     };
-    // a small hint in the corner of the match zone, only at 1100px and wider
-    const invite = () => say(null, null, null, 'Hover a piece to see where it can go.');
+    // between beats the note is empty and hidden. The hover hint sits in the intro card, for visitors with a mouse.
+    const invite = () => say();
+    document.querySelector('.intro .note')?.insertAdjacentHTML('beforeend', '<span class="hover"> Hover a piece to see where it can go.</span>');
 
     // beat shots: both moves and every dot as large as fits above the note, with the whole board in the frame
     const T = Math.PI / 4, K = 22, BOARD = [[-.62, -.62, .56], [8.62, -.62, .56], [-.62, 9.62, 0], [8.62, 9.62, 0]];
