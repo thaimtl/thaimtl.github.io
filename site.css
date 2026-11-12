@@ -83,7 +83,8 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
 .num{font:600 44px/44px var(--display);font-variant-numeric:lining-nums tabular-nums;letter-spacing:-.01em;white-space:nowrap}
 
 .links{display:flex;flex-wrap:wrap;column-gap:var(--u);font-size:15px;line-height:24px;font-weight:500}
-.links a{position:relative;display:inline-flex;align-items:center;min-height:44px}
+.links a{position:relative;display:inline-flex;align-items:center;gap:8px;min-height:44px}
+.ico{flex:none;width:16px;height:16px;fill:currentColor}
 .links a::before{content:"";position:absolute;inset:0 min(0px,(100% - 44px)/2)}
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:11px 22px;border:1px solid transparent;border-radius:10px;background:linear-gradient(rgba(255,255,255,.16),rgba(255,255,255,0) 50%) var(--red);color:#fff;font:600 16px/24px var(--text);text-align:center;text-decoration:none;cursor:pointer;box-shadow:inset 0 1px rgba(255,255,255,.35),inset 0 -1px rgba(100,12,8,.25),0 8px 16px -8px rgba(142,26,20,.5)}
 .btn:focus-visible{color:#fff}
@@ -312,6 +313,14 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
 #work .sv-body img{object-position:35% 45%}
 :is(#work .sv-text,#pyd,#planned) p:not(.meta,.links)+p{margin-top:16px}
 :is(#work,#pyd) .links{margin-top:8px}
+/* the press block is one link: where it ran, then its headline */
+#work .press{display:grid;gap:6px;padding:16px 20px;border:1px solid var(--hair);border-radius:10px;background:rgba(255,255,255,.5);text-decoration:none}
+#work .press .meta{display:flex;gap:8px}
+#work .press .ico{margin-top:4px}
+#work .press strong{font:600 26px/30px var(--display);font-variant-numeric:lining-nums;text-wrap:balance}
+#work .press:focus-visible strong{color:var(--red)}
+@media (hover:hover){#work .press strong{transition:color .15s}#work .press:hover{border-color:var(--bronze)}#work .press:hover strong{color:var(--red)}}
+@media (max-width:639px){#work .press{padding:14px 16px}#work .press strong{font-size:22px;line-height:26px}}
 :is(#work,#pyd) figcaption{text-wrap:balance}
 #pyd .figs{grid-template-columns:minmax(0,1fr);gap:var(--u) 16px}
 @container (min-width:480px) and (max-width:619.98px){
@@ -366,12 +375,10 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
 /* flex would make each side of the <wbr> its own item, with a gap between */
 #contact .btn{display:inline-block}
 #contact .links{margin:12px 0 -10px}
-#contact .links a{gap:8px}
-#contact .ico{flex:none;width:16px;height:16px;fill:currentColor}
 #contact .btn .ico{margin-right:10px;vertical-align:-2px}
 .foot{padding-block:18px;font-size:14px;line-height:20px;color:var(--muted)}
 .foot .sig{color:var(--ink);font-weight:500}
 .foot .sig+p{margin-top:2px}
 .foot span{display:inline-block;text-wrap:balance}
 @media (max-width:639px){#contact .hook{font-size:22px;line-height:30px}#contact .btn{padding-inline:16px}.foot{padding-block:14px}}
-@media (max-width:359px){#contact .links{column-gap:12px}#contact .links a{gap:6px}}
+@media (max-width:359px){.links{column-gap:12px}.links a{gap:6px}}
