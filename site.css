@@ -126,6 +126,33 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
 @keyframes ring{from{transform:scale(.04);opacity:0}15%{opacity:1}to{transform:scale(1);opacity:0}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 
+/* ===== side rail: the piece and the heading get their own strip of denser glass, ruled off in board ink. Under 768px it is a slim top bar, and the intro stays plain. ===== */
+:root{--rail-glass:rgba(255,255,255,.4);--rail-ink:rgba(111,74,42,.38);--rail-cut:rgba(255,255,255,.7)}
+.intro,.beat+section{--pt:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-20 -20 40 40' fill='none' stroke='%236f4a2a' stroke-opacity='.55' stroke-width='1.25'%3E%3Cpath d='M-20 0h14M6 0h14M0-20v14M0 6v14' stroke-opacity='.22'/%3E%3Cpath d='M-4.5-13v8.5H-13M4.5-13v8.5H13M-4.5 13V4.5H-13M4.5 13V4.5H13'/%3E%3C/svg%3E")}
+@media (max-width:767px){
+  :root{--bar:calc(2*var(--sc) + 10px);--sx:calc(var(--sr) + 21px)}
+  .beat+section{padding-top:calc(var(--bar) + 1px + var(--u))}
+  .beat+section::before{background:radial-gradient(circle at var(--c1),#2454422e calc(var(--h) + 1px),#fffe calc(var(--h) + 2px),#fff0 calc(var(--h) + 3px)),radial-gradient(circle at var(--c2),#2454422e calc(var(--h) + .5px),#fffe calc(var(--h) + 1.5px),#fff0 calc(var(--h) + 2.5px)),linear-gradient(var(--rail-glass) calc(var(--bar) + 1px),var(--rail-ink) 0 calc(var(--bar) + 2px),var(--rail-cut) 0 calc(var(--bar) + 3px),#fff0 0),var(--glass);background-origin:border-box}
+  .beat+section>h2{position:absolute;left:calc(var(--sx) + var(--sr) + 14px);right:20px;top:-1px;display:flex;align-items:center;height:calc(2*var(--sc));margin:0;font-size:30px;line-height:32px;white-space:nowrap}
+  .beat+section>h2+*{margin-top:0}
+}
+@media (min-width:768px){
+  :root{--rail:104px;--sx:calc(var(--rail)/2 + 1px)}
+  .page{width:min(100% - 24px,720px + var(--rail))}
+  .beat+section{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);column-gap:32px;align-content:start;padding-top:32px;padding-left:0}
+  .beat+section::before{background:radial-gradient(circle at var(--c1),#2454422e calc(var(--h) + 1px),#fffe calc(var(--h) + 2px),#fff0 calc(var(--h) + 3px)),radial-gradient(circle at var(--c2),#2454422e calc(var(--h) + .5px),#fffe calc(var(--h) + 1.5px),#fff0 calc(var(--h) + 2.5px)),linear-gradient(90deg,var(--rail-glass) calc(var(--rail) + 1px),var(--rail-ink) 0 calc(var(--rail) + 2px),var(--rail-cut) 0 calc(var(--rail) + 3px),#fff0 0),var(--glass);background-origin:border-box}
+  .beat+section>*{grid-column:2}
+  .beat+section>h2{grid-column:1;grid-row:1/span 12;justify-self:center;align-self:start;margin-top:calc(var(--sc) + var(--sr) + 28px - 32px);writing-mode:vertical-rl;white-space:nowrap}
+  section[aria-labelledby]:is(#origin,#work,#pyd,#planned,#writing,#club,#contact)>h2+*{margin-top:0}
+  section#contact>.hook{margin-bottom:0}
+  .intro,main+footer.foot{padding-left:calc(var(--rail) + 32px)}
+  .intro{background:var(--pt) calc(var(--sx) - 20px) calc(var(--sc) + 8px) / 40px 40px no-repeat,linear-gradient(90deg,var(--rail-glass) calc(var(--rail) + 1px),var(--rail-ink) 0 calc(var(--rail) + 2px),var(--rail-cut) 0 calc(var(--rail) + 3px),#fff0 0),var(--glass);background-origin:border-box}
+  main+footer.foot{background:linear-gradient(90deg,var(--rail-glass) calc(var(--rail) + 1px),var(--rail-ink) 0 calc(var(--rail) + 2px),var(--rail-cut) 0 calc(var(--rail) + 3px),#fff0 0),var(--glass);background-origin:border-box}
+}
+@media (max-width:359px){.beat+section>h2{font-size:28px}}
+@media (min-width:640px) and (max-width:767px){:root{--sx:calc(var(--sr) + 33px)}.beat+section>h2{right:32px;font-size:36px;line-height:40px}}
+@media (min-width:768px) and (min-height:480px){.beat+section>h2{position:sticky;top:24px}}
+
 @property --b{syntax:'<length>';inherits:true;initial-value:0px}
 @property --tx{syntax:'<length>';inherits:true;initial-value:0px}
 @property --ty{syntax:'<length>';inherits:true;initial-value:0px}
