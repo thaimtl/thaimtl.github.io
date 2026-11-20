@@ -388,6 +388,24 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
   #writing h3{margin-top:-4px}
 }
 
+#writing .feed{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr));column-gap:24px;margin-bottom:calc(-1*var(--u))}
+#writing .feed li{position:relative;display:grid;grid-row:span 4;grid-template-rows:subgrid;row-gap:0;margin-bottom:var(--u);padding:16px 20px 4px;border:1px solid var(--hair);border-radius:10px;background:rgba(255,255,255,.5)}
+#writing .feed li:has(a:focus-visible){outline:2px solid var(--bronze);outline-offset:3px}
+#writing .feed li:has(a:focus-visible) a{outline:none}
+#writing .by{display:flex;align-items:center;gap:8px;font-size:14px;line-height:20px;font-weight:600}
+#writing .by .ico{width:18px;height:18px}
+#writing .by span{font-weight:400;color:var(--muted)}
+#writing .feed :is(h3,.fig-frame){grid-area:auto}
+#writing .feed h3{margin-top:12px;font-size:22px;line-height:26px}
+#writing .body{margin-top:8px;font-size:15px;line-height:24px;color:var(--muted);display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:4;line-clamp:4;overflow:hidden}
+#writing .feed .fig-frame{width:auto;margin:16px -20px 0;border-width:1px 0;border-radius:0}
+#writing .feed .links{margin-top:4px}
+#writing .feed .links a{position:static;text-decoration:none}
+#writing .feed a:focus-visible,#writing .feed li:has(a:focus-visible) h3{color:var(--red)}
+@media (hover:hover){
+  #writing .feed li:hover h3{color:var(--red)}
+}
+
 #club h2+.fig{margin-top:var(--u)}
 #club .fig-frame{--ar:7/3}
 #club figcaption{text-wrap:balance}
