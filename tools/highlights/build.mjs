@@ -1,7 +1,6 @@
 // node tools/highlights/build.mjs [key ...]  turns tools/highlights/<key>.mjs pixel grids into img/hl-<key>.svg, plus an 8x PNG preview for checking.
 // Each grid is 32 strings of 32 characters. '.' is transparent, every other character maps to a scene palette name through `legend`.
-import { readdirSync } from 'node:fs';
-import { writeFileSync } from 'node:fs';
+import { readdirSync, writeFileSync } from 'node:fs';
 import { C } from '../scene/palette.mjs';
 import { writePNG, hex } from '../scene/lib.mjs';
 

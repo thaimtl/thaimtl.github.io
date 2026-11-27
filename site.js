@@ -196,7 +196,7 @@
     // it lives in the highlights, where a click anywhere on its tile starts the game
     const tile = document.querySelector('.wins .play');
     tile?.querySelector('strong').append(opener);
-    tile?.addEventListener('click', e => { if (!e.target.closest('button')) opener.click(); });
+    tile?.addEventListener('click', e => { if (!e.target.closest('button, .more')) opener.click(); });
     bar.className = 'play-bar';
     bar.hidden = true;
     bar.innerHTML = '<div class="vh" tabindex="0" role="application" aria-label="Board. Arrow keys move, Enter picks up or places a piece, Escape puts it back, or leaves the game when nothing is held."></div><div class="play-status" aria-live="polite"></div><p class="vh" aria-live="polite"></p>'
@@ -378,7 +378,7 @@
     pad.addEventListener('blur', () => dots.querySelector('.cur')?.remove());
 
     // in the story a mouse resting on a stone shows where it can go from the opening position. Clicks and taps on the board do nothing.
-    const open = t => !t.closest('a,button,input,select,textarea,label,header,footer,main>section:not(.hero,.beat)');
+    const open = t => !t.closest('a,button,input,select,textarea,label,header,footer,.wins,main>section:not(.hero,.beat)');
     const hit = (x, y) => {
       for (const [id, el] of els) {
         const r = el.querySelector('.p-face').getBoundingClientRect();
@@ -440,7 +440,7 @@
     const point = (p, keys = false) => { on = p && { list: [].concat(p), keys }; place(); };
     // a scroll beat or a resize moves the props: a mouse card goes, a keyboard card follows
     const moved = () => { if (on) on.keys ? place() : point(null); };
-    opener.after(...[...document.querySelectorAll('[data-tip]')].map(src => {
+    hero?.append(...[...document.querySelectorAll('[data-tip]')].map(src => {
       const b = document.createElement('button'), k = src.dataset.tip;
       // the viewer's own plate or cup first, then his
       const list = props.filter(p => kind(p) === k).sort((a, c) => c.matches('.prop--near') - a.matches('.prop--near'));
@@ -468,8 +468,9 @@
     const frame = () => {
       raf = 0;
       if (game) return;
-      // the camera holds the opening shot while the story scrolls over it
-      if (cur !== -1) { tip(null); moved(); go(-1); }
+      // the camera holds the opening shot while the story scrolls over it, and a pointer left still lets go of its piece and prop
+      tip(null); moved();
+      if (cur !== -1) go(-1);
     };
     const measure = () => {
       const head = document.querySelector('header.top');
@@ -499,8 +500,8 @@
     t?.querySelector('p a').setAttribute('aria-current', 'location');
   };
   const spy = () => {
-    // the last chapter whose card has reached the middle of the screen, held through the gap to the next one
-    const now = sections.findLast(s => s.getBoundingClientRect().top < innerHeight / 2)?.id;
+    // the last chapter whose card has reached a line near the top of the screen, held through the gap to the next one
+    const line = Math.min(innerHeight / 2, 320), now = sections.findLast(s => s.getBoundingClientRect().top < line)?.id;
     if (on?.dataset.to !== now) mark(tiles.find(t => t.dataset.to === now));
   };
   for (const t of tiles) t.addEventListener('click', e => {
@@ -509,6 +510,11 @@
     if (!hit) a.click();
     else if (hit.getAttribute('href') === a.getAttribute('href')) mark(t);
   });
+  // Escape tucks a tile's brief away until the pointer or focus leaves it
+  for (const t of document.querySelectorAll('.wins>ul>li')) {
+    t.addEventListener('keydown', e => { if (e.key === 'Escape') t.classList.add('shut'); });
+    for (const ev of ['focusout', 'pointerleave']) t.addEventListener(ev, () => t.classList.remove('shut'));
+  }
   let raf = 0;
   const later = () => { raf ||= requestAnimationFrame(() => { raf = 0; spy(); }); };
   addEventListener('scroll', later, { passive: true });
