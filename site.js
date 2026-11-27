@@ -191,9 +191,12 @@
     // Play mode, 768px and wider: the visitor takes Black against bot.js in a top-down shot that holds still. The story's page and scroll stand down until they leave.
     const opener = document.createElement('button'), bar = document.createElement('div');
     opener.type = 'button';
-    opener.className = 'btn play-start';
-    opener.textContent = 'Play Xiangqi';
-    hero?.append(opener);
+    opener.className = 'play-start';
+    opener.textContent = 'Play xiangqi';
+    // it lives in the highlights, where a click anywhere on its tile starts the game
+    const tile = document.querySelector('.wins .play');
+    tile?.querySelector('strong').append(opener);
+    tile?.addEventListener('click', e => { if (!e.target.closest('button')) opener.click(); });
     bar.className = 'play-bar';
     bar.hidden = true;
     bar.innerHTML = '<div class="vh" tabindex="0" role="application" aria-label="Board. Arrow keys move, Enter picks up or places a piece, Escape puts it back, or leaves the game when nothing is held."></div><div class="play-status" aria-live="polite"></div><p class="vh" aria-live="polite"></p>'
@@ -485,7 +488,7 @@
 
 // the highlights: a click on a tile or its Read more opens its section and marks it, and scrolling marks the one for the section in view
 {
-  const tiles = [...document.querySelectorAll('.wins>ul>li')];
+  const tiles = [...document.querySelectorAll('.wins>ul>li[data-to]')];
   const sections = [...document.querySelectorAll('main>section[id]')];
   let on = null;
   const mark = t => {
