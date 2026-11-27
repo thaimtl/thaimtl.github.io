@@ -242,7 +242,6 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
 /* the game's opener reads as a highlight's heading, set in its tile in the highlights */
 .play-start{padding:0;border:0;background:none;color:inherit;font:inherit;text-align:left;cursor:pointer}
 .wins .play .art{padding:6px}
-.wins .play .more p{margin-top:8px;font-size:14px;line-height:20px;color:var(--muted)}
 .stage .p.gone{visibility:hidden}
 /* rings on the stones themselves: the last move, a piece that can be taken, the piece in hand */
 .stage .p.last .p-in{box-shadow:0 0 0 calc(.06*var(--b)) rgba(23,25,28,.72)}
@@ -400,10 +399,10 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
 .wins>ul{display:flex;flex-direction:column;gap:10px}
 .wins>ul>li{position:relative;display:grid;grid-template-columns:64px 1fr;align-items:center;gap:12px;padding:6px 16px 6px 6px;background:var(--glass);-webkit-backdrop-filter:var(--frost);backdrop-filter:var(--frost);border:1px solid var(--rim);border-radius:12px;box-shadow:var(--lip),var(--lift);cursor:pointer;pointer-events:auto}
 .wins .art{width:64px;height:64px;image-rendering:pixelated}
-.wins p{display:grid;gap:2px;max-width:none}
-.wins p strong{font:600 20px/24px var(--display);font-variant-numeric:lining-nums;letter-spacing:-.005em;text-wrap:balance}
-.wins p strong a{text-decoration:none}
-.wins p span{font-size:13px;line-height:18px;color:var(--muted);text-wrap:pretty}
+.wins>ul>li>p{display:grid;gap:2px;max-width:none}
+.wins>ul>li>p strong{font:600 20px/24px var(--display);font-variant-numeric:lining-nums;letter-spacing:-.005em;text-wrap:balance}
+.wins>ul>li>p strong a{text-decoration:none}
+.wins>ul>li>p span{font-size:13px;line-height:18px;color:var(--muted);text-wrap:pretty}
 .wins>ul>li:has(:is(a,button):focus-visible){outline:2px solid var(--red);outline-offset:2px}
 .wins>ul>li.on{background:#fff;border-color:var(--red);box-shadow:0 0 0 1px var(--red),var(--lift)}
 .wins>ul>li.on strong a{color:var(--red)}
@@ -424,7 +423,7 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
   .wins>ul>li{display:block;padding:4px;background:none;border-color:transparent;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
   .wins .art{width:48px;height:48px}
   .wins>ul>li.on{background:#fff;border-color:var(--red);box-shadow:var(--lift)}
-  .wins p{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+  .wins>ul>li>p{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 }
 @media (min-width:944px) and (max-width:1279px){
   .wins{top:50%;right:max(8px,(50vw - 360px - 66px)/2);transform:translateY(-50%)}
@@ -450,9 +449,8 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
 .wins .more::after{content:"";position:absolute;top:0;bottom:0;left:100%;width:14px}
 .wins>ul>li:is(:hover,:focus-within) .more{transform:translate(0,-50%);opacity:1;visibility:visible;transition:opacity .15s,transform .2s}
 .wins .more strong{display:block;font:600 22px/26px var(--display);text-wrap:balance}
-.wins .more ul{display:grid;gap:6px;margin-top:10px}
-.wins .more li{position:relative;padding-left:16px;font-size:14px;line-height:20px;color:var(--muted);text-wrap:pretty}
-.wins .more li::before{content:"";position:absolute;left:2px;top:7px;width:6px;height:6px;background:var(--red)}
+.wins .more p{margin-top:8px;font-size:15px;line-height:23px;color:var(--muted);text-wrap:pretty}
+.wins .more p b{font-weight:600;color:var(--red)}
 .wins .more a{display:inline-flex;align-items:center;gap:6px;min-height:32px;margin-top:10px;font-weight:600;font-size:15px;color:var(--red);text-decoration-color:var(--red)}
 .wins .more a::after{content:"→"}
 @media (hover:none){.wins .more{display:none}}
