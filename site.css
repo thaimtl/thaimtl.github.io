@@ -339,6 +339,7 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
 :is(#work .sv-text,#pyd,#planned) p:not(.meta,.links)+p{margin-top:16px}
 :is(#work,#pyd) .links{margin-top:8px}
 /* the press block is one link: where it ran, then its headline */
+#work .press-list{display:grid;gap:8px}
 #work .press{display:grid;gap:6px;padding:16px 20px;border:1px solid var(--hair);border-radius:10px;background:rgba(255,255,255,.5);text-decoration:none}
 #work .press .meta{display:flex;gap:8px}
 #work .press .ico{margin-top:4px}
@@ -424,3 +425,42 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
 .foot span{display:inline-block;text-wrap:balance}
 @media (max-width:639px){#contact .hook{font-size:22px;line-height:30px}#contact .btn{padding-inline:16px}.foot{padding-block:14px}}
 @media (max-width:359px){.links{column-gap:12px}.links a{gap:6px}}
+
+/* highlights: glass tiles, each pressed with a vermilion chop, the red seal stamped on a scroll, hanging off the tile's edge. A rail on the right flank of the opening shot, a strip under the header when the flank is too narrow. */
+.chops{display:flex;gap:10px;pointer-events:auto}
+.chops li{position:relative;display:grid;grid-template-columns:58px 1fr;align-items:center;gap:14px;min-height:72px;margin-left:14px;padding:8px 16px 8px 0;background:var(--glass);-webkit-backdrop-filter:var(--frost);backdrop-filter:var(--frost);border:1px solid var(--rim);border-radius:12px;box-shadow:var(--lip),var(--lift)}
+.chop{display:block;width:58px;height:58px;margin-left:-14px;overflow:visible;color:var(--red);transform:rotate(var(--r,-4deg));filter:drop-shadow(0 2px 3px rgba(110,16,10,.3))}
+.chops li:nth-child(even) .chop{--r:3deg}
+.chops li:nth-child(3n) .chop{--r:-2deg}
+.chop text{fill:#fff;font:600 21px var(--display);font-variant-numeric:lining-nums;text-anchor:middle;letter-spacing:-.02em}
+.chop .sm{font-size:16.5px;letter-spacing:-.03em}
+.chops p{display:grid;gap:2px;max-width:none}
+.chops strong{font:600 20px/22px var(--display);font-variant-numeric:lining-nums;letter-spacing:-.005em}
+.chops strong a{text-decoration:none}
+.chops strong a::after{content:"";position:absolute;inset:0;border-radius:inherit}
+.chops li span{font-size:13px;line-height:18px;color:var(--muted);text-wrap:pretty}
+.chops span a{position:relative;z-index:1;color:inherit}
+.chops li:has(strong a:focus-visible){outline:2px solid var(--red);outline-offset:2px}
+@media (hover:hover){
+  .chop{transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
+  .chops li{transition:border-color .15s}
+  .chops li:hover{border-color:var(--bronze)}
+  .chops li:hover .chop{transform:rotate(0) scale(1.06)}
+  .chops li:has(strong a):hover strong a{color:var(--red)}
+}
+@media (min-width:1240px){
+  .chops{position:absolute;z-index:1;top:16px;right:calc(50% - 50vw + max(24px,50vw - 680px));width:280px;flex-direction:column}
+}
+@media (max-width:1239px){
+  .stage{--hd:calc(var(--head) + 92px)}
+  .chops{margin-inline:-12px;padding:2px 12px 10px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:12px;scrollbar-width:none}
+  .chops::-webkit-scrollbar{display:none}
+  .chops li{flex:0 0 236px;scroll-snap-align:start}
+  .play-start{top:104px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .chops li{animation:chop-in .5s calc(.35s + var(--i)*.09s) cubic-bezier(.2,.8,.3,1) backwards}
+  .chops .chop{animation:chop-stamp .42s calc(.6s + var(--i)*.09s) cubic-bezier(.3,1.5,.55,1) backwards}
+}
+@keyframes chop-in{from{opacity:0;transform:translateY(10px)}}
+@keyframes chop-stamp{from{opacity:0;transform:rotate(-16deg) scale(1.9)}60%{opacity:1}}
