@@ -426,9 +426,10 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
 @media (max-width:639px){#contact .hook{font-size:22px;line-height:30px}#contact .btn{padding-inline:16px}.foot{padding-block:14px}}
 @media (max-width:359px){.links{column-gap:12px}.links a{gap:6px}}
 
-/* highlights: glass tiles, each pressed with a vermilion chop, the red seal stamped on a scroll, hanging off the tile's edge. A rail on the right flank of the opening shot, a strip under the header when the flank is too narrow. */
-.chops{display:flex;gap:10px;pointer-events:auto}
-.chops li{position:relative;display:grid;grid-template-columns:58px 1fr;align-items:center;gap:14px;min-height:72px;margin-left:14px;padding:8px 16px 8px 0;background:var(--glass);-webkit-backdrop-filter:var(--frost);backdrop-filter:var(--frost);border:1px solid var(--rim);border-radius:12px;box-shadow:var(--lip),var(--lift)}
+/* highlights: vermilion chops, the red seal stamped on a scroll, fixed on the side through the whole story. Full tiles where they fit beside the cards, stamps alone on a narrower side, a dock at the bottom on phones. The one for the section in view is marked. */
+.chops{position:fixed;z-index:3;pointer-events:none}
+.chops ul{display:flex;flex-direction:column;gap:10px}
+.chops li{position:relative;display:grid;grid-template-columns:58px 1fr;align-items:center;gap:14px;min-height:72px;margin-left:14px;padding:8px 16px 8px 0;background:var(--glass);-webkit-backdrop-filter:var(--frost);backdrop-filter:var(--frost);border:1px solid var(--rim);border-radius:12px;box-shadow:var(--lip),var(--lift);cursor:pointer;pointer-events:auto}
 .chop{display:block;width:58px;height:58px;margin-left:-14px;overflow:visible;color:var(--red);transform:rotate(var(--r,-4deg));filter:drop-shadow(0 2px 3px rgba(110,16,10,.3))}
 .chops li:nth-child(even) .chop{--r:3deg}
 .chops li:nth-child(3n) .chop{--r:-2deg}
@@ -437,30 +438,55 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
 .chops p{display:grid;gap:2px;max-width:none}
 .chops strong{font:600 20px/22px var(--display);font-variant-numeric:lining-nums;letter-spacing:-.005em}
 .chops strong a{text-decoration:none}
-.chops strong a::after{content:"";position:absolute;inset:0;border-radius:inherit}
 .chops li span{font-size:13px;line-height:18px;color:var(--muted);text-wrap:pretty}
-.chops span a{position:relative;z-index:1;color:inherit}
-.chops li:has(strong a:focus-visible){outline:2px solid var(--red);outline-offset:2px}
+.chops span a{color:inherit}
+.chops li:has(a:focus-visible){outline:2px solid var(--red);outline-offset:2px}
+.chops li.on{background:#fff;border-color:var(--red);box-shadow:inset 3px 0 var(--red),var(--lift)}
+.chops li.on strong a{color:var(--red)}
+.chops li.on .chop{transform:rotate(0) scale(1.06)}
 @media (hover:hover){
   .chop{transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
-  .chops li{transition:border-color .15s}
+  .chops li{transition:border-color .15s,background-color .15s}
   .chops li:hover{border-color:var(--bronze)}
   .chops li:hover .chop{transform:rotate(0) scale(1.06)}
-  .chops li:has(strong a):hover strong a{color:var(--red)}
+  .chops li:hover strong a{color:var(--red)}
 }
-@media (min-width:1240px){
-  .chops{position:absolute;z-index:1;top:16px;right:calc(50% - 50vw + max(24px,50vw - 680px));width:280px;flex-direction:column}
+/* full tiles: the cards narrow to 640px below 1360px so the rail clears them */
+@media (min-width:1280px){
+  .chops{top:50%;right:max(24px,50vw - 680px);width:280px;transform:translateY(-50%)}
 }
-@media (max-width:1239px){
-  .stage{--hd:calc(var(--head) + 92px)}
-  .chops{margin-inline:-12px;padding:2px 12px 10px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:12px;scrollbar-width:none}
-  .chops::-webkit-scrollbar{display:none}
-  .chops li{flex:0 0 236px;scroll-snap-align:start}
-  .play-start{top:104px}
+@media (min-width:1280px) and (max-width:1359px){.page{width:640px}}
+/* stamps alone: the words show beside a stamp on hover or focus */
+@media (max-width:1279px){
+  .chops li{display:block;min-height:0;margin:0;padding:6px;background:none;border-color:transparent;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+  .chop{width:46px;height:46px;margin:0}
+  .chops li.on{background:#fff;border-color:var(--red);box-shadow:var(--lift)}
+  .chops p{position:absolute;top:50%;right:calc(100% + 10px);width:max-content;max-width:240px;padding:10px 14px;background:#fff;border:1px solid var(--hair);border-radius:10px;box-shadow:var(--lift);transform:translateY(-50%);opacity:0;visibility:hidden;transition:opacity .15s,visibility 0s .15s}
+  .chops li:is(:hover,:focus-within) p{opacity:1;visibility:visible;transition:opacity .15s}
+  .chops strong{font-size:18px}
 }
+@media (min-width:944px) and (max-width:1279px){
+  .chops{top:50%;right:max(8px,(50vw - 360px - 60px)/2);transform:translateY(-50%)}
+  .chops ul{gap:4px;padding:6px;background:var(--glass);-webkit-backdrop-filter:var(--frost);backdrop-filter:var(--frost);border:1px solid var(--rim);border-radius:14px;box-shadow:var(--lip),var(--lift);pointer-events:auto}
+}
+/* the dock: stamps in a row at the bottom, the scene and the scroll prompt lifted above it */
+@media (max-width:943px){
+  .chops{left:0;right:0;bottom:max(10px,env(safe-area-inset-bottom));display:flex;justify-content:center}
+  .chops ul{flex-direction:row;gap:2px;padding:4px;background:var(--glass);-webkit-backdrop-filter:var(--frost);backdrop-filter:var(--frost);border:1px solid var(--rim);border-radius:14px;box-shadow:var(--lip),var(--lift);pointer-events:auto}
+  .chops p{top:auto;right:auto;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%)}
+  .chops li{padding:4px}
+  .chop{width:44px;height:44px}
+  .chops li:first-child p{left:0;transform:none}
+  .chops li:last-child p{left:auto;right:0;transform:none}
+  .stage{--hb:calc(100svh - 56px - 72px)}
+  .cue{bottom:76px}
+  .page{padding-bottom:84px}
+}
+@media (max-width:943px) and (hover:none){.chops p{display:none}}
 @media (prefers-reduced-motion:no-preference){
   .chops li{animation:chop-in .5s calc(.35s + var(--i)*.09s) cubic-bezier(.2,.8,.3,1) backwards}
   .chops .chop{animation:chop-stamp .42s calc(.6s + var(--i)*.09s) cubic-bezier(.3,1.5,.55,1) backwards}
 }
 @keyframes chop-in{from{opacity:0;transform:translateY(10px)}}
 @keyframes chop-stamp{from{opacity:0;transform:rotate(-16deg) scale(1.9)}60%{opacity:1}}
+html.playing .chops{display:none}

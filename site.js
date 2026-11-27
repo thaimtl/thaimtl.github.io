@@ -484,3 +484,34 @@
     addEventListener('resize', () => { measure(); if (game) return innerWidth < 768 ? leave() : lay(true); moved(); frame(); shot(); });
   }
 }
+
+// the highlights: a click on a stamp opens its section and marks it, and scrolling marks the one for the section in view
+{
+  const tiles = [...document.querySelectorAll('.chops li')];
+  const sections = [...document.querySelectorAll('main>section[id]')];
+  let on = null;
+  const mark = t => {
+    if (t === on) return;
+    on?.classList.remove('on');
+    on?.querySelector('strong a').removeAttribute('aria-current');
+    on = t;
+    t?.classList.add('on');
+    t?.querySelector('strong a').setAttribute('aria-current', 'location');
+  };
+  const spy = () => {
+    // the last chapter whose card has reached the middle of the screen, held through the glide to the next piece
+    const now = sections.findLast(s => s.getBoundingClientRect().top < innerHeight / 2)?.id;
+    if (on?.dataset.to !== now) mark(tiles.find(t => t.dataset.to === now));
+  };
+  for (const t of tiles) t.addEventListener('click', e => {
+    const a = t.querySelector('strong a');
+    if (!e.target.closest('a')) a.click();
+    if (e.target.closest('a') !== a && e.target.closest('a')) return;
+    mark(t);
+  });
+  let raf = 0;
+  const later = () => { raf ||= requestAnimationFrame(() => { raf = 0; spy(); }); };
+  addEventListener('scroll', later, { passive: true });
+  addEventListener('resize', later);
+  spy();
+}
