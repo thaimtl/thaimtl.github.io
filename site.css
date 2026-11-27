@@ -431,7 +431,7 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
 .wins>ul>li{position:relative;display:grid;grid-template-columns:64px 1fr;align-items:center;gap:12px;padding:6px 16px 6px 6px;background:var(--glass);-webkit-backdrop-filter:var(--frost);backdrop-filter:var(--frost);border:1px solid var(--rim);border-radius:12px;box-shadow:var(--lip),var(--lift);cursor:pointer;pointer-events:auto}
 .wins .art{width:64px;height:64px;image-rendering:pixelated}
 .wins p{display:grid;gap:2px;max-width:none}
-.wins p strong{font:600 20px/22px var(--display);font-variant-numeric:lining-nums;letter-spacing:-.005em}
+.wins p strong{font:600 20px/22px var(--display);font-variant-numeric:lining-nums;letter-spacing:-.005em;text-wrap:balance}
 .wins p strong a{text-decoration:none}
 .wins p span{font-size:13px;line-height:18px;color:var(--muted);text-wrap:pretty}
 .wins>ul>li:has(a:focus-visible){outline:2px solid var(--red);outline-offset:2px}

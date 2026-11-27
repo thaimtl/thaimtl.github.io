@@ -8,6 +8,8 @@ export const C = {
   white0: '#5d6570', white1: '#9aa2ac', white2: '#c4cad1', white3: '#e5e8eb', white4: '#ffffff',
   black0: '#141217', black1: '#28242b', black2: '#3b3d48', grey1: '#6e6964', grey2: '#9b958d', grey3: '#c3beb4',
   red: '#c8281f', tea1: '#a9c95a', tea2: '#c9df7c',
+  // Claude's terracotta, for the club's mascot
+  claude1: '#a8513a', claude2: '#d97757', claude3: '#eb9a7c',
 };
 const r = (...names) => names.map(n => C[n]);
 
