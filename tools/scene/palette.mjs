@@ -1,5 +1,5 @@
 // The whole scene shares these colours. Wood tones match the page tokens.
-const C = {
+export const C = {
   dark: '#2b1a12', wood1: '#6f4a2a', wood2: '#a47945', wood3: '#c99c66', wood4: '#e2c08e',
   skin1: '#8a5236', skin2: '#b4744e', skin3: '#d49a72',
   orange1: '#a4521f', orange2: '#d47a34', orange3: '#f0a85e', yellow1: '#d9a12b', yellow2: '#f3cd55',

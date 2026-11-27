@@ -32,9 +32,8 @@ body{background:var(--ground);font:400 17px/28px var(--text);color:var(--ink);-w
 .page{position:relative;z-index:1;width:min(100% - 24px,720px);margin-inline:auto;padding:12px 0}
 .page,main,.hero,.beat{pointer-events:none}
 .hero{height:calc(100vh - var(--head) + 9px);height:calc(100svh - var(--head) + 9px)}
-.beat{height:85vh;height:85svh}
-/* a stop right beside the last one is a short step, not a long glide */
-.beat[data-near]{height:55vh;height:55svh}
+/* a beat is the gap between two cards, its piece set in the next card's socket */
+.beat{height:48px}
 :where(header.top,footer.foot,main>section:not(.hero,.beat),.play-bar,.prop-tip){pointer-events:auto;padding:32px;background:var(--glass);-webkit-backdrop-filter:var(--frost);backdrop-filter:var(--frost);border:1px solid var(--rim);border-radius:16px;box-shadow:var(--lip),var(--lift)}
 /* a card after a beat carries that beat's piece in a socket cut through its top edge, so its glass moves to ::before to be masked */
 .beat{position:relative}
@@ -426,67 +425,65 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
 @media (max-width:639px){#contact .hook{font-size:22px;line-height:30px}#contact .btn{padding-inline:16px}.foot{padding-block:14px}}
 @media (max-width:359px){.links{column-gap:12px}.links a{gap:6px}}
 
-/* highlights: vermilion chops, the red seal stamped on a scroll, fixed on the side through the whole story. Full tiles where they fit beside the cards, stamps alone on a narrower side, a dock at the bottom on phones. The one for the section in view is marked. */
-.chops{position:fixed;z-index:3;pointer-events:none}
-.chops ul{display:flex;flex-direction:column;gap:10px}
-.chops li{position:relative;display:grid;grid-template-columns:58px 1fr;align-items:center;gap:14px;min-height:72px;margin-left:14px;padding:8px 16px 8px 0;background:var(--glass);-webkit-backdrop-filter:var(--frost);backdrop-filter:var(--frost);border:1px solid var(--rim);border-radius:12px;box-shadow:var(--lip),var(--lift);cursor:pointer;pointer-events:auto}
-.chop{display:block;width:58px;height:58px;margin-left:-14px;overflow:visible;color:var(--red);transform:rotate(var(--r,-4deg));filter:drop-shadow(0 2px 3px rgba(110,16,10,.3))}
-.chops li:nth-child(even) .chop{--r:3deg}
-.chops li:nth-child(3n) .chop{--r:-2deg}
-.chop text{fill:#fff;font:600 21px var(--display);font-variant-numeric:lining-nums;text-anchor:middle;letter-spacing:-.02em}
-.chop .sm{font-size:16.5px;letter-spacing:-.03em}
-.chops p{display:grid;gap:2px;max-width:none}
-.chops strong{font:600 20px/22px var(--display);font-variant-numeric:lining-nums;letter-spacing:-.005em}
-.chops strong a{text-decoration:none}
-.chops li span{font-size:13px;line-height:18px;color:var(--muted);text-wrap:pretty}
-.chops span a{color:inherit}
-.chops li:has(a:focus-visible){outline:2px solid var(--red);outline-offset:2px}
-.chops li.on{background:#fff;border-color:var(--red);box-shadow:inset 3px 0 var(--red),var(--lift)}
-.chops li.on strong a{color:var(--red)}
-.chops li.on .chop{transform:rotate(0) scale(1.06)}
+/* highlights: pixel art drawn by tools/highlights, fixed on the side through the whole story. Full tiles where they fit beside the cards, the art alone on a narrower side, a dock at the bottom on phones. The one for the section in view is marked. */
+.wins{position:fixed;z-index:3;pointer-events:none}
+.wins>ul{display:flex;flex-direction:column;gap:10px}
+.wins>ul>li{position:relative;display:grid;grid-template-columns:64px 1fr;align-items:center;gap:12px;padding:6px 16px 6px 6px;background:var(--glass);-webkit-backdrop-filter:var(--frost);backdrop-filter:var(--frost);border:1px solid var(--rim);border-radius:12px;box-shadow:var(--lip),var(--lift);cursor:pointer;pointer-events:auto}
+.wins .art{width:64px;height:64px;image-rendering:pixelated}
+.wins p{display:grid;gap:2px;max-width:none}
+.wins p strong{font:600 20px/22px var(--display);font-variant-numeric:lining-nums;letter-spacing:-.005em}
+.wins p strong a{text-decoration:none}
+.wins p span{font-size:13px;line-height:18px;color:var(--muted);text-wrap:pretty}
+.wins>ul>li:has(a:focus-visible){outline:2px solid var(--red);outline-offset:2px}
+.wins>ul>li.on{background:#fff;border-color:var(--red);box-shadow:inset 3px 0 var(--red),var(--lift)}
+.wins>ul>li.on strong a{color:var(--red)}
 @media (hover:hover){
-  .chop{transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
-  .chops li{transition:border-color .15s,background-color .15s}
-  .chops li:hover{border-color:var(--bronze)}
-  .chops li:hover .chop{transform:rotate(0) scale(1.06)}
-  .chops li:hover strong a{color:var(--red)}
+  .wins .art{transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
+  .wins>ul>li{transition:border-color .15s,background-color .15s}
+  .wins>ul>li:hover{border-color:var(--bronze)}
+  .wins>ul>li:hover .art{transform:translateY(-3px)}
+  .wins>ul>li:hover strong a{color:var(--red)}
 }
 /* full tiles: the cards narrow to 640px below 1360px so the rail clears them */
 @media (min-width:1280px){
-  .chops{top:50%;right:max(24px,50vw - 680px);width:280px;transform:translateY(-50%)}
+  .wins{top:50%;right:max(24px,50vw - 680px);width:280px;transform:translateY(-50%)}
 }
 @media (min-width:1280px) and (max-width:1359px){.page{width:640px}}
-/* stamps alone: the words show beside a stamp on hover or focus */
+/* the art alone: the words show beside it on hover or focus */
 @media (max-width:1279px){
-  .chops li{display:block;min-height:0;margin:0;padding:6px;background:none;border-color:transparent;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
-  .chop{width:46px;height:46px;margin:0}
-  .chops li.on{background:#fff;border-color:var(--red);box-shadow:var(--lift)}
-  .chops p{position:absolute;top:50%;right:calc(100% + 10px);width:max-content;max-width:240px;padding:10px 14px;background:#fff;border:1px solid var(--hair);border-radius:10px;box-shadow:var(--lift);transform:translateY(-50%);opacity:0;visibility:hidden;transition:opacity .15s,visibility 0s .15s}
-  .chops li:is(:hover,:focus-within) p{opacity:1;visibility:visible;transition:opacity .15s}
-  .chops strong{font-size:18px}
+  .wins>ul>li{display:block;padding:4px;background:none;border-color:transparent;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+  .wins .art{width:48px;height:48px}
+  .wins>ul>li.on{background:#fff;border-color:var(--red);box-shadow:var(--lift)}
+  .wins p{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 }
 @media (min-width:944px) and (max-width:1279px){
-  .chops{top:50%;right:max(8px,(50vw - 360px - 60px)/2);transform:translateY(-50%)}
-  .chops ul{gap:4px;padding:6px;background:var(--glass);-webkit-backdrop-filter:var(--frost);backdrop-filter:var(--frost);border:1px solid var(--rim);border-radius:14px;box-shadow:var(--lip),var(--lift);pointer-events:auto}
+  .wins{top:50%;right:max(8px,(50vw - 360px - 66px)/2);transform:translateY(-50%)}
+  .wins>ul{gap:4px;padding:6px;background:var(--glass);-webkit-backdrop-filter:var(--frost);backdrop-filter:var(--frost);border:1px solid var(--rim);border-radius:14px;box-shadow:var(--lip),var(--lift);pointer-events:auto}
 }
-/* the dock: stamps in a row at the bottom, the scene and the scroll prompt lifted above it */
+/* the dock: the art in a row at the bottom, the scene and the scroll prompt lifted above it */
 @media (max-width:943px){
-  .chops{left:0;right:0;bottom:max(10px,env(safe-area-inset-bottom));display:flex;justify-content:center}
-  .chops ul{flex-direction:row;gap:2px;padding:4px;background:var(--glass);-webkit-backdrop-filter:var(--frost);backdrop-filter:var(--frost);border:1px solid var(--rim);border-radius:14px;box-shadow:var(--lip),var(--lift);pointer-events:auto}
-  .chops p{top:auto;right:auto;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%)}
-  .chops li{padding:4px}
-  .chop{width:44px;height:44px}
-  .chops li:first-child p{left:0;transform:none}
-  .chops li:last-child p{left:auto;right:0;transform:none}
-  .stage{--hb:calc(100svh - 56px - 72px)}
-  .cue{bottom:76px}
-  .page{padding-bottom:84px}
+  .wins{left:0;right:0;bottom:max(10px,env(safe-area-inset-bottom));display:flex;justify-content:center}
+  .wins>ul{flex-direction:row;gap:4px;padding:4px;background:var(--glass);-webkit-backdrop-filter:var(--frost);backdrop-filter:var(--frost);border:1px solid var(--rim);border-radius:14px;box-shadow:var(--lip),var(--lift);pointer-events:auto}
+  .wins .more{display:none}
+  .stage{--hb:calc(100svh - 56px - 76px)}
+  .cue{bottom:80px}
+  .page{padding-bottom:88px}
 }
-@media (max-width:943px) and (hover:none){.chops p{display:none}}
 @media (prefers-reduced-motion:no-preference){
-  .chops li{animation:chop-in .5s calc(.35s + var(--i)*.09s) cubic-bezier(.2,.8,.3,1) backwards}
-  .chops .chop{animation:chop-stamp .42s calc(.6s + var(--i)*.09s) cubic-bezier(.3,1.5,.55,1) backwards}
+  .wins>ul>li{animation:win-in .5s calc(.35s + var(--i)*.09s) cubic-bezier(.2,.8,.3,1) backwards}
+  .wins .art{animation:win-pop .45s calc(.55s + var(--i)*.09s) cubic-bezier(.3,1.6,.55,1) backwards}
 }
-@keyframes chop-in{from{opacity:0;transform:translateY(10px)}}
-@keyframes chop-stamp{from{opacity:0;transform:rotate(-16deg) scale(1.9)}60%{opacity:1}}
-html.playing .chops{display:none}
+@keyframes win-in{from{opacity:0;transform:translateY(10px)}}
+@keyframes win-pop{from{opacity:0;transform:scale(.4)}}
+/* the brief: a card beside the tile on hover or focus, its strongest facts and a way into the full story. The strip on its right edge bridges the gap so the pointer can reach Read more. */
+.wins .more{position:absolute;top:50%;right:calc(100% + 12px);width:320px;padding:18px 20px 16px;background:#fff;border:1px solid var(--hair);border-radius:14px;box-shadow:var(--lift);cursor:auto;transform:translate(8px,-50%);opacity:0;visibility:hidden;transition:opacity .15s,transform .2s,visibility 0s .2s}
+.wins .more::after{content:"";position:absolute;top:0;bottom:0;left:100%;width:14px}
+.wins>ul>li:is(:hover,:focus-within) .more{transform:translate(0,-50%);opacity:1;visibility:visible;transition:opacity .15s,transform .2s}
+.wins .more strong{display:block;font:600 22px/26px var(--display);text-wrap:balance}
+.wins .more ul{display:grid;gap:6px;margin-top:10px}
+.wins .more li{position:relative;padding-left:16px;font-size:14px;line-height:20px;color:var(--muted);text-wrap:pretty}
+.wins .more li::before{content:"";position:absolute;left:2px;top:7px;width:6px;height:6px;background:var(--red)}
+.wins .more a{display:inline-flex;align-items:center;gap:6px;min-height:32px;margin-top:10px;font-weight:600;font-size:15px;color:var(--red);text-decoration-color:var(--red)}
+.wins .more a::after{content:"→"}
+@media (hover:none){.wins .more{display:none}}
+html.playing .wins{display:none}

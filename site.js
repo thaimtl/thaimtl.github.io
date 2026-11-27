@@ -393,7 +393,7 @@
     document.querySelector('.intro .note')?.insertAdjacentHTML('beforeend', '<span class="hover"> Hover a piece to see where it can go.</span>');
     // the props on the table each show a card: the clementines one for the plates, the tea one for the cups and the pot. The copy sits in the hero's [data-tip] blocks.
     const props = [...stage.querySelectorAll('.prop')], kind = p => (/fruit/.test(p.querySelector('img').getAttribute('src')) ? 'fruit' : 'tea');
-    const blocks = document.querySelectorAll('header.top,.chops li,main>section:not(.hero,.beat),footer.foot,.cue'), card = document.createElement('div'), halo = document.createElement('div'), elder = stage.querySelector('.spr--elder'), slab = stage.querySelector('.slab');
+    const blocks = document.querySelectorAll('header.top,.wins>ul>li,main>section:not(.hero,.beat),footer.foot,.cue'), card = document.createElement('div'), halo = document.createElement('div'), elder = stage.querySelector('.spr--elder'), slab = stage.querySelector('.slab');
     card.className = 'prop-tip';
     halo.className = 'prop-ring';
     card.setAttribute('aria-hidden', 'true');
@@ -466,10 +466,8 @@
     const frame = () => {
       raf = 0;
       if (game) return;
-      let k = -1;
-      // the opening shot holds until the reader has scrolled, however tall the window is
-      if (scrollY > innerHeight * .3) beats.forEach(([b], j) => { if (b.getBoundingClientRect().top < innerHeight / 2) k = j; });
-      if (k !== cur) { tip(null); moved(); go(k); }
+      // the camera holds the opening shot while the story scrolls over it
+      if (cur !== -1) { tip(null); moved(); go(-1); }
     };
     const measure = () => {
       const head = document.querySelector('header.top');
@@ -485,29 +483,29 @@
   }
 }
 
-// the highlights: a click on a stamp opens its section and marks it, and scrolling marks the one for the section in view
+// the highlights: a click on a tile or its Read more opens its section and marks it, and scrolling marks the one for the section in view
 {
-  const tiles = [...document.querySelectorAll('.chops li')];
+  const tiles = [...document.querySelectorAll('.wins>ul>li')];
   const sections = [...document.querySelectorAll('main>section[id]')];
   let on = null;
   const mark = t => {
     if (t === on) return;
     on?.classList.remove('on');
-    on?.querySelector('strong a').removeAttribute('aria-current');
+    on?.querySelector('p a').removeAttribute('aria-current');
     on = t;
     t?.classList.add('on');
-    t?.querySelector('strong a').setAttribute('aria-current', 'location');
+    t?.querySelector('p a').setAttribute('aria-current', 'location');
   };
   const spy = () => {
-    // the last chapter whose card has reached the middle of the screen, held through the glide to the next piece
+    // the last chapter whose card has reached the middle of the screen, held through the gap to the next one
     const now = sections.findLast(s => s.getBoundingClientRect().top < innerHeight / 2)?.id;
     if (on?.dataset.to !== now) mark(tiles.find(t => t.dataset.to === now));
   };
   for (const t of tiles) t.addEventListener('click', e => {
-    const a = t.querySelector('strong a');
-    if (!e.target.closest('a')) a.click();
-    if (e.target.closest('a') !== a && e.target.closest('a')) return;
-    mark(t);
+    const a = t.querySelector('p a'), hit = e.target.closest('a');
+    if (!hit && e.target.closest('.more')) return;
+    if (!hit) a.click();
+    else if (hit.getAttribute('href') === a.getAttribute('href')) mark(t);
   });
   let raf = 0;
   const later = () => { raf ||= requestAnimationFrame(() => { raf = 0; spy(); }); };
