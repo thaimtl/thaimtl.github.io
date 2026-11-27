@@ -47,10 +47,12 @@ const nearBank = x => RIVER[1] - 180 * Math.sin(x * 0.0011 + 1) - 90 * Math.sin(
 const farBank = x => RIVER[0] + 150 * Math.sin(x * 0.0009 + 3);
 const ground = (x, z) => -60 * ss(nearBank(x) + 80, nearBank(x) - 60, z) * ss(farBank(x) - 120, farBank(x) + 60, z) + 4 * noise(x * 0.004, z * 0.004);
 
+// bare leaves the foliage out, for the ground and sky behind it once the leaves sway in the wind
+let bare = false;
 function field(x, y, z) {
   let out = U([(y - ground(x, z)) * 0.7, z < farBank(x) ? 'farGrass' : y < -6 ? 'bank' : 'grass'], [y - WATER, 'water']);
-  for (const t of trees) out = U(out, [limb(x, y, z, t.trunk[0], t.trunk[1], 30, 18), 'trunk'], [t.leaves(x, y, z, 40), 'leaf']);
-  for (const b of bushes) out = U(out, [b(x, y, z, 24), 'leaf']);
+  for (const t of trees) out = U(out, [limb(x, y, z, t.trunk[0], t.trunk[1], 30, 18), 'trunk'], [bare ? 1e9 : t.leaves(x, y, z, 40), 'leaf']);
+  if (!bare) for (const b of bushes) out = U(out, [b(x, y, z, 24), 'leaf']);
   let d = 1e9;
   for (const f of far) d = Math.min(d, f(x, y, z, 30));
   return U(out, [d, 'farTree']);
@@ -79,7 +81,7 @@ const STONE = ['.lll.', 'lmmmd', '.dddd'];
 const REED = ['..b.', '.ab.', 'a.ab', 'aab.'];
 const shade = (c) => ({ mat: 'grass', c });
 
-function draw() {
+function shot() {
   const px = trace({ field, w: W, h: H, ray, far: 9000, eps: 0.6, ao: 30, shadowFar: 700, steps: 500 });
   const img = paint(px, W, H, RAMPS, { tone, dither: { grass: 0.06 } });
   img.forEach((p, k) => {
@@ -87,7 +89,24 @@ function draw() {
     const j = Math.floor(k / W);
     img[k] = { mat: 'sky', c: j < 10 ? 1 : 2, t: Infinity };
   });
-  finish(img, W, H, { depthBreak: 0.12, relative: true, outlineMats: ['leaf', 'trunk'] });
+  return finish(img, W, H, { depthBreak: 0.12, relative: true, outlineMats: ['leaf', 'trunk'] });
+}
+
+// Glints on the water, drawn on a strip that tiles sideways so the page can drift it with the current. Far ones are short, near ones longer.
+function glints(seed, top, bottom, min, max, count) {
+  const T = 480, g = rng(seed), img = new Array(T * H).fill(null);
+  for (let n = 0; n < count; n++) {
+    const y = Math.floor(H * (top + g() * (bottom - top))), x = Math.floor(g() * T), l = min + Math.floor(g() * (max - min + 1));
+    for (let i = 0; i < l; i++) img[y * T + (x + i) % T] = { mat: 'water', c: 4 };
+  }
+  return { w: T, h: H, rgba: toRGBA(img, RAMPS) };
+}
+
+function draw() {
+  const img = shot();
+  bare = true;
+  const behind = shot();
+  bare = false;
   const r = rng(11), at = (x, y) => img[y * W + x], lawn = (x, y) => at(x, y)?.mat === 'grass';
   // A darker line of water along the near bank.
   for (let y = 1; y < H; y++) for (let x = 0; x < W; x++) if (lawn(x, y) && at(x, y - 1)?.mat === 'water') at(x, y - 1).c = 1;
@@ -110,12 +129,16 @@ function draw() {
     }
   }
   for (const [x, y] of [[90, 330], [97, 334], [392, 290], [24, 262], [-90, 300], [600, 330]].map(([x, y]) => [x + X0, y])) if (lawn(x, y)) stamp(img, x, y, STONE, { l: { mat: 'stone', c: 3 }, m: { mat: 'stone', c: 2 }, d: { mat: 'stone', c: 1 } });
-  const glint = rng(5);
-  for (let n = 0; n < 60; n++) {
-    const x = Math.floor(glint() * W), y = Math.floor(H * 0.1 + glint() * H * 0.3), l = 2 + Math.floor(glint() * 6);
-    if (img[y * W + x]?.mat === 'water' && img[y * W + x + l]?.mat === 'water') stamp(img, x, y, ['w'.repeat(l)], { w: { mat: 'water', c: 4 } });
-  }
-  return { w: W, h: H, rgba: toRGBA(img, RAMPS) };
+  // the base keeps no foliage: what lies behind it fills in, and the leaves get their own layer
+  const leaves = img.map(p => p?.mat === 'leaf' ? p : null);
+  const base = img.map((p, k) => p?.mat === 'leaf' ? behind[k] : p);
+  const water = img.map(p => p?.mat === 'water' ? { mat: 'sky', c: 4 } : null);
+  return { w: W, h: H, rgba: toRGBA(base, RAMPS), layers: [
+    { name: 'leaves', w: W, h: H, rgba: toRGBA(leaves, RAMPS) },
+    { name: 'water', w: W, h: H, rgba: toRGBA(water, RAMPS) },
+    { name: 'glint-far', ...glints(5, 0.178, 0.235, 2, 4, 44) },
+    { name: 'glint-near', ...glints(6, 0.235, 0.29, 3, 7, 36) },
+  ] };
 }
 
 export const bg = { name: 'bg', draw };
