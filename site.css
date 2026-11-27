@@ -76,10 +76,6 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
 .fig-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .fig figcaption{margin-top:10px}
 
-.facts{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:16px}
-.facts li{display:grid;grid-template-rows:auto 1fr;row-gap:10px}
-.facts span{text-wrap:pretty;padding-top:10px;background:linear-gradient(var(--bronze) 0 0) 0 0/var(--u) 1px no-repeat;font-size:15px;line-height:24px;color:var(--muted)}
-.num{font:600 44px/44px var(--display);font-variant-numeric:lining-nums tabular-nums;letter-spacing:-.01em;white-space:nowrap}
 
 .links{display:flex;flex-wrap:wrap;column-gap:var(--u);font-size:15px;line-height:24px;font-weight:500}
 .links a{position:relative;display:inline-flex;align-items:center;gap:8px;min-height:44px}
@@ -108,13 +104,7 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
 @media (max-width:639px){
   h2{font-size:40px;line-height:42px}
   h3{font-size:26px;line-height:30px}
-  .num{font-size:34px;line-height:36px}
-  .facts span{font-size:14px;line-height:20px}
   :where(header.top,footer.foot,main>section:not(.hero,.beat)){padding:20px}
-}
-@media (max-width:399px){
-  .facts{grid-auto-flow:row;grid-template-columns:88px minmax(0,1fr)}
-  .facts li{grid-column:1/-1;grid-template-columns:subgrid;grid-template-rows:none;align-items:center}
 }
 @media (prefers-reduced-motion:no-preference){
   html.js .beat:not(.in,:has(+:target)) .seal{opacity:0;transform:translateY(-24px) scale(1.1)}
@@ -125,30 +115,24 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
 @keyframes ring{from{transform:scale(.04);opacity:0}15%{opacity:1}to{transform:scale(1);opacity:0}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 
-/* ===== side rail: the piece and the heading get their own strip of denser glass, ruled off in board ink. Under 768px it is a slim top bar, and the intro stays plain. ===== */
-:root{--rail-glass:rgba(255,255,255,.4);--rail-ink:rgba(111,74,42,.38);--rail-cut:rgba(255,255,255,.7)}
-.intro{--pt:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-20 -20 40 40' fill='none' stroke='%236f4a2a' stroke-opacity='.55' stroke-width='1.25'%3E%3Cpath d='M-20 0h14M6 0h14M0-20v14M0 6v14' stroke-opacity='.22'/%3E%3Cpath d='M-4.5-13v8.5H-13M4.5-13v8.5H13M-4.5 13V4.5H-13M4.5 13V4.5H13'/%3E%3C/svg%3E")}
-@media (max-width:767px){
-  :root{--bar:calc(2*var(--sc) + 10px);--sx:calc(var(--sr) + 21px)}
-  .beat+section{padding-top:calc(var(--bar) + 1px + var(--u))}
-  .beat+section::before{background:radial-gradient(circle at var(--c1),#2454422e calc(var(--h) + 1px),#fffe calc(var(--h) + 2px),#fff0 calc(var(--h) + 3px)),radial-gradient(circle at var(--c2),#2454422e calc(var(--h) + .5px),#fffe calc(var(--h) + 1.5px),#fff0 calc(var(--h) + 2.5px)),linear-gradient(var(--rail-glass) calc(var(--bar) + 1px),var(--rail-ink) 0 calc(var(--bar) + 2px),var(--rail-cut) 0 calc(var(--bar) + 3px),#fff0 0),var(--glass);background-origin:border-box}
-  .beat+section>h2{position:absolute;left:calc(var(--sx) + var(--sr) + 14px);right:20px;top:-1px;display:flex;align-items:center;height:calc(2*var(--sc));margin:0;font-size:clamp(20px,(100vw - 123px)/6.8,30px);line-height:32px;white-space:nowrap}
+/* ===== the cards: each chapter's piece sits in a socket at the middle of the top edge, then one big label, led by the highlight's pixel art where the chapter has one, then one table of the facts ===== */
+:root{--sx:50%}
+.lead{display:flex;align-items:center;gap:20px}
+.lead .art{flex:none;width:64px;height:64px;image-rendering:pixelated}
+.lead h2{font-size:44px;line-height:48px}
+.ledger{width:100%;border-collapse:collapse;border-top:2px solid var(--ink);font-size:16px;line-height:24px}
+.ledger tr+tr{border-top:1px solid var(--hair)}
+.ledger th{width:104px;padding:14px 16px 14px 0;font-weight:600;font-size:14px;color:var(--muted);text-align:left;vertical-align:baseline}
+.ledger td{padding:14px 0;vertical-align:baseline;text-wrap:pretty}
+.ledger b{font:600 26px/24px var(--display);font-variant-numeric:lining-nums;letter-spacing:-.01em}
+.ledger .links{margin-block:-10px}
+@media (max-width:639px){
+  .lead{gap:14px}
+  .lead .art{width:48px;height:48px}
+  .lead h2{font-size:30px;line-height:34px}
+  .ledger th{width:76px;padding-right:12px}
+  .ledger b{font-size:22px}
 }
-@media (min-width:768px){
-  :root{--rail:104px;--sx:calc(var(--rail)/2 + 1px)}
-  .page{width:min(100% - 24px,720px + var(--rail))}
-  .beat+section{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);column-gap:32px;padding-top:32px;padding-left:0}
-  .beat+section::before{background:radial-gradient(circle at var(--c1),#2454422e calc(var(--h) + 1px),#fffe calc(var(--h) + 2px),#fff0 calc(var(--h) + 3px)),radial-gradient(circle at var(--c2),#2454422e calc(var(--h) + .5px),#fffe calc(var(--h) + 1.5px),#fff0 calc(var(--h) + 2.5px)),linear-gradient(90deg,var(--rail-glass) calc(var(--rail) + 1px),var(--rail-ink) 0 calc(var(--rail) + 2px),var(--rail-cut) 0 calc(var(--rail) + 3px),#fff0 0),var(--glass);background-origin:border-box}
-  .beat+section>*{grid-column:2}
-  .beat+section>h2{grid-column:1;grid-row:1/span 99;justify-self:center;align-self:start;margin-top:calc(var(--sc) + var(--sr) + 28px - 32px);writing-mode:vertical-rl;white-space:nowrap}
-  section#contact>.hook{margin-bottom:0}
-  .intro,main+footer.foot{padding-left:calc(var(--rail) + 32px)}
-  .intro{background:var(--pt) calc(var(--sx) - 20px) calc(var(--sc) + 8px) / 40px 40px no-repeat,linear-gradient(90deg,var(--rail-glass) calc(var(--rail) + 1px),var(--rail-ink) 0 calc(var(--rail) + 2px),var(--rail-cut) 0 calc(var(--rail) + 3px),#fff0 0),var(--glass);background-origin:border-box}
-  main+footer.foot{background:linear-gradient(90deg,var(--rail-glass) calc(var(--rail) + 1px),var(--rail-ink) 0 calc(var(--rail) + 2px),var(--rail-cut) 0 calc(var(--rail) + 3px),#fff0 0),var(--glass);background-origin:border-box}
-}
-section[aria-labelledby]:is(#origin,#work,#pyd,#planned,#writing,#club,#contact)>h2+*{margin-top:0}
-@media (min-width:640px) and (max-width:767px){:root{--sx:calc(var(--sr) + 33px)}.beat+section>h2{right:32px;font-size:36px;line-height:40px}}
-@media (min-width:768px) and (min-height:480px){.beat+section>h2{position:sticky;top:24px}}
 
 @property --b{syntax:'<length>';inherits:true;initial-value:0px}
 @property --tx{syntax:'<length>';inherits:true;initial-value:0px}
@@ -255,7 +239,7 @@ section[aria-labelledby]:is(#origin,#work,#pyd,#planned,#writing,#club,#contact)
 .stage{-webkit-tap-highlight-color:transparent}
 .hero{position:relative}
 /* the teal of his shirt, so red stays for the ring and the links */
-.play-start{--c:#3b5f66;position:absolute;left:0;top:12px;pointer-events:auto;background-color:var(--c);box-shadow:inset 0 1px rgba(255,255,255,.35),inset 0 -1px rgba(16,36,40,.3),0 8px 16px -8px rgba(24,48,54,.55)}
+.play-start{--c:#3b5f66;position:absolute;left:0;bottom:16px;pointer-events:auto;background-color:var(--c);box-shadow:inset 0 1px rgba(255,255,255,.35),inset 0 -1px rgba(16,36,40,.3),0 8px 16px -8px rgba(24,48,54,.55)}
 @media (hover:hover){.play-start:hover{background-color:color-mix(in oklab,var(--c),#000 16%)}}
 .play-start[hidden],html.playing .play-start{display:none}
 .stage .p.gone{visibility:hidden}
@@ -330,22 +314,11 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
   .intro .claim{font-size:24px;line-height:32px}
 }
 
-@media (min-width:400px){#work .facts{column-gap:var(--u)}}
 #work .sv-body{display:grid;gap:var(--u);container-type:inline-size;grid-template-columns:repeat(3,minmax(0,1fr))}
 #work .sv-body>*{grid-column:1/-1}
 #work .sv-body .fig-frame{aspect-ratio:2/1}
 #work .sv-body img{object-position:35% 45%}
 :is(#work .sv-text,#pyd,#planned) p:not(.meta,.links)+p{margin-top:16px}
-:is(#work,#pyd) .links{margin-top:8px}
-/* the press block is one link: where it ran, then its headline */
-#work .press-list{display:grid;gap:8px}
-#work .press{display:grid;gap:6px;padding:16px 20px;border:1px solid var(--hair);border-radius:10px;background:rgba(255,255,255,.5);text-decoration:none}
-#work .press .meta{display:flex;gap:8px}
-#work .press .ico{margin-top:4px}
-#work .press strong{font:600 26px/30px var(--display);font-variant-numeric:lining-nums;text-wrap:balance}
-#work .press:focus-visible strong{color:var(--red)}
-@media (hover:hover){#work .press strong{transition:color .15s}#work .press:hover{border-color:var(--bronze)}#work .press:hover strong{color:var(--red)}}
-@media (max-width:639px){#work .press{padding:14px 16px}#work .press strong{font-size:22px;line-height:26px}}
 :is(#work,#pyd) figcaption{text-wrap:balance}
 #pyd .figs{grid-template-columns:minmax(0,1fr);gap:var(--u) 16px}
 @container (min-width:480px) and (max-width:619.98px){
@@ -359,7 +332,6 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
 }
 @media (min-width:640px){
   #pyd .figs{grid-template-columns:1176fr 728fr}
-  :is(#work,#pyd) .facts span{text-wrap:balance}
 }
 
 /* every post shows at once: one row each, picture beside the words from 480px up. The link is the whole row. */
@@ -406,11 +378,9 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
   #writing .feed li:hover h3{color:var(--red)}
 }
 
-#club h2+.fig{margin-top:var(--u)}
 #club .fig-frame{--ar:7/3}
 #club figcaption{text-wrap:balance}
 #club p:not(.links){max-width:60ch}
-#club .links{margin:12px 0 -10px}
 @media (max-width:639px){#club .fig-frame{--ar:3/2}}
 
 #contact .hook{max-width:24em;margin:12px 0 var(--u);font:500 26px/34px var(--display);text-wrap:balance}
@@ -435,7 +405,7 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
 .wins p strong a{text-decoration:none}
 .wins p span{font-size:13px;line-height:18px;color:var(--muted);text-wrap:pretty}
 .wins>ul>li:has(a:focus-visible){outline:2px solid var(--red);outline-offset:2px}
-.wins>ul>li.on{background:#fff;border-color:var(--red);box-shadow:inset 3px 0 var(--red),var(--lift)}
+.wins>ul>li.on{background:#fff;border-color:var(--red);box-shadow:0 0 0 1px var(--red),var(--lift)}
 .wins>ul>li.on strong a{color:var(--red)}
 @media (hover:hover){
   .wins .art{transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
@@ -446,7 +416,7 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
 }
 /* full tiles: the cards narrow to 640px below 1360px so the rail clears them */
 @media (min-width:1280px){
-  .wins{top:50%;right:max(24px,50vw - 680px);width:280px;transform:translateY(-50%)}
+  .wins{top:50%;right:max(16px,50vw - 680px);width:280px;transform:translateY(-50%)}
 }
 @media (min-width:1280px) and (max-width:1359px){.page{width:640px}}
 /* the art alone: the words show beside it on hover or focus */
@@ -467,6 +437,7 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
   .wins .more{display:none}
   .stage{--hb:calc(100svh - 56px - 76px)}
   .cue{bottom:80px}
+  .play-start{bottom:84px}
   .page{padding-bottom:88px}
 }
 @media (prefers-reduced-motion:no-preference){
@@ -487,3 +458,15 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
 .wins .more a::after{content:"→"}
 @media (hover:none){.wins .more{display:none}}
 html.playing .wins{display:none}
+/* the clubs table reads across: each club, what I do there, and its size */
+.ledger--clubs thead th{padding-block:10px;font-size:13px}
+.ledger--clubs td:nth-child(2){width:100%}
+.ledger--clubs tbody th{width:auto;padding-right:20px;color:var(--ink);font-size:16px;white-space:nowrap}
+.ledger--clubs tbody th a{display:inline-flex;align-items:center;gap:8px}
+.ledger--clubs thead th:last-child,.ledger--clubs td:last-child{padding-left:16px;text-align:right;white-space:nowrap}
+@media (max-width:639px){
+  .ledger--clubs thead{display:none}
+  .ledger--clubs tr{display:grid;grid-template-columns:1fr auto;column-gap:12px;padding-block:12px}
+  .ledger--clubs :is(th,td){padding:0;width:auto}
+  .ledger--clubs td:nth-child(2){grid-column:1/-1;grid-row:2;margin-top:4px;color:var(--muted)}
+}
