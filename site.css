@@ -310,20 +310,11 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
 @media (prefers-reduced-motion:no-preference){.cue::after{animation:cue 2.4s ease-in-out infinite}}
 @keyframes cue{50%{translate:0 3px}}
 
-.intro .claim{font:500 34px/42px var(--display);letter-spacing:-.01em;text-wrap:balance}
-.intro .claim+.lede{margin-top:24px}
-.intro .lede+.lede{margin-top:12px}
 
-@media (max-width:639px){
-  .intro .claim{font-size:26px;line-height:34px}
-}
 @media (max-width:519px){
   header.top{padding-block:8px}
   header.top nav{flex:1 0 100%;justify-content:space-between;margin-inline:-4px}
   header.top nav a{padding-inline:4px}
-}
-@media (max-width:359px){
-  .intro .claim{font-size:24px;line-height:32px}
 }
 
 #work .sv-body{display:grid;gap:var(--u);container-type:inline-size;grid-template-columns:repeat(3,minmax(0,1fr))}
