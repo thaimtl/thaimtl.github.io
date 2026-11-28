@@ -166,19 +166,17 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
 }
 .stage img{position:absolute;max-width:none;image-rendering:pixelated}
 .stage .bg{width:calc(960*var(--a));left:clamp(calc(100vw - 960*var(--a)),calc(var(--cx) - 480*var(--a)),0px);top:min(0px,round(calc(var(--edge) - 196*var(--a)),1px))}
-/* the garden moves: glints drift downstream on the river, the near ones faster, and the leaves lean and settle in gusts of wind from the left, the tops more than the ground */
+/* the garden moves: glints drift downstream on the river, the near ones faster. The wind in the leaves and grass is drawn on the canvas by site.js. */
 .stage .water{position:absolute;aspect-ratio:960/360;overflow:hidden;-webkit-mask:url(img/scene-bg-water.png) 0 0/100% 100%;mask:url(img/scene-bg-water.png) 0 0/100% 100%}
 .stage .water i{position:absolute;left:calc(-480*var(--a));top:0;bottom:0;width:calc(100% + 480*var(--a));background:url(img/scene-bg-glint-far.png) 0 0/calc(480*var(--a)) 100% repeat-x;image-rendering:pixelated}
 .stage .water .near{background-image:url(img/scene-bg-glint-near.png)}
-.stage .leaves{transform-origin:50% 70%}
+.stage .wind{position:absolute;aspect-ratio:960/360;image-rendering:pixelated}
 @media (prefers-reduced-motion:no-preference){
-  .stage .water .far{animation:flow 96s steps(480) infinite,shimmer 4.3s ease-in-out infinite alternate}
-  .stage .water .near{animation:flow 54s steps(480) infinite,shimmer 3.1s ease-in-out -1.4s infinite alternate}
-  .stage .leaves{animation:wind 9s ease-in-out infinite}
+  .stage .water .far{animation:flow 96s linear infinite,shimmer 4.3s ease-in-out infinite alternate}
+  .stage .water .near{animation:flow 54s linear infinite,shimmer 3.1s ease-in-out -1.4s infinite alternate}
 }
 @keyframes flow{to{transform:translateX(calc(480*var(--a)))}}
 @keyframes shimmer{from{opacity:.55}to{opacity:1}}
-@keyframes wind{0%,100%{transform:skewX(-.15deg)}14%{transform:skewX(-.7deg)}24%{transform:skewX(-.35deg)}38%{transform:skewX(-.85deg)}52%{transform:skewX(-.2deg)}70%{transform:skewX(-.6deg)}84%{transform:skewX(-.3deg)}}
 .stage .spr--elder{width:calc(138*var(--a));left:calc(var(--cx) - 69*var(--a));top:round(calc(var(--edge) - 114*var(--a)),1px)}
 
 /* Each flat part of the table is its own element under the same camera, so no browser has to sort 3D layers. Units are board cells, the board's far left point is 0 0. */

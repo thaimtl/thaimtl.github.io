@@ -521,3 +521,52 @@
   addEventListener('resize', later);
   spy();
 }
+
+// The wind: the leaves bend from a line near the ground, their tops furthest, with a flutter on top, and the grass ripples as each gust rolls across the lawn. Each row of leaves and each strip of grass is drawn whole and moved in device pixels, so the art stays crisp while the motion stays smooth.
+{
+  const cv = document.querySelector('.stage .wind'), stage = cv?.closest('.stage');
+  if (cv) {
+    const W = 960, H = 360, PIVOT = 270, ctx = cv.getContext('2d');
+    const still = matchMedia('(prefers-reduced-motion: reduce)');
+    const load = src => new Promise((ok, no) => { const i = new Image(); i.onload = () => ok(i); i.onerror = no; i.src = src; });
+    // a slow swell with quicker swirls on top, always leaning downwind
+    const gust = t => .55 + .25 * Math.sin(t * .6) + .12 * Math.sin(t * 1.7 + 1) + .08 * Math.sin(t * 3.1 + 2);
+    Promise.all(['img/scene-bg-grass.png', 'img/scene-bg-leaves.png'].map(load)).then(([grass, leaves]) => {
+      let s = 1, raf = 0;
+      const fit = () => {
+        const r = cv.getBoundingClientRect(), d = devicePixelRatio || 1;
+        cv.width = Math.max(1, Math.round(r.width * d));
+        cv.height = Math.max(1, Math.round(r.height * d));
+        s = cv.width / W;
+      };
+      const px = v => Math.round(v * s);
+      const paint = t => {
+        const calm = still.matches;
+        ctx.imageSmoothingEnabled = false;
+        ctx.clearRect(0, 0, cv.width, cv.height);
+        for (let x = 0; x < W; x += 8) {
+          const dx = calm ? 0 : .7 * gust(t - x * .004) * (.5 + .5 * Math.sin(t * 2.4 - x * .03));
+          ctx.drawImage(grass, x, 0, 8, H, px(x + dx), 0, px(x + 8 + dx) - px(x + dx), cv.height);
+        }
+        const g = gust(t);
+        for (let y = 0; y < H; y++) {
+          const bend = Math.max(0, (PIVOT - y) / PIVOT) ** 1.6;
+          if (calm || !bend) { ctx.drawImage(leaves, 0, y, W, H - y, 0, px(y), cv.width, cv.height - px(y)); break; }
+          const dx = bend * (2.4 * g + .25 * Math.sin(t * 5.3 + y * .21)) - bend * 1.3;
+          ctx.drawImage(leaves, 0, y, W, 1, px(dx), px(y), cv.width, px(y + 1) - px(y));
+        }
+      };
+      const tick = now => {
+        raf = 0;
+        if (!stage.matches('.play')) paint(now / 1000);
+        if (!still.matches) raf = requestAnimationFrame(tick);
+      };
+      fit();
+      paint(performance.now() / 1000);
+      for (const img of stage.querySelectorAll('.bg.still')) img.hidden = true;
+      new ResizeObserver(() => { fit(); paint(performance.now() / 1000); }).observe(cv);
+      still.addEventListener('change', () => { if (!raf) raf = requestAnimationFrame(tick); });
+      raf = requestAnimationFrame(tick);
+    }, () => {});
+  }
+}

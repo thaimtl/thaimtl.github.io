@@ -110,6 +110,8 @@ function draw() {
   const r = rng(11), at = (x, y) => img[y * W + x], lawn = (x, y) => at(x, y)?.mat === 'grass';
   // A darker line of water along the near bank.
   for (let y = 1; y < H; y++) for (let x = 0; x < W; x++) if (lawn(x, y) && at(x, y - 1)?.mat === 'water') at(x, y - 1).c = 1;
+  // the lawn before its tufts, reeds and flowers, so they can move in the wind on a layer of their own
+  const plain = img.slice();
   // Tufts gather in loose clusters and thin out toward the open lawn in the middle.
   for (let n = 0; n < 2600 * W / 480; n++) {
     const x = Math.floor(r() * W), y = Math.floor(r() * H), side = Math.abs(x / W - 0.5);
@@ -129,12 +131,16 @@ function draw() {
     }
   }
   for (const [x, y] of [[90, 330], [97, 334], [392, 290], [24, 262], [-90, 300], [600, 330]].map(([x, y]) => [x + X0, y])) if (lawn(x, y)) stamp(img, x, y, STONE, { l: { mat: 'stone', c: 3 }, m: { mat: 'stone', c: 2 }, d: { mat: 'stone', c: 1 } });
-  // the base keeps no foliage: what lies behind it fills in, and the leaves get their own layer
-  const leaves = img.map(p => p?.mat === 'leaf' ? p : null);
-  const base = img.map((p, k) => p?.mat === 'leaf' ? behind[k] : p);
+  // the base keeps no foliage and no grass: the lawn and what lies behind the leaves fill in, and both get layers of their own. Stones stay put.
+  const sways = (p, k) => p && p !== plain[k] && p.mat !== 'stone';
+  const grass = img.map((p, k) => sways(p, k) ? p : null);
+  const still = img.map((p, k) => sways(p, k) ? plain[k] : p);
+  const leaves = still.map(p => p?.mat === 'leaf' ? p : null);
+  const base = still.map((p, k) => p?.mat === 'leaf' ? behind[k] : p);
   const water = img.map(p => p?.mat === 'water' ? { mat: 'sky', c: 4 } : null);
   return { w: W, h: H, rgba: toRGBA(base, RAMPS), layers: [
     { name: 'leaves', w: W, h: H, rgba: toRGBA(leaves, RAMPS) },
+    { name: 'grass', w: W, h: H, rgba: toRGBA(grass, RAMPS) },
     { name: 'water', w: W, h: H, rgba: toRGBA(water, RAMPS) },
     { name: 'glint-far', ...glints(5, 0.178, 0.235, 2, 4, 44) },
     { name: 'glint-near', ...glints(6, 0.235, 0.29, 3, 7, 36) },
