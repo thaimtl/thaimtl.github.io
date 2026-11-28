@@ -3,20 +3,20 @@
   --ground:#bfd4b2;
   --wood:#c99c66;--wood-edge:#a47945;--wood-dark:#6f4a2a;
   --ink:#17191c;--muted:#474b53;
-  --bronze:#7c5a24;--red:#c8281f;
+  --bronze:#7c5a24;--red:#c8281f;--red-ink:#a8201a;
   --stone:#ffffff;--stone-side:#d6d1c9;--graphite:#1b1c1f;
   --glass:rgba(255,255,255,.72);--frost:blur(32px) saturate(.3);--hair:rgba(23,25,28,.14);
   --rim:rgba(255,255,255,.45);--lip:inset 0 1px #fff,inset 0 -1px rgba(36,84,66,.2),inset 0 16px 16px -16px #fff;
   --lift:0 1px rgba(36,84,66,.12),0 20px 32px -16px rgba(18,40,30,.34),0 48px 72px -36px rgba(18,40,30,.3);
   --display:'Cormorant Garamond',Georgia,serif;--text:'Hanken Grotesk',system-ui,sans-serif;
   --u:28px;
-  /* seal: stone radius, gap to socket, centre x (stone's left edge 24px inside the text edge), centre y, ring radius */
-  --sr:28px;--sg:4px;--sx:85px;--sc:calc(var(--sr) - 4px);--rr:640px;
+  /* seal: stone radius, gap to socket, centre y, ring radius. The socket's centre x, --sx, is set with the cards below. */
+  --sr:28px;--sg:4px;--sc:calc(var(--sr) - 4px);--rr:640px;
   /* the header card's bottom plus 8px, measured again by stage.js */
   --head:100px;
 }
 @media (max-width:519px){:root{--head:126px}}
-@media (max-width:639px){:root{--u:20px;--sr:22px;--sx:67px;--rr:400px}}
+@media (max-width:639px){:root{--u:20px;--sr:22px;--rr:400px}}
 @media (prefers-reduced-transparency:reduce){:root{--glass:#f4f7f9;--frost:none}}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){:root{--glass:#f4f7f9}}
 
@@ -32,9 +32,8 @@ body{background:var(--ground);font:400 17px/28px var(--text);color:var(--ink);-w
 .page{position:relative;z-index:1;width:min(100% - 24px,720px);margin-inline:auto;padding:12px 0}
 .page,main,.hero,.beat{pointer-events:none}
 .hero{height:calc(100vh - var(--head) + 9px);height:calc(100svh - var(--head) + 9px)}
-.beat{height:85vh;height:85svh}
-/* a stop right beside the last one is a short step, not a long glide */
-.beat[data-near]{height:55vh;height:55svh}
+/* a beat is the gap between two cards, its piece set in the next card's socket */
+.beat{height:48px}
 :where(header.top,footer.foot,main>section:not(.hero,.beat),.play-bar,.prop-tip){pointer-events:auto;padding:32px;background:var(--glass);-webkit-backdrop-filter:var(--frost);backdrop-filter:var(--frost);border:1px solid var(--rim);border-radius:16px;box-shadow:var(--lip),var(--lift)}
 /* a card after a beat carries that beat's piece in a socket cut through its top edge, so its glass moves to ::before to be masked */
 .beat{position:relative}
@@ -77,10 +76,6 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
 .fig-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .fig figcaption{margin-top:10px}
 
-.facts{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:16px}
-.facts li{display:grid;grid-template-rows:auto 1fr;row-gap:10px}
-.facts span{text-wrap:pretty;padding-top:10px;background:linear-gradient(var(--bronze) 0 0) 0 0/var(--u) 1px no-repeat;font-size:15px;line-height:24px;color:var(--muted)}
-.num{font:600 44px/44px var(--display);font-variant-numeric:lining-nums tabular-nums;letter-spacing:-.01em;white-space:nowrap}
 
 .links{display:flex;flex-wrap:wrap;column-gap:var(--u);font-size:15px;line-height:24px;font-weight:500}
 .links a{position:relative;display:inline-flex;align-items:center;gap:8px;min-height:44px}
@@ -109,13 +104,7 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
 @media (max-width:639px){
   h2{font-size:40px;line-height:42px}
   h3{font-size:26px;line-height:30px}
-  .num{font-size:34px;line-height:36px}
-  .facts span{font-size:14px;line-height:20px}
   :where(header.top,footer.foot,main>section:not(.hero,.beat)){padding:20px}
-}
-@media (max-width:399px){
-  .facts{grid-auto-flow:row;grid-template-columns:88px minmax(0,1fr)}
-  .facts li{grid-column:1/-1;grid-template-columns:subgrid;grid-template-rows:none;align-items:center}
 }
 @media (prefers-reduced-motion:no-preference){
   html.js .beat:not(.in,:has(+:target)) .seal{opacity:0;transform:translateY(-24px) scale(1.1)}
@@ -126,30 +115,29 @@ a:focus-visible{color:var(--red);text-decoration-color:var(--red)}
 @keyframes ring{from{transform:scale(.04);opacity:0}15%{opacity:1}to{transform:scale(1);opacity:0}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 
-/* ===== side rail: the piece and the heading get their own strip of denser glass, ruled off in board ink. Under 768px it is a slim top bar, and the intro stays plain. ===== */
-:root{--rail-glass:rgba(255,255,255,.4);--rail-ink:rgba(111,74,42,.38);--rail-cut:rgba(255,255,255,.7)}
-.intro{--pt:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-20 -20 40 40' fill='none' stroke='%236f4a2a' stroke-opacity='.55' stroke-width='1.25'%3E%3Cpath d='M-20 0h14M6 0h14M0-20v14M0 6v14' stroke-opacity='.22'/%3E%3Cpath d='M-4.5-13v8.5H-13M4.5-13v8.5H13M-4.5 13V4.5H-13M4.5 13V4.5H13'/%3E%3C/svg%3E")}
-@media (max-width:767px){
-  :root{--bar:calc(2*var(--sc) + 10px);--sx:calc(var(--sr) + 21px)}
-  .beat+section{padding-top:calc(var(--bar) + 1px + var(--u))}
-  .beat+section::before{background:radial-gradient(circle at var(--c1),#2454422e calc(var(--h) + 1px),#fffe calc(var(--h) + 2px),#fff0 calc(var(--h) + 3px)),radial-gradient(circle at var(--c2),#2454422e calc(var(--h) + .5px),#fffe calc(var(--h) + 1.5px),#fff0 calc(var(--h) + 2.5px)),linear-gradient(var(--rail-glass) calc(var(--bar) + 1px),var(--rail-ink) 0 calc(var(--bar) + 2px),var(--rail-cut) 0 calc(var(--bar) + 3px),#fff0 0),var(--glass);background-origin:border-box}
-  .beat+section>h2{position:absolute;left:calc(var(--sx) + var(--sr) + 14px);right:20px;top:-1px;display:flex;align-items:center;height:calc(2*var(--sc));margin:0;font-size:clamp(20px,(100vw - 123px)/6.8,30px);line-height:32px;white-space:nowrap}
+/* ===== the cards: each chapter's piece sits in a socket at the middle of the top edge, then one big label, led by the highlight's pixel art where the chapter has one, then a standfirst with the facts and the logos of the organizations behind it ===== */
+:root{--sx:50%}
+.lead{display:flex;align-items:center;gap:20px}
+.lead .art{flex:none;width:64px;height:64px;image-rendering:pixelated}
+.lead h2{font-size:44px;line-height:48px}
+.deck{max-width:none;font:500 22px/32px var(--display);font-variant-numeric:lining-nums;color:var(--ink);text-wrap:pretty}
+.deck b{font-weight:600;color:var(--red-ink)}
+.deck a{text-decoration-color:var(--bronze)}
+/* the organizations behind a chapter, each logo a link to its site */
+.orgs{display:flex;flex-wrap:wrap;align-items:center;gap:4px 28px;max-width:none}
+.orgs a{display:inline-flex;align-items:center;gap:10px;min-height:44px;font:600 18px/1 var(--display);text-decoration:none}
+.orgs img{flex:none;width:auto;height:24px}
+.orgs .word{height:22px}
+.orgs .px{height:28px;image-rendering:pixelated}
+.orgs .sub{font:500 15px/24px var(--text);gap:8px}
+@media (hover:hover){.orgs a{transition:opacity .15s}.orgs a:hover{opacity:.7}}
+@media (max-width:639px){
+  .lead{gap:14px}
+  .lead .art{width:48px;height:48px}
+  .lead h2{font-size:30px;line-height:34px}
+  .deck{font-size:19px;line-height:28px}
+  .orgs{column-gap:20px}
 }
-@media (min-width:768px){
-  :root{--rail:104px;--sx:calc(var(--rail)/2 + 1px)}
-  .page{width:min(100% - 24px,720px + var(--rail))}
-  .beat+section{display:grid;grid-template-columns:var(--rail) minmax(0,1fr);column-gap:32px;padding-top:32px;padding-left:0}
-  .beat+section::before{background:radial-gradient(circle at var(--c1),#2454422e calc(var(--h) + 1px),#fffe calc(var(--h) + 2px),#fff0 calc(var(--h) + 3px)),radial-gradient(circle at var(--c2),#2454422e calc(var(--h) + .5px),#fffe calc(var(--h) + 1.5px),#fff0 calc(var(--h) + 2.5px)),linear-gradient(90deg,var(--rail-glass) calc(var(--rail) + 1px),var(--rail-ink) 0 calc(var(--rail) + 2px),var(--rail-cut) 0 calc(var(--rail) + 3px),#fff0 0),var(--glass);background-origin:border-box}
-  .beat+section>*{grid-column:2}
-  .beat+section>h2{grid-column:1;grid-row:1/span 99;justify-self:center;align-self:start;margin-top:calc(var(--sc) + var(--sr) + 28px - 32px);writing-mode:vertical-rl;white-space:nowrap}
-  section#contact>.hook{margin-bottom:0}
-  .intro,main+footer.foot{padding-left:calc(var(--rail) + 32px)}
-  .intro{background:var(--pt) calc(var(--sx) - 20px) calc(var(--sc) + 8px) / 40px 40px no-repeat,linear-gradient(90deg,var(--rail-glass) calc(var(--rail) + 1px),var(--rail-ink) 0 calc(var(--rail) + 2px),var(--rail-cut) 0 calc(var(--rail) + 3px),#fff0 0),var(--glass);background-origin:border-box}
-  main+footer.foot{background:linear-gradient(90deg,var(--rail-glass) calc(var(--rail) + 1px),var(--rail-ink) 0 calc(var(--rail) + 2px),var(--rail-cut) 0 calc(var(--rail) + 3px),#fff0 0),var(--glass);background-origin:border-box}
-}
-section[aria-labelledby]:is(#origin,#work,#pyd,#planned,#writing,#club,#contact)>h2+*{margin-top:0}
-@media (min-width:640px) and (max-width:767px){:root{--sx:calc(var(--sr) + 33px)}.beat+section>h2{right:32px;font-size:36px;line-height:40px}}
-@media (min-width:768px) and (min-height:480px){.beat+section>h2{position:sticky;top:24px}}
 
 @property --b{syntax:'<length>';inherits:true;initial-value:0px}
 @property --tx{syntax:'<length>';inherits:true;initial-value:0px}
@@ -178,6 +166,17 @@ section[aria-labelledby]:is(#origin,#work,#pyd,#planned,#writing,#club,#contact)
 }
 .stage img{position:absolute;max-width:none;image-rendering:pixelated}
 .stage .bg{width:calc(960*var(--a));left:clamp(calc(100vw - 960*var(--a)),calc(var(--cx) - 480*var(--a)),0px);top:min(0px,round(calc(var(--edge) - 196*var(--a)),1px))}
+/* the garden moves: glints drift downstream on the river, the near ones faster. The wind in the leaves and grass is drawn on the canvas by site.js. */
+.stage .water{position:absolute;aspect-ratio:960/360;overflow:hidden;-webkit-mask:url(img/scene-bg-water.png) 0 0/100% 100%;mask:url(img/scene-bg-water.png) 0 0/100% 100%}
+.stage .water i{position:absolute;left:calc(-480*var(--a));top:0;bottom:0;width:calc(100% + 480*var(--a));background:url(img/scene-bg-glint-far.png) 0 0/calc(480*var(--a)) 100% repeat-x;image-rendering:pixelated}
+.stage .water .near{background-image:url(img/scene-bg-glint-near.png)}
+.stage .wind{position:absolute;aspect-ratio:960/360;image-rendering:pixelated}
+@media (prefers-reduced-motion:no-preference){
+  .stage .water .far{animation:flow 96s linear infinite,shimmer 4.3s ease-in-out infinite alternate}
+  .stage .water .near{animation:flow 54s linear infinite,shimmer 3.1s ease-in-out -1.4s infinite alternate}
+}
+@keyframes flow{to{transform:translateX(calc(480*var(--a)))}}
+@keyframes shimmer{from{opacity:.55}to{opacity:1}}
 .stage .spr--elder{width:calc(138*var(--a));left:calc(var(--cx) - 69*var(--a));top:round(calc(var(--edge) - 114*var(--a)),1px)}
 
 /* Each flat part of the table is its own element under the same camera, so no browser has to sort 3D layers. Units are board cells, the board's far left point is 0 0. */
@@ -255,10 +254,9 @@ section[aria-labelledby]:is(#origin,#work,#pyd,#planned,#writing,#club,#contact)
 /* play mode: the camera looks straight down, the page steps aside and a bar of controls takes its place */
 .stage{-webkit-tap-highlight-color:transparent}
 .hero{position:relative}
-/* the teal of his shirt, so red stays for the ring and the links */
-.play-start{--c:#3b5f66;position:absolute;left:0;top:12px;pointer-events:auto;background-color:var(--c);box-shadow:inset 0 1px rgba(255,255,255,.35),inset 0 -1px rgba(16,36,40,.3),0 8px 16px -8px rgba(24,48,54,.55)}
-@media (hover:hover){.play-start:hover{background-color:color-mix(in oklab,var(--c),#000 16%)}}
-.play-start[hidden],html.playing .play-start{display:none}
+/* the game's opener reads as a highlight's heading, set in its tile in the highlights */
+.play-start{padding:0;border:0;background:none;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.wins .play .art{padding:6px}
 .stage .p.gone{visibility:hidden}
 /* rings on the stones themselves: the last move, a piece that can be taken, the piece in hand */
 .stage .p.last .p-in{box-shadow:0 0 0 calc(.06*var(--b)) rgba(23,25,28,.72)}
@@ -287,7 +285,6 @@ section[aria-labelledby]:is(#origin,#work,#pyd,#planned,#writing,#club,#contact)
   .stage.play::before{transition:opacity .4s .5s}
   .stage:not(.play) .bg{transition-delay:0s,.2s}
 }
-@media (max-width:767px){.play-start{display:none}}
 html.playing{overflow:hidden}
 html.playing :is(.page,.skip){visibility:hidden}
 
@@ -312,12 +309,10 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
 .cue::after{content:"";display:block;width:7px;height:7px;margin:3px auto 0;border:solid;border-width:0 2px 2px 0;transform:rotate(45deg);filter:drop-shadow(0 0 2px rgba(15,22,12,.9))}
 @media (prefers-reduced-motion:no-preference){.cue::after{animation:cue 2.4s ease-in-out infinite}}
 @keyframes cue{50%{translate:0 3px}}
-@media (hover:none){.intro .note .hover{display:none}}
 
 .intro .claim{font:500 34px/42px var(--display);letter-spacing:-.01em;text-wrap:balance}
 .intro .claim+.lede{margin-top:24px}
 .intro .lede+.lede{margin-top:12px}
-.intro .lede+.note{margin-top:16px}
 
 @media (max-width:639px){
   .intro .claim{font-size:26px;line-height:34px}
@@ -331,21 +326,11 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
   .intro .claim{font-size:24px;line-height:32px}
 }
 
-@media (min-width:400px){#work .facts{column-gap:var(--u)}}
 #work .sv-body{display:grid;gap:var(--u);container-type:inline-size;grid-template-columns:repeat(3,minmax(0,1fr))}
 #work .sv-body>*{grid-column:1/-1}
 #work .sv-body .fig-frame{aspect-ratio:2/1}
 #work .sv-body img{object-position:35% 45%}
 :is(#work .sv-text,#pyd,#planned) p:not(.meta,.links)+p{margin-top:16px}
-:is(#work,#pyd) .links{margin-top:8px}
-/* the press block is one link: where it ran, then its headline */
-#work .press{display:grid;gap:6px;padding:16px 20px;border:1px solid var(--hair);border-radius:10px;background:rgba(255,255,255,.5);text-decoration:none}
-#work .press .meta{display:flex;gap:8px}
-#work .press .ico{margin-top:4px}
-#work .press strong{font:600 26px/30px var(--display);font-variant-numeric:lining-nums;text-wrap:balance}
-#work .press:focus-visible strong{color:var(--red)}
-@media (hover:hover){#work .press strong{transition:color .15s}#work .press:hover{border-color:var(--bronze)}#work .press:hover strong{color:var(--red)}}
-@media (max-width:639px){#work .press{padding:14px 16px}#work .press strong{font-size:22px;line-height:26px}}
 :is(#work,#pyd) figcaption{text-wrap:balance}
 #pyd .figs{grid-template-columns:minmax(0,1fr);gap:var(--u) 16px}
 @container (min-width:480px) and (max-width:619.98px){
@@ -359,7 +344,6 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
 }
 @media (min-width:640px){
   #pyd .figs{grid-template-columns:1176fr 728fr}
-  :is(#work,#pyd) .facts span{text-wrap:balance}
 }
 
 /* every post shows at once: one row each, picture beside the words from 480px up. The link is the whole row. */
@@ -406,11 +390,9 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
   #writing .feed li:hover h3{color:var(--red)}
 }
 
-#club h2+.fig{margin-top:var(--u)}
 #club .fig-frame{--ar:7/3}
 #club figcaption{text-wrap:balance}
 #club p:not(.links){max-width:60ch}
-#club .links{margin:12px 0 -10px}
 @media (max-width:639px){#club .fig-frame{--ar:3/2}}
 
 #contact .hook{max-width:24em;margin:12px 0 var(--u);font:500 26px/34px var(--display);text-wrap:balance}
@@ -424,3 +406,70 @@ header.top nav a{padding-inline:10px;font-size:15px;line-height:24px;font-weight
 .foot span{display:inline-block;text-wrap:balance}
 @media (max-width:639px){#contact .hook{font-size:22px;line-height:30px}#contact .btn{padding-inline:16px}.foot{padding-block:14px}}
 @media (max-width:359px){.links{column-gap:12px}.links a{gap:6px}}
+
+/* highlights: pixel art drawn by tools/highlights, fixed on the side through the whole story. Full tiles where they fit beside the cards, the art alone on a narrower side, a dock at the bottom on phones. The one for the section in view is marked. */
+.wins{position:fixed;z-index:3;pointer-events:none}
+.wins>ul{display:flex;flex-direction:column;gap:10px}
+.wins>ul>li{position:relative;display:grid;grid-template-columns:64px 1fr;align-items:center;gap:12px;padding:6px 16px 6px 6px;background:var(--glass);-webkit-backdrop-filter:var(--frost);backdrop-filter:var(--frost);border:1px solid var(--rim);border-radius:12px;box-shadow:var(--lip),var(--lift);cursor:pointer;pointer-events:auto}
+.wins .art{display:block;width:64px;height:64px;image-rendering:pixelated}
+.wins>ul>li>p{display:grid;gap:2px;max-width:none}
+.wins>ul>li>p strong{font:600 20px/24px var(--display);font-variant-numeric:lining-nums;letter-spacing:-.005em;text-wrap:balance}
+.wins>ul>li>p strong a{text-decoration:none}
+.wins>ul>li:has(:is(a,button):focus-visible){outline:2px solid var(--red);outline-offset:2px}
+.wins>ul>li.on{background:#fff;border-color:var(--red);box-shadow:0 0 0 1px var(--red),var(--lift)}
+.wins>ul>li.on strong a{color:var(--red-ink)}
+@media (hover:hover){
+  .wins .art{transition:transform .25s cubic-bezier(.3,1.6,.5,1)}
+  .wins>ul>li{transition:border-color .15s,background-color .15s}
+  .wins>ul>li:not(.on):hover{border-color:var(--bronze)}
+  .wins>ul>li:hover .art{transform:translateY(-3px)}
+  .wins>ul>li:hover strong :is(a,button){color:var(--red-ink)}
+}
+/* full tiles: the cards narrow to 640px below 1360px so the rail clears them */
+@media (min-width:1280px){
+  .wins{top:50%;right:max(16px,50% - 680px);width:280px;transform:translateY(-50%)}
+}
+@media (min-width:1280px) and (max-width:1359px){.page{width:640px}}
+/* the art alone: the words show beside it on hover or focus */
+@media (max-width:1279px){
+  .wins>ul>li{display:block;padding:4px;background:none;border-color:transparent;box-shadow:none;-webkit-backdrop-filter:none;backdrop-filter:none}
+  .wins .art{width:48px;height:48px}
+  .wins>ul>li.on{background:#fff;border-color:var(--red);box-shadow:var(--lift)}
+  .wins>ul>li>p{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+}
+@media (min-width:944px) and (max-width:1279px){
+  .wins{top:50%;right:max(8px,(50% - 360px - 72px)/2);transform:translateY(-50%)}
+  .wins>ul{gap:4px;padding:6px;background:var(--glass);-webkit-backdrop-filter:var(--frost);backdrop-filter:var(--frost);border:1px solid var(--rim);border-radius:14px;box-shadow:var(--lip),var(--lift);pointer-events:auto}
+}
+/* the dock: the art in a row at the bottom, the scene and the scroll prompt lifted above it */
+@media (max-width:943px){
+  .wins{left:0;right:0;bottom:10px;display:flex;justify-content:center}
+  .wins>ul{flex-direction:row;gap:4px;padding:4px;background:var(--glass);-webkit-backdrop-filter:var(--frost);backdrop-filter:var(--frost);border:1px solid var(--rim);border-radius:14px;box-shadow:var(--lip),var(--lift);pointer-events:auto}
+  .wins .more{display:none}
+  .stage{--hb:calc(100svh - 56px - 76px)}
+  .cue{bottom:80px}
+  .page{padding-bottom:88px}
+  html{scroll-padding-bottom:96px}
+}
+@media (prefers-reduced-motion:no-preference){
+  .wins>ul>li{animation:win-in .5s calc(.35s + var(--i)*.09s) cubic-bezier(.2,.8,.3,1) backwards}
+  .wins .art{animation:win-pop .45s calc(.55s + var(--i)*.09s) cubic-bezier(.3,1.6,.55,1) backwards}
+}
+@keyframes win-in{from{opacity:0;transform:translateY(10px)}}
+@keyframes win-pop{from{opacity:0;transform:scale(.4)}}
+/* the brief: a card beside the tile on hover or focus, its strongest facts and a way into the full story. The strip on its right edge bridges the gap so the pointer can reach Read more. */
+.wins .more{position:absolute;top:50%;right:calc(100% + 12px);width:320px;padding:18px 20px 16px;background:#fff;border:1px solid var(--hair);border-radius:14px;box-shadow:var(--lift);cursor:auto;transform:translate(8px,-50%);opacity:0;visibility:hidden;transition:opacity .15s,transform .2s,visibility 0s .2s}
+.wins .more::after{content:"";position:absolute;top:0;bottom:0;left:100%;width:14px}
+.wins>ul>li:is(:hover,:focus-within) .more{transform:translate(0,-50%);opacity:1;visibility:visible;transition:opacity .15s,transform .2s}
+.wins .more strong{display:block;font:600 22px/26px var(--display);text-wrap:balance}
+.wins .more p{margin-top:8px;font-size:15px;line-height:23px;color:var(--muted);text-wrap:pretty}
+.wins .more p b{font-weight:600;color:var(--red)}
+.wins .more a{display:inline-flex;align-items:center;gap:6px;min-height:32px;margin-top:10px;font-weight:600;font-size:15px;color:var(--red);text-decoration-color:var(--red)}
+.wins .more a::after{content:"→"}
+@media (hover:none){.wins .more{display:none}}
+.wins>ul>li.shut .more{visibility:hidden;opacity:0}
+@media (max-height:660px){.wins>ul>li:first-child .more{top:0;transform:translate(8px,0)}.wins>ul>li:first-child:is(:hover,:focus-within) .more{transform:none}}
+html:not(.js) .wins .play{display:none}
+html.playing .wins{display:none}
+/* the game needs 768px, so its tile goes below that */
+@media (max-width:767px){.wins .play{display:none}}

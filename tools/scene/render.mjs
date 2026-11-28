@@ -16,8 +16,8 @@ const sizes = existsSync(jsonPath) ? JSON.parse(readFileSync(jsonPath, 'utf8')) 
 for (const s of sprites) {
   if (only.length && !only.includes(s.name)) continue;
   const t0 = Date.now();
-  let w, h, rgba, anchor;
-  if (s.draw) ({ w, h, rgba } = s.draw());
+  let w, h, rgba, anchor, layers = [];
+  if (s.draw) ({ w, h, rgba, layers = [] } = s.draw());
   else {
     const [cw, ch, cx, cy] = s.canvas;
     const px = trace({ field: s.field, w: cw, h: ch, ray: s.ray || ortho(s.scale, s.look, cx, cy), ...s.trace });
@@ -29,6 +29,8 @@ for (const s of sprites) {
     anchor = cy - b.y;
   }
   writePNG(new URL(`scene-${s.name}.png`, img), rgba, w, h);
+  // layers the page animates on their own, such as the leaves and the water
+  for (const l of layers) writePNG(new URL(`scene-${s.name}-${l.name}.png`, img), l.rgba, l.w, l.h);
   // a prop's anchor row is where its table point lands, q its perspective scale there
   sizes[s.name] = s.q ? { w, h, anchor, q: +s.q.toFixed(4) } : { w, h };
   console.log(`${s.name}: ${w}x${h}${anchor === undefined ? '' : `, anchor row ${anchor}`} in ${Date.now() - t0}ms`);

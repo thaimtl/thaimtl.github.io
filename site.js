@@ -191,9 +191,12 @@
     // Play mode, 768px and wider: the visitor takes Black against bot.js in a top-down shot that holds still. The story's page and scroll stand down until they leave.
     const opener = document.createElement('button'), bar = document.createElement('div');
     opener.type = 'button';
-    opener.className = 'btn play-start';
-    opener.textContent = 'Play Xiangqi';
-    hero?.append(opener);
+    opener.className = 'play-start';
+    opener.textContent = 'Play xiangqi';
+    // it lives in the highlights, where a click anywhere on its tile starts the game
+    const tile = document.querySelector('.wins .play');
+    tile?.querySelector('strong').append(opener);
+    tile?.addEventListener('click', e => { if (!e.target.closest('button, .more')) opener.click(); });
     bar.className = 'play-bar';
     bar.hidden = true;
     bar.innerHTML = '<div class="vh" tabindex="0" role="application" aria-label="Board. Arrow keys move, Enter picks up or places a piece, Escape puts it back, or leaves the game when nothing is held."></div><div class="play-status" aria-live="polite"></div><p class="vh" aria-live="polite"></p>'
@@ -375,7 +378,7 @@
     pad.addEventListener('blur', () => dots.querySelector('.cur')?.remove());
 
     // in the story a mouse resting on a stone shows where it can go from the opening position. Clicks and taps on the board do nothing.
-    const open = t => !t.closest('a,button,input,select,textarea,label,header,footer,main>section:not(.hero,.beat)');
+    const open = t => !t.closest('a,button,input,select,textarea,label,header,footer,.wins,main>section:not(.hero,.beat)');
     const hit = (x, y) => {
       for (const [id, el] of els) {
         const r = el.querySelector('.p-face').getBoundingClientRect();
@@ -390,10 +393,9 @@
       dots.innerHTML = id ? trail(OPEN, id) : '';
       prey(OPEN, id);
     };
-    document.querySelector('.intro .note')?.insertAdjacentHTML('beforeend', '<span class="hover"> Hover a piece to see where it can go.</span>');
     // the props on the table each show a card: the clementines one for the plates, the tea one for the cups and the pot. The copy sits in the hero's [data-tip] blocks.
     const props = [...stage.querySelectorAll('.prop')], kind = p => (/fruit/.test(p.querySelector('img').getAttribute('src')) ? 'fruit' : 'tea');
-    const blocks = document.querySelectorAll('header.top,main>section:not(.hero,.beat),footer.foot,.cue'), card = document.createElement('div'), halo = document.createElement('div'), elder = stage.querySelector('.spr--elder'), slab = stage.querySelector('.slab');
+    const blocks = document.querySelectorAll('header.top,.wins>ul>li,main>section:not(.hero,.beat),footer.foot,.cue'), card = document.createElement('div'), halo = document.createElement('div'), elder = stage.querySelector('.spr--elder'), slab = stage.querySelector('.slab');
     card.className = 'prop-tip';
     halo.className = 'prop-ring';
     card.setAttribute('aria-hidden', 'true');
@@ -438,7 +440,7 @@
     const point = (p, keys = false) => { on = p && { list: [].concat(p), keys }; place(); };
     // a scroll beat or a resize moves the props: a mouse card goes, a keyboard card follows
     const moved = () => { if (on) on.keys ? place() : point(null); };
-    opener.after(...[...document.querySelectorAll('[data-tip]')].map(src => {
+    hero?.append(...[...document.querySelectorAll('[data-tip]')].map(src => {
       const b = document.createElement('button'), k = src.dataset.tip;
       // the viewer's own plate or cup first, then his
       const list = props.filter(p => kind(p) === k).sort((a, c) => c.matches('.prop--near') - a.matches('.prop--near'));
@@ -466,10 +468,9 @@
     const frame = () => {
       raf = 0;
       if (game) return;
-      let k = -1;
-      // the opening shot holds until the reader has scrolled, however tall the window is
-      if (scrollY > innerHeight * .3) beats.forEach(([b], j) => { if (b.getBoundingClientRect().top < innerHeight / 2) k = j; });
-      if (k !== cur) { tip(null); moved(); go(k); }
+      // the camera holds the opening shot while the story scrolls over it, and a pointer left still lets go of its piece and prop
+      tip(null); moved();
+      if (cur !== -1) go(-1);
     };
     const measure = () => {
       const head = document.querySelector('header.top');
@@ -482,5 +483,90 @@
     frame();
     addEventListener('scroll', () => { raf ||= requestAnimationFrame(frame); }, { passive: true });
     addEventListener('resize', () => { measure(); if (game) return innerWidth < 768 ? leave() : lay(true); moved(); frame(); shot(); });
+  }
+}
+
+// the highlights: a click on a tile or its Read more opens its section and marks it, and scrolling marks the one for the section in view
+{
+  const tiles = [...document.querySelectorAll('.wins>ul>li[data-to]')];
+  const sections = [...document.querySelectorAll('main>section[id]')];
+  let on = null;
+  const mark = t => {
+    if (t === on) return;
+    on?.classList.remove('on');
+    on?.querySelector('p a').removeAttribute('aria-current');
+    on = t;
+    t?.classList.add('on');
+    t?.querySelector('p a').setAttribute('aria-current', 'location');
+  };
+  const spy = () => {
+    // the last chapter whose card has reached a line near the top of the screen, held through the gap to the next one
+    const line = Math.min(innerHeight / 2, 320), now = sections.findLast(s => s.getBoundingClientRect().top < line)?.id;
+    if (on?.dataset.to !== now) mark(tiles.find(t => t.dataset.to === now));
+  };
+  for (const t of tiles) t.addEventListener('click', e => {
+    const a = t.querySelector('p a'), hit = e.target.closest('a');
+    if (!hit && e.target.closest('.more')) return;
+    if (!hit) a.click();
+    else if (hit.getAttribute('href') === a.getAttribute('href')) mark(t);
+  });
+  // Escape tucks a tile's brief away until the pointer or focus leaves it
+  for (const t of document.querySelectorAll('.wins>ul>li')) {
+    t.addEventListener('keydown', e => { if (e.key === 'Escape') t.classList.add('shut'); });
+    for (const ev of ['focusout', 'pointerleave']) t.addEventListener(ev, () => t.classList.remove('shut'));
+  }
+  let raf = 0;
+  const later = () => { raf ||= requestAnimationFrame(() => { raf = 0; spy(); }); };
+  addEventListener('scroll', later, { passive: true });
+  addEventListener('resize', later);
+  spy();
+}
+
+// The wind: the leaves bend from a line near the ground, their tops furthest, with a flutter on top, and the grass ripples as each gust rolls across the lawn. Each row of leaves and each strip of grass is drawn whole and moved in device pixels, so the art stays crisp while the motion stays smooth.
+{
+  const cv = document.querySelector('.stage .wind'), stage = cv?.closest('.stage');
+  if (cv) {
+    const W = 960, H = 360, PIVOT = 270, ctx = cv.getContext('2d');
+    const still = matchMedia('(prefers-reduced-motion: reduce)');
+    const load = src => new Promise((ok, no) => { const i = new Image(); i.onload = () => ok(i); i.onerror = no; i.src = src; });
+    // a slow swell with quicker swirls on top, always leaning downwind
+    const gust = t => .55 + .25 * Math.sin(t * .6) + .12 * Math.sin(t * 1.7 + 1) + .08 * Math.sin(t * 3.1 + 2);
+    Promise.all(['img/scene-bg-grass.png', 'img/scene-bg-leaves.png'].map(load)).then(([grass, leaves]) => {
+      let s = 1, raf = 0;
+      const fit = () => {
+        const r = cv.getBoundingClientRect(), d = devicePixelRatio || 1;
+        cv.width = Math.max(1, Math.round(r.width * d));
+        cv.height = Math.max(1, Math.round(r.height * d));
+        s = cv.width / W;
+      };
+      const px = v => Math.round(v * s);
+      const paint = t => {
+        const calm = still.matches;
+        ctx.imageSmoothingEnabled = false;
+        ctx.clearRect(0, 0, cv.width, cv.height);
+        for (let x = 0; x < W; x += 8) {
+          const dx = calm ? 0 : .7 * gust(t - x * .004) * (.5 + .5 * Math.sin(t * 2.4 - x * .03));
+          ctx.drawImage(grass, x, 0, 8, H, px(x + dx), 0, px(x + 8 + dx) - px(x + dx), cv.height);
+        }
+        const g = gust(t);
+        for (let y = 0; y < H; y++) {
+          const bend = Math.max(0, (PIVOT - y) / PIVOT) ** 1.6;
+          if (calm || !bend) { ctx.drawImage(leaves, 0, y, W, H - y, 0, px(y), cv.width, cv.height - px(y)); break; }
+          const dx = bend * (2.4 * g + .25 * Math.sin(t * 5.3 + y * .21)) - bend * 1.3;
+          ctx.drawImage(leaves, 0, y, W, 1, px(dx), px(y), cv.width, px(y + 1) - px(y));
+        }
+      };
+      const tick = now => {
+        raf = 0;
+        if (!stage.matches('.play')) paint(now / 1000);
+        if (!still.matches) raf = requestAnimationFrame(tick);
+      };
+      fit();
+      paint(performance.now() / 1000);
+      for (const img of stage.querySelectorAll('.bg.still')) img.hidden = true;
+      new ResizeObserver(() => { fit(); paint(performance.now() / 1000); }).observe(cv);
+      still.addEventListener('change', () => { if (!raf) raf = requestAnimationFrame(tick); });
+      raf = requestAnimationFrame(tick);
+    }, () => {});
   }
 }
